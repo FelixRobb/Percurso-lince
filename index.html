@@ -2,24 +2,48 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bird Sounds of Guadiana River</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bird Sounds of the Guadiana River</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
 <body>
-  <header>
-    <h1>Bird Sounds of the Guadiana River</h1>
-    <nav>
-      <a href="index.html">Map</a>
-      <a href="recordings.html">Recordings</a>
-    </nav>
-  </header>
-  <main id="map"></main>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="map.js"></script>
+    <header>
+        <div class="container">
+            <h1>Bird Sounds of the Guadiana River</h1>
+            <nav>
+                <div class="mapbutton"> <a href="index.html" class="mapbut">Map</a>
+                </div>
+                <div class="recordingbutton">
+                    <a hef="recordings.html" class="recordingsbut">Recordings</a>
+                </div>
+            </nav>
+        </div>
+    </header>n
+
+    <main>
+        <section id="project-description">
+            <div class="container">
+                <h2>About the Project</h2>
+                <p>Welcome to the Bird Sounds of the Guadiana River project. This initiative aims to document and share
+                    the beautiful bird sounds recorded along the Guadiana River. Explore our interactive map to discover
+                    the locations of these recordings, and visit our recordings page for detailed information and audio
+                    clips of each bird species.</p>
+            </div>
+        </section>
+        <section id="map-container">
+            <div id="map"></div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Bird Sounds of the Guadiana River. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="map.js"></script>
 </body>
 
 </html>

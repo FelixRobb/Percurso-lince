@@ -1,4 +1,3 @@
-/* Add styles here */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -8,43 +7,73 @@ body {
 
 header {
     background-color: #1f1f1f;
-    padding: 1rem;
+    padding: 1rem 0;
     text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
 }
 
 header h1 {
     margin: 0;
+    font-size: 1.5rem;
 }
 
-nav a {
-    color: #ffffff;
-    margin: 0 1rem;
+.mapbutton {
+    background-color:#fff;
+    color:#fff;
+    padding: 10px;
+    border-radius: 5px;
     text-decoration: none;
 }
+main {
+    padding: 2rem 0;
+}
 
-nav a:hover {
-    text-decoration: underline;
+#project-description {
+    padding: 0px;
+    background-color: #1f1f1f;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+#project-description .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+#project-description p {
+    text-align: center;
+}
+
+#map-container {
+    margin: 2rem 0;
 }
 
 #map {
-    height: 90vh;
+    height: 70vh;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-#recordings-list {
-    padding: 1rem;
-}
-
-.recording {
+footer {
     background-color: #1f1f1f;
-    margin: 1rem 0;
-    padding: 1rem;
-    border-radius: 8px;
+    padding: 1rem 0;
+    text-align: center;
 }
 
-.recording h2 {
-    margin-top: 0;
-}
-
-.recording a {
-    color: #1e90ff;
+footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
