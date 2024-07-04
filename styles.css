@@ -1,0 +1,50 @@
+/* Add styles here */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+header {
+    background-color: #1f1f1f;
+    padding: 1rem;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav a {
+    color: #ffffff;
+    margin: 0 1rem;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+#map {
+    height: 90vh;
+}
+
+#recordings-list {
+    padding: 1rem;
+}
+
+.recording {
+    background-color: #1f1f1f;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.recording h2 {
+    margin-top: 0;
+}
+
+.recording a {
+    color: #1e90ff;
+}
