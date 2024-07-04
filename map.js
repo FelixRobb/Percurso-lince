@@ -2,7 +2,7 @@ const birdData = [
     {
         name: 'European Robin',
         description: 'A small insectivorous passerine bird, distinctive for its orange-red breast.',
-        imageUrl: 'images/robin.jpg',
+        imageUrl: 'images/robin.jpeg',
         audioUrl: 'sounds/robin.mp3',
         lat: 37.805,
         lng: -7.564,
