@@ -21,7 +21,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 birdData.forEach(bird => {
     const marker = L.marker([bird.lat, bird.lng]).addTo(map);
     const popupContent = `
-                                                                                                <div class="popup">
+                                                                                                <div class="pinpopup">
                                                                                                             <h2>${bird.name}</h2>
                                                                                                                         <img src="${bird.imageUrl}" alt="${bird.name}" width="100">
                                                                                                                                     <p>${bird.description}</p>
