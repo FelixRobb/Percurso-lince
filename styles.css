@@ -13,6 +13,8 @@ header {
 }
 
 header .container {
+				display: flex;
+				flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -26,34 +28,29 @@ header h1 {
     font-size: 1.5rem;
 }
 
-.mapbutton {
-    background-color:#fff;
-    color:#fff;
-    padding: 10px;
-    border-radius: 5px;
+nav {
+				display: flex;
+				align-content: center;
+				justify-content: center;
+}
+
+nav a {
+    color: #ffffff;
+    margin: 0 0.5rem;
     text-decoration: none;
-}
-main {
-    padding: 2rem 0;
-}
-
-#project-description {
-    padding: 0px;
-    background-color: #1f1f1f;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-#project-description .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px;
+nav a.nav-button {
+    background-color: #333;
+				margin-top: 10px;
 }
 
-#project-description p {
-    text-align: center;
+nav a.active, nav a:hover {
+    background-color: #1e90ff;
 }
 
 #map-container {
@@ -76,4 +73,108 @@ footer .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
+}
+
+/* Popup styles */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Ensure popup is on top */
+}
+
+.popup-content {
+    background: #2c2c2c;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 700px;
+    text-align: left;
+    overflow-y: auto;
+    max-height: 80%;
+}
+
+.popup-content h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.popup-content p {
+    margin: 0.5rem 0;
+}
+
+#popup-close {
+    display: block;
+    background-color: #1e90ff;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 1rem auto 0;
+    text-align: center;
+}
+
+#popup-close:hover {
+    background-color: #3ba6ff;
+}
+
+/* Recordings page styles */
+main .container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#recordings-list {
+    list-style: none;
+    padding: 0;
+}
+
+.recording-item {
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.recording-item:hover {
+    background-color: #2b2b2b;
+    border-color: #444;
+}
+
+.recording-item h3 {
+    margin: 0 0 0.5rem;
+}
+
+.recording-item p {
+    margin: 0.5rem 0;
+}
+
+.recording-item audio {
+    width: 100%;
+    margin: 0.5rem 0;
+}
+
+.recording-item a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.recording-item a:hover {
+    text-decoration: underline;
 }

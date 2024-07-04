@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bird Recordings</title>
+    <title>Recordings - Bird Sounds of the Guadiana River</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <header>
-        <h1>Bird Recordings</h1>
-        <nav>
-            <a href="index.html">Map</a>
-            <a href="recordings.html">Recordings</a>
-        </nav>
+        <div class="container">
+            <h1>Bird Sounds of the Guadiana River</h1>
+            <nav>
+                <a href="index.html" class="nav-button">Map</a>
+                <a href="recordings.html" class="nav-button active">Recordings</a>
+            </nav>
+        </div>
     </header>
-    <main id="recordings-list">
-        <!-- Recording entries will be dynamically generated -->
+    <main>
+        <div class="container">
+            <h2>Recordings</h2>
+            <ul id="recordings-list">
+                <!-- The recordings will be dynamically inserted here -->
+            </ul>
+        </div>
     </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Bird Sounds of the Guadiana River. All rights reserved.</p>
+        </div>
+    </footer>
     <script src="recordings.js"></script>
 </body>
-
 </html>
