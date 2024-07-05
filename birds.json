@@ -41,5 +41,21 @@
             "lat": 37.63,
             "lng": -7.6679
         }
+    },
+    {
+        "name": "eagle",
+        "scientific_name": "butio butio",
+        "description": "kwrgoiwofgwocgowugfofwcosdfgoufoug fuhbosdv ovos",
+        "most_probable_months": [
+            "July",
+            "August",
+            "September"
+        ],
+        "image": "images/eagle_square.jpg",
+        "audio": "sounds/eagle.mp3",
+        "location": {
+            "lat": 37.6356,
+            "lng": -7.6679
+        }
     }
 ]
