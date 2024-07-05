@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const popupContent = `
                     <div>
                         <div style="display: flex; align-items: center; margin-right: 20px;">
-                            <img style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" src="${imageSrc}" alt="${bird.name}">
+                            <img style="width: 100px; height: 100px; object-fit: cover; border-radius: 4px;" src="${imageSrc}" alt="${bird.name}">
                             <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
                         </div>
                         <p>${bird.description}</p>

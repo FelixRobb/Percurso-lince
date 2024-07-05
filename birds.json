@@ -1,24 +1,11 @@
 [
     {
-        "name": "robin",
-        "scientific_name": "qfowgfs fsjv sdvs",
-        "description": "sbcdfasoicfsoisfgcoidvoiosvcvasgvougsfgcgfsog ovhgswouv jzxbcj ausd avrvd sjvboa usv",
+        "name": "European Robin",
+        "scientific_name": "Erithacus Rubecula",
+        "description": "The European robin (Erithacus rubecula), known simply as the robin or robin redbreast in Great Britain and Ireland, is a small insectivorous passerine bird that belongs to the chat subfamily of the Old World flycatcher family.[3] It is found across Europe, east to Western Siberia and south to North Africa; it is sedentary in most of its range except the far north.",
         "most_probable_date": "2024-07-25",
-        "image": "images/robin_image.png",
-        "sound": "sounds/robin_sound.mp3",
-        "location": {
-            "lat": 37.6364,
-            "lng": -7.6673
-        }
-    },
-
-    {
-        "name": "f",
-        "scientific_name": "f",
-        "description": "f\r\nf",
-        "most_probable_date": "2024-07-25",
-        "image": "images/f_square.jpg",
-        "audio": "sounds/f.mp3",
+        "image": "images/robin.jpg",
+        "audio": "sounds/robin.mp3",
         "location": {
             "lat": 37.6368,
             "lng": -7.6679
