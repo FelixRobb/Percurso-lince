@@ -10,5 +10,36 @@
             "lat": 37.6368,
             "lng": -7.6679
         }
+    },
+    {
+        "name": "r",
+        "scientific_name": "r",
+        "description": "r",
+        "most_probable_months": [
+            "January"
+        ],
+        "image": "images/r_square.jpg",
+        "audio": "sounds/r.mp3",
+        "location": {
+            "lat": 37.6364,
+            "lng": -7.6673
+        }
+    },
+    {
+        "name": "d",
+        "scientific_name": "d",
+        "description": "d",
+        "most_probable_months": [
+            "January",
+            "February",
+            "March",
+            "April"
+        ],
+        "image": "images/d_square.jpg",
+        "audio": "sounds/d.mp3",
+        "location": {
+            "lat": 37.63,
+            "lng": -7.6679
+        }
     }
 ]
