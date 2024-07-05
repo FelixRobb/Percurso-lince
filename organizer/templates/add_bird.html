@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Add Bird{% endblock %}
+{% block content %}
+<h2>Add a New Bird</h2>
+<form method="POST" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="scientific_name">Scientific Name:</label>
+    <input type="text" id="scientific_name" name="scientific_name" required><br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
+    <label for="most_probable_date">Most Probable Date to See:</label>
+    <input type="date" id="most_probable_date" name="most_probable_date" required><br>
+    <label for="image">Image:</label>
+    <input type="file" id="image" name="image" required><br>
+    <label for="sound">Sound:</label>
+    <input type="file" id="sound" name="sound" required><br>
+    <label for="lat">Latitude:</label>
+    <input type="text" id="lat" name="lat" required><br>
+    <label for="lng">Longitude:</label>
+    <input type="text" id="lng" name="lng" required><br>
+    <button type="submit">Add Bird</button>
+</form>
+{% endblock %}

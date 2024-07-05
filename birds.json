@@ -1,35 +1,27 @@
 [
     {
-        "name": "Common Nightingale",
-        "scientific_name": "Luscinia megarhynchos",
-        "description": "A small passerine bird best known for its powerful and beautiful song.",
-        "most_probable_date": "April",
-        "image": "nightingale.jpg",
+        "name": "robin",
+        "scientific_name": "qfowgfs fsjv sdvs",
+        "description": "sbcdfasoicfsoisfgcoidvoiosvcvasgvougsfgcgfsog ovhgswouv jzxbcj ausd avrvd sjvboa usv",
+        "most_probable_date": "2024-07-25",
+        "image": "images/robin_image.png",
+        "sound": "sounds/robin_sound.mp3",
         "location": {
             "lat": 37.6364,
             "lng": -7.6673
         }
     },
+
     {
-        "name": "European Bee-eater",
-        "scientific_name": "Merops apiaster",
-        "description": "A richly colored, slender bird with a bright yellow throat.",
-        "most_probable_date": "May",
-        "image": "bee-eater.jpg",
+        "name": "f",
+        "scientific_name": "f",
+        "description": "f\r\nf",
+        "most_probable_date": "2024-07-25",
+        "image": "images/f_square.jpg",
+        "audio": "sounds/f.mp3",
         "location": {
-            "lat": 37.6421,
-            "lng": -7.6594
-        }
-    },
-    {
-        "name": "robin",
-        "scientific_name": "ldl",
-        "description": "weffv",
-        "most_probable_date": "2/2/1014",
-        "image": "nightingale.jpg",
-        "location": {
-            "lat": 37.636,
-            "lng": -7.6594
+            "lat": 37.6368,
+            "lng": -7.6679
         }
     }
 ]

@@ -87,3 +87,10 @@ form button:hover {
 .button:hover {
     background-color: #0073e6;
 }
+
+.image {
+    width: 20px;
+    height: 20px;
+    object-fit: fill;
+    border-radius: 4px; /* optional, adds a slight rounded corner */
+  }
