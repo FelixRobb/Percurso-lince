@@ -26,7 +26,7 @@
             "August",
             "September"
         ],
-        "image": "images/eagle_square.jpg",
+        "image": "images/eagle.jpg",
         "audio": "sounds/eagle.mp3",
         "location": {
             "lat": 37.6356,
