@@ -71,28 +71,29 @@ def add_bird():
         sanitized_name = sanitize_filename(name)
 
         if image and allowed_file(image.filename, app.config['ALLOWED_IMAGE_EXTENSIONS']):
-            image_filename = secure_filename(image.filename)
-            image_path = os.path.join(app.config['IMAGE_UPLOADS'], image_filename)
+            sanitized_name = sanitize_filename(name)
+            image_filename = f"{sanitized_name}.{image.filename.rsplit('.', 1)[1].lower()}"
+            image_path = os.path.join(app.config['IMAGE_UPLOADS'], sanitized_name + '.jpg')
             print(f"Saving image to: {image_path}")
-            
+    
             try:
                 image.save(image_path)
                 print("Original image saved successfully.")
-                
+        
                 # Resize and save square image
                 img_square = resize_image(image_path)
                 if img_square:
-                    image_square_path = os.path.join(app.config['IMAGE_UPLOADS'], f"{sanitized_name}_image.jpg")
+                    image_square_path = os.path.join(app.config['IMAGE_UPLOADS'], sanitized_name + '.jpg')
                     img_square.save(image_square_path)
                     print("Square image saved successfully.")
                 else:
                     print("Error: Could not resize image.")
-                
+        
                 # Cleanup: Delete original image if square image is successfully created
-                if os.path.exists(image_path) and os.path.exists(image_square_path):
-                    os.remove(image_path)
-                    print(f"Original image deleted: {image_path}")
-                    
+                #if os.path.exists(image_path) and os.path.exists(image_square_path):
+                    #os.remove(image_path)
+                    #print(f"Original image deleted: {image_path}")
+            
             except Exception as e:
                 print(f"Error saving image: {e}")
 
@@ -111,7 +112,7 @@ def add_bird():
             "scientific_name": scientific_name,
             "description": description,
             "most_probable_months": most_probable_months,
-            "image": f'images/{sanitized_name}_square.jpg',  # Save sanitized filename
+            "image": f'images/{sanitized_name}.jpg',  # Save sanitized filename
             "audio": f'sounds/{sound_filename}',  # Use sanitized filename for audio
             "location": {
                 "lat": float(request.form['lat']),

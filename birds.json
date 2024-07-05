@@ -18,37 +18,6 @@
         }
     },
     {
-        "name": "r",
-        "scientific_name": "r",
-        "description": "r",
-        "most_probable_months": [
-            "January"
-        ],
-        "image": "images/r_square.jpg",
-        "audio": "sounds/r.mp3",
-        "location": {
-            "lat": 37.6364,
-            "lng": -7.6673
-        }
-    },
-    {
-        "name": "d",
-        "scientific_name": "d",
-        "description": "d",
-        "most_probable_months": [
-            "January",
-            "February",
-            "March",
-            "April"
-        ],
-        "image": "images/d_square.jpg",
-        "audio": "sounds/d.mp3",
-        "location": {
-            "lat": 37.63,
-            "lng": -7.6679
-        }
-    },
-    {
         "name": "eagle",
         "scientific_name": "butio butio",
         "description": "kwrgoiwofgwocgowugfofwcosdfgoufoug fuhbosdv ovos",
@@ -61,7 +30,24 @@
         "audio": "sounds/eagle.mp3",
         "location": {
             "lat": 37.6356,
-            "lng": -7.6679
+            "lng": -7.6685
+        }
+    },
+    {
+        "name": "Eurasian goshawk",
+        "scientific_name": "Accipiter gentilis",
+        "description": "The Eurasian goshawk (/\u02c8\u0261\u0252s\u02cch\u0254\u02d0k/; Accipiter gentilis) is a species of medium-large bird of prey in the family Accipitridae, a family which also includes other extant diurnal raptors, such as eagles, buzzards and harriers. As a species in the genus Accipiter, the goshawk is often considered a \"true hawk\".[3] The scientific name is Latin; Accipiter is \"hawk\", from accipere, \"to grasp\", and gentilis is \"noble\" or \"gentle\" because in the Middle Ages only the nobility were permitted to fly goshawks for falconry.[4]",
+        "most_probable_months": [
+            "March",
+            "April",
+            "May",
+            "June"
+        ],
+        "image": "images/eurasian_goshawk.jpg",
+        "audio": "sounds/eurasian_goshawk.ogg",
+        "location": {
+            "lat": 37.4567,
+            "lng": -7.3974
         }
     }
 ]
