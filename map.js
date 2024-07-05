@@ -14,16 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     const audioSrc = `static/${bird.audio}`;
 
                     const popupContent = `
-  <div>
-    <div style="display: flex; align-items: center; margin-right: 20px;">
-      <img style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" src="${imageSrc}" alt="${bird.name}">
-      <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
-    </div>
-    <p>${bird.description}</p>
-    <p><strong>Most probable date to see it:</strong> ${bird.most_probable_date}</p>
-    <audio controls src="${audioSrc}"></audio>
-  </div>
-`;
+                    <div>
+                        <div style="display: flex; align-items: center; margin-right: 20px;">
+                            <img style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" src="${imageSrc}" alt="${bird.name}">
+                            <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
+                        </div>
+                        <p>${bird.description}</p>
+                        <p><strong>Most probable date to see it:</strong> ${bird.most_probable_date}</p>
+                        <audio controls src="${audioSrc}"></audio>
+                    </div>
+                    `;
                     L.popup()
                         .setLatLng([bird.location.lat, bird.location.lng])
                         .setContent(popupContent)
