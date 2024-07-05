@@ -55,7 +55,7 @@ def add_bird():
         name = request.form['name'].strip()
         scientific_name = request.form['scientific_name'].strip()
         description = request.form['description'].strip()
-        most_probable_date = request.form['most_probable_date']
+        most_probable_months = request.form.getlist('most_probable_months') 
 
         if 'image' not in request.files or 'sound' not in request.files:
             flash('No file part')
@@ -110,7 +110,7 @@ def add_bird():
             "name": name,
             "scientific_name": scientific_name,
             "description": description,
-            "most_probable_date": most_probable_date,
+            "most_probable_months": most_probable_months,
             "image": f'images/{sanitized_name}_square.jpg',  # Save sanitized filename
             "audio": f'sounds/{sound_filename}',  # Use sanitized filename for audio
             "location": {

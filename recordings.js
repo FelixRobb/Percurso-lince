@@ -33,13 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const birdItem = document.createElement('div');
             birdItem.classList.add('bird-item');
             birdItem.innerHTML = `
-                <h2>${bird.name} (${bird.scientific_name})</h2>
-                <p>${bird.description}</p>
-                <p><strong>Most probable date to see it:</strong> ${bird.most_probable_date}</p>
-                <img src="${bird.image}" alt="${bird.name}">
-                <audio controls src="${bird.audio}"></audio>
-                <p><a href="index.html#${bird.location.lat},${bird.location.lng}">View on Map</a></p>
-            `;
+            <div style="display: flex; align-items: center; margin-right: 20px;">
+            <img  style="width: 100px; height: 100px; object-fit: cover; border-radius: 4px;" src="static/${bird.image}" alt="${bird.name}"> 
+            <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
+            </div>
+            <p>${bird.description}</p>
+            <p><strong>Most probable date to see it:</strong> ${bird.most_probable_date}</p>
+            <audio controls src="static/${bird.audio}"></audio> 
+            <p><a href="index.html#${bird.location.lat},${bird.location.lng}">View on Map</a></p>
+        `;
             recordingsList.appendChild(birdItem);
         });
     }
@@ -48,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentMonth = new Date().getMonth();
         const seasonMonths = ["December", "January", "February"].includes(currentMonth) ? "Winter" :
             ["March", "April", "May"].includes(currentMonth) ? "Spring" :
-            ["June", "July", "August"].includes(currentMonth) ? "Summer" : "Fall";
+                ["June", "July", "August"].includes(currentMonth) ? "Summer" : "Fall";
         return birds.filter(bird => bird.most_probable_date.toLowerCase().includes(seasonMonths.toLowerCase()));
     }
 
