@@ -178,3 +178,23 @@ h2 {
 .recording a:hover {
     text-decoration: underline;
 }
+
+.filter-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.filter-options button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #1e90ff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-options button:hover {
+    background-color: #0073e6;
+}
