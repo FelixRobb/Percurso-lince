@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const marker = L.marker([bird.location.lat, bird.location.lng]).addTo(map);
                 marker.on('click', () => {
                     const imageSrc = `static/${bird.image}`;
-                    const audioSrc = `static/${bird.audio}`;
+                    const soundCloudIframe = bird.sound_url;
 
                     const popupContent = `
                     <div>
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <p>${bird.description}</p>
                         <p><strong>Most probable date to see it:</strong> ${bird.most_probable_date}</p>
-                        <audio controls src="${audioSrc}"></audio>
+                        ${soundCloudIframe}
                     </div>
                     `;
                     L.popup()

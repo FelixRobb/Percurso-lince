@@ -47,7 +47,8 @@ def resize_image(image_path):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    birds = load_bird_data()
+    return render_template('index.html', birds=birds)
 
 @app.route('/add_bird', methods=['GET', 'POST'])
 def add_bird():
@@ -55,16 +56,15 @@ def add_bird():
         name = request.form['name'].strip()
         scientific_name = request.form['scientific_name'].strip()
         description = request.form['description'].strip()
-        most_probable_months = request.form.getlist('most_probable_months') 
+        most_probable_months = request.form.getlist('most_probable_months')
 
-        if 'image' not in request.files or 'sound' not in request.files:
+        if 'image' not in request.files:
             flash('No file part')
             return redirect(request.url)
 
         image = request.files['image']
-        sound = request.files['sound']
 
-        if image.filename == '' or sound.filename == '':
+        if image.filename == '':
             flash('No selected file')
             return redirect(request.url)
 
@@ -75,11 +75,11 @@ def add_bird():
             image_filename = f"{sanitized_name}.{image.filename.rsplit('.', 1)[1].lower()}"
             image_path = os.path.join(app.config['IMAGE_UPLOADS'], sanitized_name + '.jpg')
             print(f"Saving image to: {image_path}")
-    
+
             try:
                 image.save(image_path)
                 print("Original image saved successfully.")
-        
+
                 # Resize and save square image
                 img_square = resize_image(image_path)
                 if img_square:
@@ -88,24 +88,11 @@ def add_bird():
                     print("Square image saved successfully.")
                 else:
                     print("Error: Could not resize image.")
-        
-                # Cleanup: Delete original image if square image is successfully created
-                #if os.path.exists(image_path) and os.path.exists(image_square_path):
-                    #os.remove(image_path)
-                    #print(f"Original image deleted: {image_path}")
-            
+
             except Exception as e:
                 print(f"Error saving image: {e}")
 
-        if sound and allowed_file(sound.filename, app.config['ALLOWED_SOUND_EXTENSIONS']):
-            sound_filename = f"{sanitized_name}.{sound.filename.rsplit('.', 1)[1].lower()}"
-            sound_path = os.path.join(app.config['SOUND_UPLOADS'], sound_filename)
-            print(f"Saving sound to: {sound_path}")
-            try:
-                sound.save(sound_path)
-                print("Sound saved successfully.")
-            except Exception as e:
-                print(f"Error saving sound: {e}")
+        sound_url = request.form['sound_url'].strip()
 
         bird_entry = {
             "name": name,
@@ -113,7 +100,7 @@ def add_bird():
             "description": description,
             "most_probable_months": most_probable_months,
             "image": f'images/{sanitized_name}.jpg',  # Save sanitized filename
-            "audio": f'sounds/{sound_filename}',  # Use sanitized filename for audio
+            "sound_url": sound_url,  # Save SoundCloud URL
             "location": {
                 "lat": float(request.form['lat']),
                 "lng": float(request.form['lng'])
