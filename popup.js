@@ -1,27 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const popup = document.getElementById('popup');
-    const popupClose = document.getElementById('popup-close');
+    const popupCloseButton = document.getElementById('popup-close');
 
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
+    // Check if the user has already seen the popup
+    if (localStorage.getItem('popupDisplayed')) {
+        // Redirect to map.html or recordings.html if the popup was already displayed
+        window.location.href = 'map.html';
+    } else {
+        // Show the popup
+        document.getElementById('popup').style.display = 'block';
     }
 
-    function setCookie(name, value, days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        const expires = `expires=${date.toUTCString()}`;
-        document.cookie = `${name}=${value};${expires};path=/`;
-    }
-
-    if (!getCookie('popupDisplayed')) {
-        popup.style.display = 'flex';
-        popup.querySelector('.popup-content').style.display = 'block';
-    }
-
-    popupClose.addEventListener('click', () => {
-        popup.style.display = 'none';
-        setCookie('popupDisplayed', 'true', 1);
+    popupCloseButton.addEventListener('click', () => {
+        // Mark the popup as displayed
+        localStorage.setItem('popupDisplayed', 'true');
+        // Redirect to map.html
+        window.location.href = 'map.html';
     });
 });
