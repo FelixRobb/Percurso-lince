@@ -2,5 +2,10 @@
     {
         "name": "Parque Natural do Vale do Guadiana: PR9",
         "url": "tracks/track1.gpx"
+    },
+    {
+        "name": "Percurso Pedestre PR10 (Rota do Minério)",
+        "url": "tracks/track2.gpx"
     }
+    
 ]

@@ -211,12 +211,11 @@ h2 {
 
 #controls {
     padding: 1rem;
-    background: #f8f8f8;
-    border-bottom: 1px solid #ddd;
+    background: #1f1f1f;
 }
 
 #map-container {
-    height: 600px;
+    height: 60vh;
 }
 
 #map {

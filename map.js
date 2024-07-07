@@ -4,14 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Add user location
-    map.locate({setView: true, maxZoom: 16});
-    map.on('locationfound', e => {
-        L.marker(e.latlng).addTo(map)
-            .bindPopup("You are here")
-            .openPopup();
-    });
+    L.control.locate().addTo(map);
 
+    
     // Load bird data
     fetch('birds.json')
         .then(response => response.json())
@@ -27,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <p>${bird.description}</p>
                         <p><strong>Most probable date to see it:</strong> ${bird.most_probable_date}</p>
-                        ${bird.sound_url}
+                        ${bird.sound_url ? `<p><strong>Sound:</strong> <a href="${bird.sound_url}">Listen</a></p>` : ''}
                         <p><strong>Track:</strong> ${bird.track}</p>
                     </div>
                 `;
@@ -53,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 Object.keys(birdMarkers).forEach(track => {
                     birdMarkers[track].forEach(marker => {
                         if (track === selectedTrack || selectedTrack === 'all') {
-                            map.addLayer(marker);
+                            marker.setOpacity(1); // highlight the selected track
                         } else {
-                            map.removeLayer(marker);
+                            marker.setOpacity(0.5); // fade out the unselected tracks
                         }
                     });
                 });
@@ -67,8 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('tracks.json')
         .then(response => response.json())
         .then(data => {
+            const gpxTracks = {};
             data.forEach(track => {
-                new L.GPX(track.url, {
+                const gpx = new L.GPX(track.url, {
                     async: true,
                     marker_options: {
                         startIconUrl: null,
@@ -76,13 +72,28 @@ document.addEventListener('DOMContentLoaded', () => {
                         shadowUrl: null
                     },
                     polyline_options: {
-                        color: 'blue',
-                        opacity: 0.75,
+                        color: '#1f1f1f',
+                        opacity: 0.5,
                         weight: 3
                     }
                 }).on('loaded', (e) => {
                     map.fitBounds(e.target.getBounds());
                 }).addTo(map);
+
+                gpxTracks[track.name] = gpx;
+            });
+
+            const trackSelect = document.getElementById('trackSelect');
+            trackSelect.addEventListener('change', (event) => {
+                const selectedTrack = event.target.value;
+                Object.keys(gpxTracks).forEach(trackName => {
+                    const gpx = gpxTracks[trackName];
+                    if (trackName === selectedTrack) {
+                        gpx.setStyle({ color: 'red' }); // change color to pink on selection
+                    } else {
+                        gpx.setStyle({ color: '#1f1f1f' }); // reset to default color
+                    }
+                });
             });
         })
         .catch(error => console.error('Error loading track data:', error));
