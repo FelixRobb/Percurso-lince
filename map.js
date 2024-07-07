@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <p>${bird.description}</p>
                         <p><strong>Most probable date to see it:</strong> ${bird.most_probable_date}</p>
-                        ${bird.sound_url ? `<p><strong>Sound:</strong> <a href="${bird.sound_url}">Listen</a></p>` : ''}
+                        ${bird.sound_url}
                         <p><strong>Track:</strong> ${bird.track}</p>
                     </div>
                 `;
