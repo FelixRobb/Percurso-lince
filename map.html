@@ -18,6 +18,12 @@
         </div>
     </header>
     <main>
+        <section id="controls">
+            <label for="trackSelect">Select Track:</label>
+            <select id="trackSelect">
+                <option value="all">All Tracks</option>
+            </select>
+        </section>
         <section id="map-container">
             <div id="map"></div>
         </section>
@@ -28,6 +34,7 @@
         </div>
     </footer>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
     <script src="map.js"></script>
 </body>
 </html>

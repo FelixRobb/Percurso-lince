@@ -14,7 +14,8 @@
         "location": {
             "lat": 37.6352,
             "lng": -7.6644
-        }
+        },
+        "track": "Parque Natural do Vale do Guadiana: PR9"
     },
     {
         "name": "Great Spotted Cuckoo",
@@ -31,7 +32,8 @@
         "location": {
             "lat": 37.6364,
             "lng": -7.6673
-        }
+        },
+        "track": "Parque Natural do Vale do Guadiana: PR9"
     },
     {
         "name": "Bico Grossudo",
@@ -45,6 +47,7 @@
         "location": {
             "lat": 37.6357,
             "lng": -7.669
-        }
+        },
+        "track": "Parque Natural do Vale do Guadiana: PR9"
     }
 ]

@@ -209,42 +209,17 @@ h2 {
     background-color: #0073e6;
 }
 
+#controls {
+    padding: 1rem;
+    background: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+}
 
-audio {
-    background-color: #666;
-    color: rgb(255, 28, 28);
-    padding: 2px;
-    border-radius: 50px;
-    max-height: 40px;
-  }
-  
-  audio::-webkit-media-controls-panel {
-    background-color: #474747;
-  }
-  
-  audio::-webkit-media-controls-play-button,
-  audio::-webkit-media-controls-mute-button {
-    filter: invert(1);
-  }
-  
-  audio::-webkit-media-controls-timeline {
-    background-color: #474747;
-  }
-  
-  audio::-webkit-media-controls-current-time-display,
-  audio::-webkit-media-controls-time-remaining-display {
-    color: #fff;
-  }
-  
-  audio::-webkit-media-controls-volume-slider-container {
+#map-container {
+    height: 600px;
+}
+
+#map {
     width: 100%;
-  }
-  
-  audio::-webkit-media-controls-volume-slider {
-    background-color: #666;
-  }
-  
-  audio::-webkit-media-controls-seek-back-button,
-  audio::-webkit-media-controls-seek-forward-button {
-    filter: invert(1);
-  }
+    height: 100%;
+}
