@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     L.control.locate().addTo(map);
 
-    
     // Load bird data
     fetch('birds.json')
         .then(response => response.json())
         .then(data => {
+            // Create markers for each bird
             const birdMarkers = {};
             data.forEach(bird => {
                 const marker = L.marker([bird.location.lat, bird.location.lng]).addTo(map);
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         weight: 3
                     }
                 }).on('loaded', (e) => {
-                    map.fitBounds(e.target.getBounds());
+                    // Do nothing on loaded to avoid changing the view
                 }).addTo(map);
 
                 gpxTracks[track.name] = gpx;
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 Object.keys(gpxTracks).forEach(trackName => {
                     const gpx = gpxTracks[trackName];
                     if (trackName === selectedTrack) {
-                        gpx.setStyle({ color: 'red' }); // change color to pink on selection
+                        gpx.setStyle({ color: 'red' }); // change color to red on selection
                     } else {
                         gpx.setStyle({ color: '#1f1f1f' }); // reset to default color
                     }
