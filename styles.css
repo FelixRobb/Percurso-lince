@@ -212,18 +212,21 @@ h2 {
 }
 
 #controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 1rem;
     background: #1f1f1f;
 }
 
-.trackSelect {
-    width: 200px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
+#trackSelect {
+    width: 70vw;
+    padding: 2px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color: #bbb;
     font-size: 16px;
-    color: #333;
+    color: #010101;
 }
 
 #description {
