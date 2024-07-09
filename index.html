@@ -9,35 +9,46 @@
 </head>
 
 <body>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Percursos sonoros Lince-ibérico</h2>
+            <p>O ICNF e o projeto LIFE Lynxconnect convidam todos os residentes e visitantes do concelho de Mértola a
+                conhecer e experienciar sons da natureza em territórios de lince-ibérico. Nesta aplicação encontra pontos em
+                torno da vila de Mértola e percursos do Parque Natural do Vale do Guadiana com os registos sonoros de
+                inúmeras espécies que pode escutar. Pretende-se que possam usufruir de uma nova dimensão e aprender mais
+                sobre a comunidade faunística que coexiste com o lince, consoante o período do dia ou da noite, a estação do
+                ano ou o local.</p>
+            <p>Além das gravações recolhidas no território por um especialista, apresentam-se fotos e breves textos que
+                destacam algumas curiosidades e biologia das espécies. Aventure-se nesta nova descoberta dos territórios que
+                o lince frequenta. Recorde-se de todos os cuidados para não perturbar os animais, do respeito pela
+                propriedade privada e que deve permanecer em silêncio (parado num ponto pode ser uma boa opção). Desejamos
+                uma ótima experiência.</p>
+            <p><strong>Ideia original:</strong> Magnus Robb e Margarida Lopes Fernandes</p>
+            <p><strong>Pesquisa, captação de sons e textos sobre as espécies:</strong> Magnus Robb</p>
+            <p><strong>Fotos:</strong> Cristina Girão Vieira, António Tavares, Agostinho Tomás, João Pargana, Magnus Robb,
+                Francisco Amorim, Margarida Fernandes e Pedro Sarmento</p>
+            <p><strong>Conceção e design da aplicação:</strong> Teresa Pimenta e Pedro Rodrigues</p>
+            <p><strong>Colaboração:</strong> Cristina Girão Vieira e Carlos Carrapato</p>
+            <p><strong>Coordenação:</strong> João Alves</p>
+            <p><strong>Projeto LIFE Lynxconnect</strong></p>
+            <p>@MR e MLF ICNF 2024</p>
+            <button id="modal-ok-button">OK</button>
+        </div>
+    </div>
+
     <main>
-        <div class="indexcont">
-        <h2>Percursos sonoros Lince-ibérico</h2>
-        <p>O ICNF e o projeto LIFE Lynxconnect convidam todos os residentes e visitantes do concelho de Mértola a
-            conhecer e experienciar sons da natureza em territórios de lince-ibérico. Nesta aplicação encontra pontos em
-            torno da vila de Mértola e percursos do Parque Natural do Vale do Guadiana com os registos sonoros de
-            inúmeras espécies que pode escutar. Pretende-se que possam usufruir de uma nova dimensão e aprender mais
-            sobre a comunidade faunística que coexiste com o lince, consoante o período do dia ou da noite, a estação do
-            ano ou o local.</p>
-        <p>Além das gravações recolhidas no território por um especialista, apresentam-se fotos e breves textos que
-            destacam algumas curiosidades e biologia das espécies. Aventure-se nesta nova descoberta dos territórios que
-            o lince frequenta. Recorde-se de todos os cuidados para não perturbar os animais, do respeito pela
-            propriedade privada e que deve permanecer em silêncio (parado num ponto pode ser uma boa opção). Desejamos
-            uma ótima experiência.</p>
-        <p><strong>Ideia original:</strong> Magnus Robb e Margarida Lopes Fernandes</p>
-        <p><strong>Pesquisa, captação de sons e textos sobre as espécies:</strong> Magnus Robb</p>
-        <p><strong>Fotos:</strong> Cristina Girão Vieira, António Tavares, Agostinho Tomás, João Pargana, Magnus Robb,
-            Francisco Amorim, Margarida Fernandes e Pedro Sarmento</p>
-        <p><strong>Conceção e design da aplicação:</strong> Teresa Pimenta e Pedro Rodrigues</p>
-        <p><strong>Colaboração:</strong> Cristina Girão Vieira e Carlos Carrapato</p>
-        <p><strong>Coordenação:</strong> João Alves</p>
-        <p><strong>Projeto LIFE Lynxconnect</strong></p>
-        <p>@MR e MLF ICNF 2024</p>
-        <a href="map.html" class="nav-button active">Go to the Map</a>
-        <p>Explore the <a href="map.html?lat=37.6175&lng=-7.6638">first location</a>, the <a
-                href="map.html?lat=37.6327&lng=-7.6479">second location</a>, or the <a
-                href="map.html?lat=37.6530&lng=-7.6523">third location</a> on the map.</p>
+        <div id="content">
+            <a href="map.html" class="nav-button active">Go to the Map</a>
+            <ul>
+                <li><a href="map.html?lat=37.6175&lng=-7.6638">First location</a></li>
+                <li><a href="map.html?lat=37.6327&lng=-7.6479">Second location</a></li>
+                <li><a href="map.html?lat=37.6530&lng=-7.6523">Third location</a></li>
+                <!-- Add more tracks as needed -->
+            </ul>
         </div>
     </main>
+    <script src="popup.js"></script>
 </body>
 
 </html>
