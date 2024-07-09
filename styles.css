@@ -28,6 +28,25 @@ header h1 {
     font-size: 1.5rem;
 }
 
+a {
+    color: #ffffff;
+    margin: 0 0.5rem;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+a.nav-button {
+    background-color: #747474;
+    margin-top: 10px;
+}
+
+a:hover {
+    background-color: #1e90ff;
+}
+
 nav {
     display: flex;
     align-content: center;
@@ -233,4 +252,13 @@ h2 {
     text-align: center;
     margin-left: 40px;
     margin-right: 40px;
+}
+
+.indexcont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 40px;
 }
