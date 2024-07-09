@@ -1,9 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const map = L.map('map').setView([37.6364, -7.6673], 13);
+    
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const lat = parseFloat(urlParams.get('lat')) || 37.6364; // default to initial view if no lat param
+    const lng = parseFloat(urlParams.get('lng')) || -7.6673; // default to initial view if no lng param
+
+    const map = L.map('map').setView([lat, lng], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    
     L.control.locate().addTo(map);
 
     // Load bird data
