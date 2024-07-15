@@ -255,6 +255,7 @@ h2 {
 }
 
 .modal {
+    color: #000000;
     display: none;
     position: fixed;
     z-index: 1;
@@ -268,6 +269,7 @@ h2 {
     padding-top: 60px;
 }
 .modal-content {
+    color: #000000;
     background-color: #fefefe;
     margin: 5% auto;
     padding: 20px;
