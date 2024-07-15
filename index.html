@@ -38,14 +38,35 @@
     </div>
 
     <main>
-        <div id="content">
+        <div class="indexcont" id="content">
             <a href="map.html" class="nav-button active">Go to the Map</a>
-            <ul>
-                <li><a href="map.html?lat=37.6175&lng=-7.6638">First location</a></li>
-                <li><a href="map.html?lat=37.6327&lng=-7.6479">Second location</a></li>
-                <li><a href="map.html?lat=37.6530&lng=-7.6523">Third location</a></li>
-                <!-- Add more tracks as needed -->
-            </ul>
+            <div class="card-container">
+                <div class="card">
+                    <img src="images/place1.jpg" alt="First Location">
+                    <div class="card-content">
+                        <div class="card-title">First Location</div>
+                        <div class="card-description">Description for the first location goes here.</div>
+                        <a href="map.html?lat=37.6175&lng=-7.6638" class="card-link">View on Map</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="images/place2.jpg" alt="Second Location">
+                    <div class="card-content">
+                        <div class="card-title">Second Location</div>
+                        <div class="card-description">Description for the second location goes here.</div>
+                        <a href="map.html?lat=37.6327&lng=-7.6479" class="card-link">View on Map</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="images/place3.jpg" alt="Third Location">
+                    <div class="card-content">
+                        <div class="card-title">Third Location</div>
+                        <div class="card-description">Description for the third location goes here.</div>
+                        <a href="map.html?lat=37.6530&lng=-7.6523" class="card-link">View on Map</a>
+                    </div>
+                </div>
+                <!-- Add more cards as needed -->
+            </div>
         </div>
     </main>
     <script src="popup.js"></script>
