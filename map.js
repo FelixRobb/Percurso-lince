@@ -1,23 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const lat = parseFloat(urlParams.get('lat')) || 37.6364; // default to initial view if no lat param
-    const lng = parseFloat(urlParams.get('lng')) || -7.6673; // default to initial view if no lng param
+    const lat = parseFloat(urlParams.get('lat')) || 37.6364;
+    const lng = parseFloat(urlParams.get('lng')) || -7.6673;
+    const trackUrl = urlParams.get('track');
 
-    const map = L.map('map').setView([lat, lng], 13);
+    const map = L.map('map').setView([lat, lng], 13.5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
     
     L.control.locate().addTo(map);
 
-    // Load bird data
     fetch('birds.json')
         .then(response => response.json())
         .then(data => {
-            // Create markers for each bird
             const birdMarkers = {};
             data.forEach(bird => {
                 const marker = L.marker([bird.location.lat, bird.location.lng]).addTo(map);
@@ -40,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 birdMarkers[bird.track].push(marker);
             });
 
-            // Populate track dropdown
             const trackSelect = document.getElementById('trackSelect');
             Object.keys(birdMarkers).forEach(track => {
                 const option = document.createElement('option');
@@ -49,15 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 trackSelect.appendChild(option);
             });
 
-            // Track change event
             trackSelect.addEventListener('change', (event) => {
                 const selectedTrack = event.target.value;
                 Object.keys(birdMarkers).forEach(track => {
                     birdMarkers[track].forEach(marker => {
                         if (track === selectedTrack || selectedTrack === 'all') {
-                            marker.setOpacity(1); // highlight the selected track
+                            marker.setOpacity(1);
                         } else {
-                            marker.setOpacity(0.5); // fade out the unselected tracks
+                            marker.setOpacity(0.5);
                         }
                     });
                 });
@@ -65,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error loading bird data:', error));
 
-    // Load GPX tracks
     fetch('tracks.json')
         .then(response => response.json())
         .then(data => {
@@ -84,7 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         weight: 3
                     }
                 }).on('loaded', (e) => {
-                    // Do nothing on loaded to avoid changing the view
+                    if (track.url === trackUrl) {
+                        map.fitBounds(e.target.getBounds());
+                        gpx.setStyle({ color: 'red' });
+                    }
                 }).addTo(map);
 
                 gpxTracks[track.name] = gpx;
@@ -96,9 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 Object.keys(gpxTracks).forEach(trackName => {
                     const gpx = gpxTracks[trackName];
                     if (trackName === selectedTrack) {
-                        gpx.setStyle({ color: 'red' }); // change color to red on selection
+                        gpx.setStyle({ color: 'red' });
+                        map.fitBounds(gpx.getBounds());
                     } else {
-                        gpx.setStyle({ color: '#1f1f1f' }); // reset to default color
+                        gpx.setStyle({ color: '#1f1f1f' });
                     }
                 });
             });
