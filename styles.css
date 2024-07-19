@@ -132,7 +132,7 @@ footer .container {
 /* Recordings page styles */
 main .container {
     max-width: 1200px;
-    margin: 0px;
+    margin: 0px auto;
     padding: 0 1rem;
 }
 
