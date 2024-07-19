@@ -41,19 +41,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function sortByMonth(birds) {
-        const currentMonth = new Date().toLocaleString('default', { month: 'long' });
-        birds.sort((a, b) => {
-            if (a.most_probable_months.includes(currentMonth) && !b.most_probable_months.includes(currentMonth)) {
-                return -1; // a comes first
-            } else if (!a.most_probable_months.includes(currentMonth) && b.most_probable_months.includes(currentMonth)) {
-                return 1; // b comes first
-            } else {
-                return a.name.localeCompare(b.name); // Sort alphabetically if both or neither have the current month
-            }
-        });
-        return birds;
-    }
+    
+function sortByMonth(birds) {
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentMonthIndex = new Date().getMonth(); // 0 for January, 1 for February, etc.
+    const currentMonth = monthNames[currentMonthIndex];
+
+    // Separate birds into two groups: those visible this month and those not
+    const birdsThisMonth = birds.filter(bird => bird.most_probable_months.includes(currentMonth));
+    const birdsNotThisMonth = birds.filter(bird => !bird.most_probable_months.includes(currentMonth));
+
+
+    // Sort both groups by name
+    birdsThisMonth.sort((a, b) => a.name.localeCompare(b.name));
+    birdsNotThisMonth.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Combine the two groups, with birds visible this month first
+    const sortedBirds = birdsThisMonth.concat(birdsNotThisMonth);
+
+    return sortedBirds;
+}
+
 
     function sortByName(birds) {
         return birds.sort((a, b) => a.name.localeCompare(b.name));
