@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>${bird.description}</p>
                 <p><strong>Most probable months to see it:</strong> ${bird.most_probable_months.join(", ")}</p>
                 ${bird.sound_url}
-                <p><a href="index.html#${bird.location.lat},${bird.location.lng}">View on Map</a></p>
+                <p><a href="index.html#${bird.location.lat},${bird.location.lng}">Ver no Mapa</a></p>
             `;
             recordingsList.appendChild(birdItem);
         });
