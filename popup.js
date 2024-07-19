@@ -9,6 +9,7 @@ var okButton = document.getElementById("modal-ok-button");
 
 // When the user clicks the OK button, close the modal
 okButton.onclick = function () {
+    window.location.href = "home.html";
     modal.style.display = "none";
 }
 
@@ -29,19 +30,4 @@ window.onload = function () {
     modal.style.display = "block";
 }
 
-// Open popup
-function openInfoPopup(id) {
-    document.getElementById(id).style.display = 'block';
-}
 
-// Close popup
-function closeInfoPopup(id) {
-    document.getElementById(id).style.display = 'none';
-}
-
-// Close the popup when clicking outside of it
-window.onclick = function (event) {
-    if (event.target.classList.contains('info-modal')) {
-        event.target.style.display = 'none';
-    }
-}
