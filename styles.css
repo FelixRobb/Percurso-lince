@@ -303,6 +303,7 @@ h2 {
 }
 
 .card {
+    position: relative;
     background-color: #484848;
     border: 1px solid #ddd;
     border-radius: 8px;
