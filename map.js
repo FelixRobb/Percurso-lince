@@ -27,11 +27,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Load GPX tracks
+    const loadTrack = (trackFile, trackName) => {
+        fetch(trackFile)
+            .then(response => response.text())
+            .then(gpxData => {
+                const gpxLayer = new L.GPX(gpxData, {
+                    async: true,
+                    polyline_options: {
+                        color: 'red',
+                        weight: 5,
+                        opacity: 0.75
+                    },
+                    marker_options: {
+                        startIconUrl: null,
+                        endIconUrl: null,
+                        shadowUrl: null
+                    }
+                }).addTo(map);
+
+                gpxLayer.on('click', (e) => {
+                    const latLng = e.latlng;
+                    showSpeciesList(trackName, latLng);
+                });
+
+                const trackPopupLayer = L.geoJSON(gpxLayer.toGeoJSON(), {
+                    onEachFeature: (feature, layer) => {
+                        layer.on('click', () => {
+                            const latLng = layer.getLatLng();
+                            showSpeciesList(trackName, latLng);
+                        });
+                    }
+                }).addTo(map);
+            })
+            .catch(error => console.error(`Error loading track ${trackName}:`, error));
+    };
+
+    const tracks = [
+        { file: 'tracks/PR3 MTL - As margens do Guadiana.gpx', name: 'PR3 MTL - As margens do Guadiana' },
+        { file: 'tracks/PR5 MTL - Ao Ritmo das Águas do Vascão.gpx', name: 'PR5 MTL - Ao Ritmo das Águas do Vascão' },
+        { file: 'tracks/PR8 MTL - Moinho do Alferes_ um Percurso Ribeirinho.gpx', name: 'PR8 MTL - Moinho do Alferes um Percurso Ribeirinho' }
+    ];
+
+    tracks.forEach(track => loadTrack(track.file, track.name));
+
     const trackSelect = document.getElementById('trackSelect');
     trackSelect.addEventListener('change', (event) => {
         const selectedTrack = event.target.value;
         showSpeciesList(selectedTrack);
     });
+
+    let previousPopup = null; // Track the previous popup
 
     fetch('birds.json')
         .then(response => response.json())
@@ -50,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error loading bird data:', error));
 
-    const showSpeciesList = (association) => {
+    const showSpeciesList = (association, latLng) => {
         fetch('birds.json')
             .then(response => response.json())
             .then(data => {
@@ -61,25 +107,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     return dateA - dateB;
                 });
 
-                const speciesList = filteredData.map(bird => `<li data-species="${bird.name}">${bird.name}</li>`).join('');
+                const speciesList = filteredData.map(bird => `<li data-species="${bird.name}" class="speciesli">${bird.name}</li>`).join('');
                 const popupContent = `
-                    <div>
+                    <div class="speciesdiv">
                         <h2>Species at ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
                     </div>
                 `;
 
-                const location = locations.find(loc => loc.name === association);
-                if (location) {
-                    L.popup()
-                        .setLatLng([location.lat, location.lng])
+                // Save current popup state
+                if (previousPopup) {
+                    previousPopup.remove();
+                }
+
+                if (latLng) {
+                    previousPopup = L.popup()
+                        .setLatLng(latLng)
                         .setContent(popupContent)
                         .openOn(map);
                 } else {
-                    const trackPopup = L.popup()
-                        .setLatLng(map.getCenter())
-                        .setContent(popupContent)
-                        .openOn(map);
+                    const location = locations.find(loc => loc.name === association);
+                    if (location) {
+                        previousPopup = L.popup()
+                            .setLatLng([location.lat, location.lng])
+                            .setContent(popupContent)
+                            .openOn(map);
+                    } else {
+                        previousPopup = L.popup()
+                            .setLatLng(map.getCenter())
+                            .setContent(popupContent)
+                            .openOn(map);
+                    }
                 }
 
                 document.querySelectorAll('.species-list li').forEach(item => {
@@ -96,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const showSpeciesInfo = (bird) => {
         const popupContent = `
             <div>
+                <button id="backButton">Back</button>
                 <h2>${bird.name} (${bird.scientific_name})</h2>
                 <img src="${bird.image}" alt="${bird.name}" style="width:100px;height:100px;object-fit:cover;border-radius:4px;">
                 <p>${bird.description}</p>
@@ -107,9 +166,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const location = locations.find(loc => loc.name === bird.association);
         const latLng = location ? [location.lat, location.lng] : map.getCenter();
 
-        L.popup()
+        const popup = L.popup()
             .setLatLng(latLng)
             .setContent(popupContent)
             .openOn(map);
+
+        popup.on('add', () => {
+            document.getElementById('backButton').addEventListener('click', () => {
+                if (previousPopup) {
+                    previousPopup.remove(); // Close the info popup
+                    previousPopup.openOn(map); // Reopen the previous popup
+                }
+            });
+        });
     };
 });

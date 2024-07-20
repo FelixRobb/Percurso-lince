@@ -293,3 +293,26 @@ h2 {
 .card-link:hover {
     text-decoration: underline;
 }
+
+.speciesdiv {
+    width: 250px;
+}
+.species-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+}
+
+.speciesli {
+    width: 90%;
+    cursor: pointer;
+    background-color: #333;
+    margin: 6px;
+    padding: 6px;
+    border-radius: 20px;
+    color: #ffffff;
+    list-style-type: none;
+    overflow: hidden;
+}
