@@ -296,6 +296,8 @@ h2 {
 
 .speciesdiv {
     width: 250px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 .species-list {
     display: flex;
@@ -315,4 +317,18 @@ h2 {
     color: #ffffff;
     list-style-type: none;
     overflow: hidden;
+}
+
+#backButton {
+    background-color: #7a7a7a;
+    border-radius: 20px;
+    border: none;
+    padding: 8px 13px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.infodiv {
+    display: flex;
 }
