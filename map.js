@@ -17,17 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     locations.forEach(location => {
         const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
-        marker.bindPopup(`<button class="species-button" data-location="${location.name}">View Species</button>`);
-        locationMarkers[location.name] = marker;
+        marker.bindPopup(`
+            <button class="species-button" data-location="${location.name}">View Species</button>
+        `);
 
-        marker.on('popupopen', (e) => {
+        marker.on('popupopen', () => {
             document.querySelector('.species-button').addEventListener('click', () => {
-                showSpeciesList(location.name);
+                showSpeciesList(location.name, [location.lat, location.lng]);
             });
         });
+
+        locationMarkers[location.name] = marker;
     });
 
-    // Load GPX tracks
     const loadTrack = (trackFile, trackName) => {
         fetch(trackFile)
             .then(response => response.text())
@@ -77,7 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
         showSpeciesList(selectedTrack);
     });
 
-    let previousPopup = null; // Track the previous popup
+    let currentPopup = null; // Track the current popup
+    let lastLocation = null; // Track the last location shown
+    let lastAssociation = 'all'; // Track the last association shown
 
     fetch('birds.json')
         .then(response => response.json())
@@ -115,30 +119,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
 
-                // Save current popup state
-                if (previousPopup) {
-                    previousPopup.remove();
+                if (currentPopup) {
+                    currentPopup.remove();
                 }
 
                 if (latLng) {
-                    previousPopup = L.popup()
+                    currentPopup = L.popup()
                         .setLatLng(latLng)
                         .setContent(popupContent)
                         .openOn(map);
                 } else {
                     const location = locations.find(loc => loc.name === association);
                     if (location) {
-                        previousPopup = L.popup()
+                        currentPopup = L.popup()
                             .setLatLng([location.lat, location.lng])
                             .setContent(popupContent)
                             .openOn(map);
+                        latLng = [location.lat, location.lng]; // Ensure latLng is set
                     } else {
-                        previousPopup = L.popup()
+                        currentPopup = L.popup()
                             .setLatLng(map.getCenter())
                             .setContent(popupContent)
                             .openOn(map);
+                        latLng = map.getCenter(); // Ensure latLng is set
                     }
                 }
+
+                lastLocation = latLng; // Track the location of the current popup
+                lastAssociation = association;
 
                 document.querySelectorAll('.species-list li').forEach(item => {
                     item.addEventListener('click', () => {
@@ -154,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const showSpeciesInfo = (bird) => {
         const popupContent = `
             <div>
-                <button id="backButton">Back</button>
+                <button id="backButton" class="back-button" onclick="handleBackButtonClick()">Back to list</button>
                 <h2>${bird.name} (${bird.scientific_name})</h2>
                 <img src="${bird.image}" alt="${bird.name}" style="width:100px;height:100px;object-fit:cover;border-radius:4px;">
                 <p>${bird.description}</p>
@@ -162,22 +170,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${bird.sound_url}
             </div>
         `;
-
-        const location = locations.find(loc => loc.name === bird.association);
-        const latLng = location ? [location.lat, location.lng] : map.getCenter();
-
-        const popup = L.popup()
-            .setLatLng(latLng)
+    
+        if (currentPopup) {
+            currentPopup.remove();
+        }
+    
+        currentPopup = L.popup()
+            .setLatLng(lastLocation) // Use the last known location
             .setContent(popupContent)
             .openOn(map);
-
-        popup.on('add', () => {
-            document.getElementById('backButton').addEventListener('click', () => {
-                if (previousPopup) {
-                    previousPopup.remove(); // Close the info popup
-                    previousPopup.openOn(map); // Reopen the previous popup
-                }
-            });
-        });
+    
+        // Define the inline function for the back button
+        window.handleBackButtonClick = () => {
+            if (currentPopup) {
+                currentPopup.remove();
+                showSpeciesList(lastAssociation, lastLocation); // Show the last species list at the previous location
+            }
+        };
     };
 });
