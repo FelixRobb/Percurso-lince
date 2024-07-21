@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showSpeciesInfo = (bird) => {
         const popupContent = `
-            <div>
+            <div class="SpeciesInfo">
                 <button id="backButton" class="back-button" onclick="handleBackButtonClick()">Back to list</button>
                 <h2>${bird.name} (${bird.scientific_name})</h2>
                 <p>${bird.description}</p>

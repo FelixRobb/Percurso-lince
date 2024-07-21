@@ -60,7 +60,7 @@ nav a:hover {
 }
 
 #map {
-    height: 800px;
+    height: 80vh;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -296,7 +296,7 @@ h2 {
 
 .speciesdiv {
     width: 250px;
-    max-height: 400px;
+    max-height: 50vh;
     overflow-y: auto;
 }
 .species-list {
@@ -329,9 +329,6 @@ h2 {
     cursor: pointer;
 }
 
-.infodiv {
-    display: flex;
-}
 
 .species-button {
     background-color: #404040;
@@ -340,4 +337,9 @@ h2 {
     padding: 8px 13px;
     color: #ffffff;
     cursor: pointer;
+}
+
+.SpeciesInfo {
+    max-height: 70vh;
+    overflow-y: auto;
 }
