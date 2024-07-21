@@ -60,7 +60,7 @@ nav a:hover {
 }
 
 #map {
-    height: 70vh;
+    height: 800px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -340,7 +340,4 @@ h2 {
     padding: 8px 13px;
     color: #ffffff;
     cursor: pointer;
-}
-
-.sounddiv {
 }
