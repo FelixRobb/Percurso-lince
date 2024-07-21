@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const markerCluster = L.markerClusterGroup().addTo(map);
 
     const locations = [
-        { name: "Azenhas do Guadiana, Mértola", lat: 37.6468, lng: -7.6512 },
+        { name: "Azenhas do Guadiana", lat: 37.6468, lng: -7.6512 },
         { name: "Ribeira de Oeiras", lat: 37.6254, lng: -7.8099 },
         { name: "Vila de Mértola", lat: 37.6438, lng: -7.6604 }
     ];
