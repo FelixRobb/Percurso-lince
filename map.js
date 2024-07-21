@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastLocation = null; // Track the last location shown
     let lastAssociation = 'all'; // Track the last association shown
 
-    fetch('birds.json')
+    fetch('species.json')
         .then(response => response.json())
         .then(data => {
             const speciesData = data;
