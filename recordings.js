@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterMonthButton = document.getElementById('filter-season');
     const filterNameButton = document.getElementById('filter-name');
 
-    fetch('birds.json')
+    fetch('species.json')
         .then(response => response.json())
         .then(birds => {
             // Initial display, ordered by name
@@ -28,10 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const birdItem = document.createElement('div');
             birdItem.classList.add('bird-item');
             birdItem.innerHTML = `
-                <div style="display: flex; align-items: center; margin-right: 20px;">
-                    <img style="width: 100px; height: 100px; object-fit: cover; border-radius: 4px;" src="static/${bird.image}" alt="${bird.name}">
-                    <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
-                </div>
+
+                <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
                 <p>${bird.description}</p>
                 <p><strong>Most probable months to see it:</strong> ${bird.most_probable_months.join(", ")}</p>
                 ${bird.sound_url}
