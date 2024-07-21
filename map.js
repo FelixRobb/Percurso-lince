@@ -163,10 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const popupContent = `
             <div>
                 <button id="backButton" class="back-button" onclick="handleBackButtonClick()">Back to list</button>
-                <div class="infodiv">
-                <img src="${bird.image}" alt="${bird.name}" style="width:100px;height:100px;object-fit:cover;border-radius:4px;">
                 <h2>${bird.name} (${bird.scientific_name})</h2>
-                </div>
                 <p>${bird.description}</p>
                 <p><strong>Most probable months:</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
