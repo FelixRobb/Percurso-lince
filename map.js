@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error loading bird data:', error));
 
     const showSpeciesList = (association, latLng) => {
-        fetch('birds.json')
+        fetch('species.json')
             .then(response => response.json())
             .then(data => {
                 const filteredData = association === 'all' ? data : data.filter(bird => bird.association === association);
