@@ -169,7 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <p>${bird.description}</p>
                 <p><strong>Most probable months:</strong> ${bird.most_probable_months.join(', ')}</p>
+                <div class="sounddiv">
                 ${bird.sound_url}
+                </div>
             </div>
         `;
     
