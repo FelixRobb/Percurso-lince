@@ -4695,7 +4695,8 @@
     {
         "id som": 11,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Alectoris r",
         "name": "Perdiz",
         "nomeEN": "Red-legged Partridge",
@@ -4735,7 +4736,8 @@
     {
         "id som": 12,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Alectoris r",
         "name": "Perdiz",
         "nomeEN": "Red-legged Partridge",
@@ -4775,7 +4777,8 @@
     {
         "id som": 92,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Tringa ochropus",
         "name": "Maçarico-bique-bique",
         "nomeEN": "Green Sandpiper",
@@ -4814,7 +4817,8 @@
     {
         "id som": 93,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Tringa ochropus",
         "name": "Maçarico-bique-bique",
         "nomeEN": "Green Sandpiper",
@@ -4853,7 +4857,8 @@
     {
         "id som": 94,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Athene noctua",
         "name": "Mocho-galego",
         "nomeEN": "Little Owl",
@@ -4892,7 +4897,8 @@
     {
         "id som": 20,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Upupa e",
         "name": "Poupa",
         "nomeEN": "Eurasian Hoopoe",
@@ -4927,7 +4933,8 @@
     {
         "id som": 21,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Upupa e",
         "name": "Poupa",
         "nomeEN": "Eurasian Hoopoe",
@@ -4962,7 +4969,8 @@
     {
         "id som": 79,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Merops apiaster",
         "name": "Albelharuco",
         "nomeEN": "European Bee-eater",
@@ -4996,7 +5004,8 @@
     {
         "id som": 47,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Oriolus oriolus",
         "name": "Papa-figos",
         "nomeEN": "European Golden Oriole",
@@ -5030,7 +5039,8 @@
     {
         "id som": 25,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Lanius meridionalis",
         "name": "Picanço-real",
         "nomeEN": "Iberian Grey Shrike",
@@ -5065,7 +5075,8 @@
     {
         "id som": 26,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Lanius meridionalis",
         "name": "Picanço-real",
         "nomeEN": "Iberian Grey Shrike",
@@ -5097,7 +5108,8 @@
     {
         "id som": 95,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Parus major",
         "name": "Chapim-real",
         "nomeEN": "Great Tit",
@@ -5137,7 +5149,8 @@
     {
         "id som": 83,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Galerida theklae",
         "name": "Cotovía-montesina",
         "nomeEN": "Thekla's Lark",
@@ -5177,7 +5190,8 @@
     {
         "id som": 84,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Galerida theklae",
         "name": "Cotovía-montesina",
         "nomeEN": "Thekla's Lark",
@@ -5217,7 +5231,8 @@
     {
         "id som": 48,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Cettia cetti",
         "name": "Rouxinol-bravo",
         "nomeEN": "Cetti's Warbler",
@@ -5257,7 +5272,8 @@
     {
         "id som": 32,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Aegithalos caudatus",
         "name": "Chapim-rabilongo",
         "nomeEN": "Long-tailed Tit",
@@ -5297,7 +5313,8 @@
     {
         "id som": 33,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Phylloscopus collybita",
         "name": "Felosa-comum",
         "nomeEN": "Common Chiffchaff",
@@ -5333,7 +5350,8 @@
     {
         "id som": 34,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Phylloscopus collybita",
         "name": "Felosa-comum",
         "nomeEN": "Common Chiffchaff",
@@ -5369,7 +5387,8 @@
     {
         "id som": 35,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Curruca melanocephala",
         "name": "Toutinegra-de-cabeça-preta",
         "nomeEN": "Sardinian Warbler",
@@ -5409,7 +5428,8 @@
     {
         "id som": 36,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Curruca melanocephala",
         "name": "Toutinegra-de-cabeça-preta",
         "nomeEN": "Sardinian Warbler",
@@ -5449,7 +5469,8 @@
     {
         "id som": 37,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Curruca undata",
         "name": "Toutinegra-do-mato",
         "nomeEN": "Dartford Warbler",
@@ -5489,7 +5510,8 @@
     {
         "id som": 38,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Curruca undata",
         "name": "Toutinegra-do-mato",
         "nomeEN": "Dartford Warbler",
@@ -5529,7 +5551,8 @@
     {
         "id som": 71,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Phoenicurus ochruros",
         "name": "Rabiruivo",
         "nomeEN": "Black Redstart",
@@ -5563,7 +5586,8 @@
     {
         "id som": 72,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Phoenicurus ochruros",
         "name": "Rabiruivo",
         "nomeEN": "Black Redstart",
@@ -5597,7 +5621,8 @@
     {
         "id som": 96,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Prunella modularis",
         "name": "Ferreirinha-comum",
         "nomeEN": "Northern Dunnock",
@@ -5631,7 +5656,8 @@
     {
         "id som": 91,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Passer hispaniolensis",
         "name": "Pardal-espanhol",
         "nomeEN": "Spanish Sparrow",
@@ -5671,7 +5697,8 @@
     {
         "id som": 97,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Coccothraustes coccothraustes",
         "name": "Bico-grossudo",
         "nomeEN": "Hawfinch",
@@ -5711,7 +5738,8 @@
     {
         "id som": 98,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Coccothraustes coccothraustes",
         "name": "Bico-grossudo",
         "nomeEN": "Hawfinch",
@@ -5751,7 +5779,8 @@
     {
         "id som": 99,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Pyrrhula pyrrhula",
         "name": "Domfafe",
         "nomeEN": "Eurasian Bullfinch",
@@ -5785,7 +5814,8 @@
     {
         "id som": 100,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Emberiza cia",
         "name": "Escrevedeira-de-gargante-cinzenta",
         "nomeEN": "Rock Bunting",
@@ -5817,7 +5847,8 @@
     {
         "id som": 101,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Emberiza cia",
         "name": "Escrevedeira-de-gargante-cinzenta",
         "nomeEN": "Rock Bunting",
@@ -5857,7 +5888,8 @@
     {
         "id som": 1,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Cicada barbara",
         "name": "Cigarra-comum-do-sul",
         "nomeEN": "Southern common cicada",
@@ -5888,7 +5920,8 @@
     {
         "id som": 3,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Alytes cisternasii",
         "name": "Sapo-parteiro-ibérico",
         "nomeEN": "Iberian Midwife Toad",
@@ -5928,7 +5961,8 @@
     {
         "id som": 51,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Bufo spinosus",
         "name": "Sapo-comum",
         "nomeEN": "Common Toad",
@@ -5962,7 +5996,8 @@
     {
         "id som": 44,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Hyla meridionalis",
         "name": "Rela-meridional",
         "nomeEN": "Mediterranean Tree Frog",
@@ -5994,7 +6029,8 @@
     {
         "id som": 76,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Pelophylax perezi",
         "name": "Rã-verde",
         "nomeEN": "Perez's Frog",
@@ -6027,7 +6063,8 @@
     {
         "id som": 11,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Alectoris r",
         "name": "Perdiz",
         "nomeEN": "Red-legged Partridge",
@@ -6067,7 +6104,8 @@
     {
         "id som": 12,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Alectoris r",
         "name": "Perdiz",
         "nomeEN": "Red-legged Partridge",
@@ -6107,7 +6145,8 @@
     {
         "id som": 102,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Columba palumbus",
         "name": "Pombo-torcaz",
         "nomeEN": "Common Wood Pigeon",
@@ -6142,7 +6181,8 @@
     {
         "id som": 103,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Streptopelia turtur",
         "name": "Rola-brava",
         "nomeEN": "European Turtle Dove",
@@ -6176,7 +6216,8 @@
     {
         "id som": 76,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Gallinula chloropus",
         "name": "Galinha-d'água",
         "nomeEN": "Common Moorhen",
@@ -6216,7 +6257,8 @@
     {
         "id som": 78,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Charadrius dubius",
         "name": "Borrelho-pequeno-de-coleira",
         "nomeEN": "Little Ringed Plover",
@@ -6251,7 +6293,8 @@
     {
         "id som": 92,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Tringa ochropus",
         "name": "Maçarico-bique-bique",
         "nomeEN": "Green Sandpiper",
@@ -6290,7 +6333,8 @@
     {
         "id som": 93,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Tringa ochropus",
         "name": "Maçarico-bique-bique",
         "nomeEN": "Green Sandpiper",
@@ -6329,7 +6373,8 @@
     {
         "id som": 104,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Circaetus gallicus",
         "name": "Águia-cobreira",
         "nomeEN": "Short-toed Snake Eagle",
@@ -6366,7 +6411,8 @@
     {
         "id som": 17,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Bubo bubo",
         "name": "Bufo-real",
         "nomeEN": "Eurasian Eagle-Owl",
@@ -6396,7 +6442,8 @@
     {
         "id som": 18,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Bubo bubo",
         "name": "Bufo-real",
         "nomeEN": "Eurasian Eagle-Owl",
@@ -6426,7 +6473,8 @@
     {
         "id som": 19,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Bubo bubo",
         "name": "Bufo-real",
         "nomeEN": "Eurasian Eagle-Owl",
@@ -6459,7 +6507,8 @@
     {
         "id som": 20,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Upupa e",
         "name": "Poupa",
         "nomeEN": "Eurasian Hoopoe",
@@ -6494,7 +6543,8 @@
     {
         "id som": 21,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Upupa e",
         "name": "Poupa",
         "nomeEN": "Eurasian Hoopoe",
@@ -6529,7 +6579,8 @@
     {
         "id som": 79,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Merops apiaster",
         "name": "Albelharuco",
         "nomeEN": "European Bee-eater",
@@ -6563,7 +6614,8 @@
     {
         "id som": 46,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Alcedo atthis",
         "name": "Guarda-rios",
         "nomeEN": "Common Kingfisher",
@@ -6603,7 +6655,8 @@
     {
         "id som": 47,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Oriolus oriolus",
         "name": "Papa-figos",
         "nomeEN": "European Golden Oriole",
@@ -6637,7 +6690,8 @@
     {
         "id som": 27,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Cyanopica cooki",
         "name": "Pega-azul",
         "nomeEN": "Iberian Magpie",
@@ -6677,7 +6731,8 @@
     {
         "id som": 105,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Garrulus glandarius",
         "name": "Gaio",
         "nomeEN": "Eurasian Jay",
@@ -6717,7 +6772,8 @@
     {
         "id som": 106,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Garrulus glandarius",
         "name": "Gaio",
         "nomeEN": "Eurasian Jay",
@@ -6757,7 +6813,8 @@
     {
         "id som": 95,
         "troço": 4,
-        "association": "PR5 MTL - Ao Ritmo das Águas do Vascão",
+        "association": "",
+        "percurso": "PR5 MTL - Ao Ritmo das Águas do Vascão",
         "scientific_name": "Parus major",
         "name": "Chapim-real",
         "nomeEN": "Great Tit",
@@ -6797,7 +6854,8 @@
     {
         "id som": 83,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Galerida theklae",
         "name": "Cotovía-montesina",
         "nomeEN": "Thekla's Lark",
@@ -6837,7 +6895,8 @@
     {
         "id som": 84,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Galerida theklae",
         "name": "Cotovía-montesina",
         "nomeEN": "Thekla's Lark",
@@ -6877,7 +6936,8 @@
     {
         "id som": 30,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Cecropis daurica",
         "name": "Andorinha-dáurica",
         "nomeEN": "Red-rumped Swallow",
@@ -6915,7 +6975,8 @@
     {
         "id som": 31,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Cecropis daurica",
         "name": "Andorinha-dáurica",
         "nomeEN": "Red-rumped Swallow",
@@ -6953,7 +7014,8 @@
     {
         "id som": 32,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Aegithalos caudatus",
         "name": "Chapim-rabilongo",
         "nomeEN": "Long-tailed Tit",
@@ -6993,7 +7055,8 @@
     {
         "id som": 33,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Phylloscopus collybita",
         "name": "Felosa-comum",
         "nomeEN": "Common Chiffchaff",
@@ -7029,7 +7092,8 @@
     {
         "id som": 34,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Phylloscopus collybita",
         "name": "Felosa-comum",
         "nomeEN": "Common Chiffchaff",
@@ -7065,7 +7129,8 @@
     {
         "id som": 35,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Curruca melanocephala",
         "name": "Toutinegra-de-cabeça-preta",
         "nomeEN": "Sardinian Warbler",
@@ -7105,7 +7170,8 @@
     {
         "id som": 36,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Curruca melanocephala",
         "name": "Toutinegra-de-cabeça-preta",
         "nomeEN": "Sardinian Warbler",
@@ -7145,7 +7211,8 @@
     {
         "id som": 107,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Nannus troglodytes",
         "name": "Carriça",
         "nomeEN": "Eurasian Wren",
@@ -7185,7 +7252,8 @@
     {
         "id som": 68,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Sturnus unicolor",
         "name": "Estorninho-preto",
         "nomeEN": "Spotless Starling",
@@ -7225,7 +7293,8 @@
     {
         "id som": 69,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Turdus merula",
         "name": "Melro",
         "nomeEN": "Common Blackbird",
@@ -7259,7 +7328,8 @@
     {
         "id som": 70,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Turdus merula",
         "name": "Melro",
         "nomeEN": "Common Blackbird",
@@ -7299,7 +7369,8 @@
     {
         "id som": 39,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Turdus philomelos",
         "name": "Tordo-pinto",
         "nomeEN": "Song Thrush",
@@ -7335,7 +7406,8 @@
     {
         "id som": 40,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Turdus philomelos",
         "name": "Tordo-pinto",
         "nomeEN": "Song Thrush",
@@ -7371,7 +7443,8 @@
     {
         "id som": 108,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Cercotrichas galactotes",
         "name": "Rouxinol-do-mato",
         "nomeEN": "Rufous-tailed Scrub Robin",
@@ -7402,7 +7475,8 @@
     {
         "id som": 41,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Erithacus rubecula",
         "name": "Pisco-de-peito-ruivo",
         "nomeEN": "European Robin",
@@ -7438,7 +7512,8 @@
     {
         "id som": 42,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Erithacus rubecula",
         "name": "Pisco-de-peito-ruivo",
         "nomeEN": "European Robin",
@@ -7474,7 +7549,8 @@
     {
         "id som": 87,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Luscinia megarhynchos",
         "name": "Rouxinol-comum",
         "nomeEN": "Common Nightingale",
@@ -7506,7 +7582,8 @@
     {
         "id som": 88,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Luscinia megarhynchos",
         "name": "Rouxinol-comum",
         "nomeEN": "Common Nightingale",
@@ -7540,7 +7617,8 @@
     {
         "id som": 89,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Ficedula hypoleuca",
         "name": "Papa-moscas-preto",
         "nomeEN": "European Pied Flycatcher",
@@ -7571,7 +7649,8 @@
     {
         "id som": 90,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Ficedula hypoleuca",
         "name": "Papa-moscas-preto",
         "nomeEN": "European Pied Flycatcher",
@@ -7602,7 +7681,8 @@
     {
         "id som": 97,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Coccothraustes coccothraustes",
         "name": "Bico-grossudo",
         "nomeEN": "Hawfinch",
@@ -7642,7 +7722,8 @@
     {
         "id som": 98,
         "troço": 5,
-        "association": "PR8 MTL - Moinho do Alferes um Percurso Ribeirinho",
+        "association": "",
+        "percurso": "PR8",
         "scientific_name": "Coccothraustes coccothraustes",
         "name": "Bico-grossudo",
         "nomeEN": "Hawfinch",

@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const tracks = [
-        { file: 'tracks/PR3 MTL - As margens do Guadiana.gpx', name: 'PR3 MTL - As margens do Guadiana' },
+        { file: 'tracks/PR3 MTL - As margens do Guadiana.gpx', name: 'PR3 MTL - As Margens do Guadiana' },
         { file: 'tracks/PR5 MTL - Ao Ritmo das Águas do Vascão.gpx', name: 'PR5 MTL - Ao Ritmo das Águas do Vascão' },
         { file: 'tracks/PR8 MTL - Moinho do Alferes_ um Percurso Ribeirinho.gpx', name: 'PR8 MTL - Moinho do Alferes um Percurso Ribeirinho' }
     ];
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastLocation = null; // Track the last location shown
     let lastAssociation = 'all'; // Track the last association shown
 
-    fetch('birds.json')
+    fetch('species.json')
         .then(response => response.json())
         .then(data => {
             const speciesData = data;
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error loading bird data:', error));
 
     const showSpeciesList = (association, latLng) => {
-        fetch('birds.json')
+        fetch('species.json')
             .then(response => response.json())
             .then(data => {
                 const filteredData = association === 'all' ? data : data.filter(bird => bird.association === association);
@@ -169,7 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <p>${bird.description}</p>
                 <p><strong>Most probable months:</strong> ${bird.most_probable_months.join(', ')}</p>
+                <div class="sounddiv">
                 ${bird.sound_url}
+                </div>
             </div>
         `;
     

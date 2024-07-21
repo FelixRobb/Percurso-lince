@@ -332,3 +332,15 @@ h2 {
 .infodiv {
     display: flex;
 }
+
+.species-button {
+    background-color: #404040;
+    border-radius: 20px;
+    border: none;
+    padding: 8px 13px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.sounddiv {
+}
