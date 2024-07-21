@@ -22,26 +22,35 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error loading bird data:', error));
 
-    function displayBirds(birds) {
-        recordingsList.innerHTML = '';
-        birds.forEach(bird => {
-            const birdItem = document.createElement('div');
-            birdItem.classList.add('bird-item');
-            birdItem.innerHTML = `
-
-                <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
-                <p>${bird.description}</p>
-                <p><strong>Most probable months to see it:</strong> ${bird.most_probable_months.join(", ")}</p>
-                ${bird.sound_url}
-                <p>${bird.association}</p>
-            `;
-            recordingsList.appendChild(birdItem);
-        });
-    }
+        function displayBirds(birds) {
+            recordingsList.innerHTML = '';
+            birds.forEach(bird => {
+                const birdItem = document.createElement('div');
+                birdItem.classList.add('bird-item');
+                birdItem.innerHTML = `
+                    <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
+                    <p>${bird.description}</p>
+                    <p><strong>Most probable months to see it:</strong> ${bird.most_probable_months.join(", ")}</p>
+                    <button class="load-sound-btn">Load Sound</button>
+                    <div class="sound-container"></div>
+                    <p>${bird.association}</p>
+                `;
+    
+                // Adding event listener to load the sound when the button is clicked
+                const loadSoundButton = birdItem.querySelector('.load-sound-btn');
+                const soundContainer = birdItem.querySelector('.sound-container');
+                loadSoundButton.addEventListener('click', () => {
+                    soundContainer.innerHTML = bird.sound_url;
+                    loadSoundButton.disabled = true; // Disable button after loading
+                });
+    
+                recordingsList.appendChild(birdItem);
+            });
+        }
 
     
 function sortByMonth(birds) {
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
     const currentMonthIndex = new Date().getMonth(); // 0 for January, 1 for February, etc.
     const currentMonth = monthNames[currentMonthIndex];
 
