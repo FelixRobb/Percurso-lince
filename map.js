@@ -194,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="SpeciesInfo">
                 <button id="backButton" class="back-button" onclick="handleBackButtonClick()">Back to list</button>
                 <h2>${bird.name} (${bird.scientific_name})</h2>
+                <p>${bird.comenta}
                 <p>${bird.description}</p>
                 <p><strong>Most probable months:</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
