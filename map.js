@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const map = L.map('map').setView([37.6364, -7.6673], 13.5);
+    const map = L.map('map').setView([37.6364, -7.6673], 12.5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -30,6 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
         locationMarkers[location.name] = marker;
     });
 
+    // Track layers and bounds storage
+    const trackLayers = {};
+    const trackBounds = {};
+
     const loadTrack = (trackFile, trackName) => {
         fetch(trackFile)
             .then(response => response.text())
@@ -37,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gpxLayer = new L.GPX(gpxData, {
                     async: true,
                     polyline_options: {
-                        color: 'red',
+                        color: 'grey', // Default color
                         weight: 5,
                         opacity: 0.75
                     },
@@ -47,6 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         shadowUrl: null
                     }
                 }).addTo(map);
+
+                // Store the track layer and bounds
+                gpxLayer.on('loaded', (e) => {
+                    const bounds = e.target.getBounds();
+                    trackBounds[trackName] = bounds;
+                    trackLayers[trackName] = e.target;
+
+                    // Position popup over the middle of the track
+                    const middlePoint = bounds.getCenter();
+                    gpxLayer.setLatLngs([middlePoint]);
+                });
 
                 gpxLayer.on('click', (e) => {
                     const latLng = e.latlng;
@@ -76,7 +91,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const trackSelect = document.getElementById('trackSelect');
     trackSelect.addEventListener('change', (event) => {
         const selectedTrack = event.target.value;
-        showSpeciesList(selectedTrack);
+        
+        // Reset all track colors to grey
+        for (const trackName in trackLayers) {
+            if (trackLayers[trackName]) {
+                trackLayers[trackName].setStyle({ color: 'grey' });
+            }
+        }
+
+        // Highlight the selected track
+        if (trackLayers[selectedTrack]) {
+            trackLayers[selectedTrack].setStyle({ color: 'red' });
+            map.fitBounds(trackBounds[selectedTrack]);
+
+            // Open popup at the middle of the selected track
+            const middlePoint = trackBounds[selectedTrack].getCenter();
+            showSpeciesList(selectedTrack, middlePoint);
+        }
     });
 
     let currentPopup = null; // Track the current popup
@@ -96,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 trackSelect.appendChild(option);
             });
 
-            showSpeciesList('all');
         })
         .catch(error => console.error('Error loading bird data:', error));
 
