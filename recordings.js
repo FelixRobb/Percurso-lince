@@ -4,35 +4,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterNameButton = document.getElementById('filter-name');
     const searchInput = document.getElementById('search-input');
     const searchButton = document.getElementById('search-button');
+    const filterAssociationSelect = document.getElementById('filter-association');
 
     let allBirds = [];
+    let filteredBirds = [];
 
     fetch('species.json')
         .then(response => response.json())
         .then(birds => {
             allBirds = sortByName(birds); 
-            displayBirds(allBirds);
+            populateAssociationFilter(allBirds);
+            // Display all birds initially
+            filteredBirds = allBirds;
+            displayBirds(filteredBirds);
 
             filterNameButton.addEventListener('click', () => {
-                allBirds = sortByName(allBirds);
-                displayBirds(allBirds);
+                filteredBirds = sortByName(filteredBirds);
+                displayBirds(filteredBirds);
             });
 
             filterMonthButton.addEventListener('click', () => {
-                allBirds = sortByMonth(allBirds);
-                displayBirds(allBirds);
+                filteredBirds = sortByMonth(filteredBirds);
+                displayBirds(filteredBirds);
             });
 
             searchButton.addEventListener('click', () => {
                 const query = searchInput.value.toLowerCase();
-                const filteredBirds = allBirds.filter(bird => 
-                    bird.name.toLowerCase().includes(query) ||
-                    bird.scientific_name.toLowerCase().includes(query)
+                filteredBirds = allBirds.filter(bird => 
+                    (bird.association === filterAssociationSelect.value || filterAssociationSelect.value === '') &&
+                    (bird.name.toLowerCase().includes(query) || bird.scientific_name.toLowerCase().includes(query))
                 );
+                displayBirds(filteredBirds);
+            });
+
+            filterAssociationSelect.addEventListener('change', () => {
+                updateFilteredBirds();
                 displayBirds(filteredBirds);
             });
         })
         .catch(error => console.error('Error loading bird data:', error));
+
+    function updateFilteredBirds() {
+        const selectedLocation = filterAssociationSelect.value;
+        filteredBirds = selectedLocation
+            ? allBirds.filter(bird => bird.association === selectedLocation)
+            : allBirds;
+    }
 
     function displayBirds(birds) {
         recordingsList.innerHTML = '';
@@ -46,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Most probable months to see it:</strong> ${bird.most_probable_months.join(", ")}</p>
                 <button class="load-sound-btn">Load Sound</button>
                 <div class="sound-container"></div>
-                <p>${bird.association}</p>
+                <p><strong>Location:</strong> ${bird.association}</p>
             `;
 
             const loadSoundButton = birdItem.querySelector('.load-sound-btn');
@@ -57,6 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             recordingsList.appendChild(birdItem);
+        });
+    }
+
+    function populateAssociationFilter(birds) {
+        const uniqueLocations = [...new Set(birds.map(bird => bird.association))];
+        filterAssociationSelect.innerHTML = '<option value="">All Locations</option>'; // Reset filter options
+        uniqueLocations.forEach(location => {
+            const option = document.createElement('option');
+            option.value = location;
+            option.textContent = location;
+            filterAssociationSelect.appendChild(option);
         });
     }
 
