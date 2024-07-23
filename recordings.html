@@ -12,7 +12,7 @@
 <body>
     <header>
         <div class="container">
-            <h1>Bird Sounds of the Guadiana River</h1>
+            <h1>Percursos sonoros Lince-ibérico</h1>
             <nav>
                 <a href="home.html" class="nav-button">Início</a>
                 <a href="map.html" class="nav-button">Mapa</a>
@@ -23,9 +23,20 @@
 
     <main>
         <div class="container">
+            <div class="searchdiv">
+                <input type="text" id="search-input" placeholder="Search by name or scientific name">
+                <button id="search-button">Search</button>
+            </div>
+            <div class="filtersdiv">
             <div class="filter-options">
                 <button id="filter-season">Organizar por época</button>
                 <button id="filter-name">Organizar por Nome</button>
+            </div>
+            <div class="filterselectdiv">
+            <select id="filter-association">
+                <option value="">All Locations</option>
+            </select>
+            </div>
             </div>
             <div id="recordings-list"></div>
         </div>

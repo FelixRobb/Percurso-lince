@@ -194,12 +194,14 @@ h2 {
 
 .filter-options {
     display: flex;
+    align-items: center;
     justify-content: space-around;
-    margin-bottom: 1rem;
+    flex-direction: row;
+    gap: 5vw;
 }
 
 .filter-options button {
-    margin-top: 20px;
+    margin: 10px;
     padding: 0.5rem 1rem;
     border: none;
     background-color: #1e90ff;
@@ -352,4 +354,62 @@ h2 {
     border: none;
     color: #ddd;
     cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.searchdiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+#search-input {
+    background-color: #2c2c2c;
+    width: 50vw;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid #4d4d4d;
+    color: #b3b3b3;
+}
+
+#search-button {
+    background-color: #2c2c2c;
+    border-radius: 20px;
+    padding: 10px;
+    border: 2px solid #4d4d4d;
+    color: #b0b0b0;
+    font-weight: 600;
+    cursor: pointer;    
+}
+#search-button:hover {
+    background-color: #222222;
+}
+
+#filter-association {
+    width: 25vw;
+    padding: 2px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color: #bbb;
+    font-size: 16px;
+    color: #010101;
+}
+
+#filter-association option {
+    padding: 5px;
+}
+
+.filtersdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.filterselectdiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
