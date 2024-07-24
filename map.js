@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const trackSelect = document.getElementById('trackSelect');
     trackSelect.addEventListener('change', (event) => {
         const selectedTrack = event.target.value;
-        
+
         // Reset all track colors to grey
         for (const trackName in trackLayers) {
             if (trackLayers[trackName]) {
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 const speciesList = filteredData.map(bird => `<li data-species="${bird.name}" class="speciesli">${bird.name}</li>`).join('');
-                const popupContent = 
+                const popupContent =
                     `<div class="speciesdiv">
                         <h2>Species at ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const showSpeciesInfo = (bird) => {
-        const popupContent = 
+        const popupContent =
             `<div class="SpeciesInfo">
                 <button id="backButton" class="back-button" onclick="handleBackButtonClick()">Back to list</button>
                 <h2>${bird.name} (${bird.scientific_name})</h2>

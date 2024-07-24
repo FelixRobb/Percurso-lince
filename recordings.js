@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('species.json')
         .then(response => response.json())
         .then(birds => {
-            allBirds = sortByName(birds); 
+            allBirds = sortByName(birds);
             populateAssociationFilter(allBirds);
             // Display all birds initially
             filteredBirds = allBirds;
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             searchButton.addEventListener('click', () => {
                 const query = searchInput.value.toLowerCase();
-                filteredBirds = allBirds.filter(bird => 
+                filteredBirds = allBirds.filter(bird =>
                     (bird.association === filterAssociationSelect.value || filterAssociationSelect.value === '') &&
                     (bird.name.toLowerCase().includes(query) || bird.scientific_name.toLowerCase().includes(query))
                 );
