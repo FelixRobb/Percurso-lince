@@ -239,4 +239,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
     };
+
+    // Handle location and species from URL
+    if (queryParams.location) {
+        const locationName = decodeURIComponent(queryParams.location);
+        const marker = locationMarkers[locationName];
+        if (marker) {
+            map.setView(marker.getLatLng(), 15);
+            marker.openPopup();
+        }
+
+        if (queryParams.species) {
+            fetch('species.json')
+                .then(response => response.json())
+                .then(data => {
+                    const bird = data.find(bird => bird.name === queryParams.species);
+                    if (bird) {
+                        showSpeciesInfo(bird);
+                    } else {
+                        console.warn(`Species not found: ${queryParams.species}`);
+                    }
+                })
+                .catch(error => console.error('Error loading species data:', error));
+        }
+    }
 });
