@@ -257,6 +257,7 @@ h2 {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 10px;
+    height: 300px;
     width: 300px;
     overflow: hidden;
     transition: transform 0.3s;
@@ -288,12 +289,29 @@ h2 {
 }
 
 .card-link {
+    font-size: medium;
     text-decoration: none;
     color: #007BFF;
     font-weight: bold;
 }
 
 .card-link:hover {
+    text-decoration: underline;
+}
+
+.info-button-text {
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: medium;
+    padding: 0%;
+    background-color: #484848;
+    border: none;
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.info-button-text:hover {
     text-decoration: underline;
 }
 

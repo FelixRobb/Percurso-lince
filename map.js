@@ -140,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (trackBounds[trackName]) {
                     trackSelect.value = trackName;
-                    trackSelect.value = trackName;
                     trackLayers[trackName].setStyle({ color: 'red' }); // Set the color to red
                     map.fitBounds(trackBounds[trackName]);
 
@@ -218,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2>${bird.name} (${bird.scientific_name})</h2>
                 <p>${bird.comenta}</p>
                 <p>${bird.description}</p>
-                <p><strong>Most probable months:</strong> ${bird.most_probable_months.join(', ')}</p>
+                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
                 ${bird.sound_url}
                 </div>

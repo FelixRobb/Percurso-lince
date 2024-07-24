@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
                 <p>${bird.comenta}</p>
                 <p>${bird.description}</p>
-                <p><strong>Most probable months to see it:</strong> ${bird.most_probable_months.join(", ")}</p>
+                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(", ")}</p>
                 <button class="load-sound-btn">Load Sound</button>
                 <div class="sound-container"></div>
                 <p><strong>Location:</strong> ${bird.association}</p>
