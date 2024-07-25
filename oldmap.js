@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     locations.forEach(location => {
         const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
-        marker.bindPopup(9~
+        marker.bindPopup(
             <button class="species-button" data-location="${location.name}">View Species</button>
         );
 
