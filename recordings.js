@@ -29,9 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const birdItem = document.createElement('div');
             birdItem.classList.add('bird-item');
             birdItem.innerHTML = `
-                <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">
                     <a href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
-                </h2>
             `;
             recordingsList.appendChild(birdItem);
         });

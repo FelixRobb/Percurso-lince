@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -5,29 +6,45 @@ body {
     color: #ffffff;
 }
 
+/* Container for sidebar and details */
 #species-details {
     display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
     padding: 1rem;
 }
 
+/* Sidebar Styles */
 #sidebar {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 250px;
-    background-color: #333;
+    height: 100%;
+    background-color: #2c2c2c;
     padding: 1rem;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateX(100%); /* Initially out of view */
+    opacity: 0;
+    z-index: 1000; /* Ensure it appears above other content */
     border-radius: 8px;
-    margin-right: 1rem;
-    overflow-y: auto;
-    max-height: calc(100vh - 2rem);
 }
 
+#sidebar.visible {
+    display: block; /* Make it visible when active */
+    transform: translateX(0); /* Slide into view */
+    opacity: 1;
+}
+
+/* Sidebar Item Styles */
 #sidebar .sidebar-item {
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 5px;
     margin-bottom: 0.5rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
+    color: #ffffff;
 }
 
 #sidebar .sidebar-item:hover,
@@ -35,11 +52,14 @@ body {
     background-color: #1e90ff;
 }
 
+/* Details Styles */
 #details {
-    flex-grow: 1;
     background-color: #2c2c2c;
+    margin: auto;
     padding: 1rem;
     border-radius: 8px;
+    max-width: 800px;
+    transition: margin-right 0.3s ease;
 }
 
 #details h2 {
@@ -87,4 +107,37 @@ body {
 .location a:hover {
     color: #3ba6ff;
     text-decoration: underline;
+}
+
+/* Toggle Button Styles */
+#toggle-sidebar {
+    cursor: pointer;
+    margin: 10px 0px 0px 15px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+
+/* Button Styles */
+#close-sidebar {
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+
+#close-sidebar:hover {
+    background-color: #555;
 }

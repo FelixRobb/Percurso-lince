@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Species Details</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="speciescss.css">
 </head>
+
 <body>
-    <div id="species-details">
-        <div id="sidebar"></div>
-        <div id="details"></div>
-    </div>
+    <header>
+        <div class="container">
+            <h1>Percursos sonoros Lince-ibérico</h1>
+            <nav>
+                <a href="map.html" style="margin-top: 20px;" class="nav-button">Ver o Mapa</a>
+                <a href="recordings.html" style="margin-top: 20px;" class="nav-button">Ver as Gravações</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="maininfo">
+            <button id="toggle-sidebar">Outras Localizações</button>
+            <div class="speciediv">
+                <div id="sidebar">
+                    <!-- Persistent close button -->
+                    <button id="close-sidebar" class="close-btn">×</button>
+                    <!-- Dynamic content will be added here -->
+                    <div id="sidebar-content"></div>
+                </div>
+                <div id="species-details">
+                    <div id="details"></div>
+                </div>
+            </div>
+        </div>
+    </main>
     <script src="species.js"></script>
 </body>
+
 </html>

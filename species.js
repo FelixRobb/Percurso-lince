@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
+    const sidebarContent = document.getElementById('sidebar-content');
     const details = document.getElementById('details');
+    const toggleButton = document.getElementById('toggle-sidebar');
+    const closeButton = document.getElementById('close-sidebar');
 
+    // Extract the species name from the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const speciesName = urlParams.get('name');
 
+    // Fetch bird data and filter for the selected species
     fetch('species.json')
         .then(response => response.json())
         .then(birds => {
@@ -15,10 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const sidebarContent = speciesEntries.map((entry, index) => `
+            // Create the sidebar content
+            const sidebarContentHtml = speciesEntries.map((entry, index) => `
                 <div class="sidebar-item" data-index="${index}">${entry.association}</div>
             `).join('');
-            sidebar.innerHTML = sidebarContent;
+            sidebarContent.innerHTML = sidebarContentHtml;
 
             function displayDetails(entry) {
                 details.innerHTML = `
@@ -40,9 +46,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            // Display first entry by default
-            document.querySelector('.sidebar-item').classList.add('active');
-            displayDetails(speciesEntries[0]);
+            if (speciesEntries.length > 0) {
+                const firstSidebarItem = document.querySelector('.sidebar-item');
+                if (firstSidebarItem) {
+                    firstSidebarItem.classList.add('active');
+                    displayDetails(speciesEntries[0]);
+                }
+            }
         })
         .catch(error => console.error('Error loading species data:', error));
+
+    // Toggle the sidebar collapse/expand
+    toggleButton.addEventListener('click', () => {
+        sidebar.classList.toggle('visible');
+    });
+
+    // Close the sidebar when the close button is clicked
+    closeButton.addEventListener('click', () => {
+        sidebar.classList.remove('visible');
+    });
 });
