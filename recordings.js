@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function populateAssociationFilter(birds) {
         const uniqueLocations = [...new Set(birds.map(bird => bird.association))];
-        filterAssociationSelect.innerHTML = '<option value="">All Locations</option>'; // Reset filter options
+        filterAssociationSelect.innerHTML = '<option value="">Todas as Localizações</option>'; // Reset filter options
         uniqueLocations.forEach(location => {
             const option = document.createElement('option');
             option.value = location;

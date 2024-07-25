@@ -13,28 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Vila de Mértola", lat: 37.6438, lng: -7.6604 }
     ];
 
-    function getQueryParams() {
-        const params = {};
-        const queryString = window.location.search.substring(1);
-        const regex = /([^&=]+)=([^&]*)/g;
-        let match;
-        while (match = regex.exec(queryString)) {
-            params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
-        }
-        return params;
-    }
-
-    const queryParams = getQueryParams();
-    console.log('Query Params:', queryParams); // Debugging line
-
-    if (queryParams.lat && queryParams.lng) {
-        const lat = parseFloat(queryParams.lat);
-        const lng = parseFloat(queryParams.lng);
-        map.setView([lat, lng], 15); // Adjust zoom level if needed
-    }
-
     const locationMarkers = {};
-
     locations.forEach(location => {
         const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
         marker.bindPopup(
@@ -117,41 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    let currentPopup = null; // Track the current popup
-    let lastLocation = null; // Track the last location shown
-    let lastAssociation = 'all'; // Track the last association shown
-
-    fetch('species.json')
-        .then(response => response.json())
-        .then(data => {
-            const speciesData = data;
-            const tracks = Array.from(new Set(speciesData.filter(bird => bird.association.includes('PR')).map(bird => bird.association)));
-
-            tracks.forEach(track => {
-                const option = document.createElement('option');
-                option.value = track;
-                option.textContent = track;
-                trackSelect.appendChild(option);
-            });
-
-            if (queryParams.track) {
-                const trackName = decodeURIComponent(queryParams.track).replace(/\.gpx$/, '');
-                console.log('Track from URL:', trackName); // Debugging line
-
-                if (trackBounds[trackName]) {
-                    trackSelect.value = trackName;
-                    trackLayers[trackName].setStyle({ color: 'red' }); // Set the color to red
-                    map.fitBounds(trackBounds[trackName]);
-
-                    const middlePoint = trackBounds[trackName].getCenter();
-                    showSpeciesList(trackName, middlePoint);
-                } else {
-                    console.warn(`Track not found: ${trackName}`); // Debugging line
-                }
-            }
-        })
-        .catch(error => console.error('Error loading bird data:', error));
-
     const showSpeciesList = (association, latLng) => {
         fetch('species.json')
             .then(response => response.json())
@@ -196,68 +140,65 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                lastLocation = latLng;
-                lastAssociation = association;
-
-                document.querySelectorAll('.species-list li').forEach(item => {
-                    item.addEventListener('click', () => {
-                        const speciesName = item.dataset.species;
-                        const bird = data.find(bird => bird.name === speciesName);
-                        showSpeciesInfo(bird);
+                document.querySelectorAll('.speciesli').forEach(item => {
+                    item.addEventListener('click', (event) => {
+                        const speciesName = event.target.getAttribute('data-species');
+                        showSpeciesInfo(filteredData.find(bird => bird.name === speciesName), latLng);
                     });
                 });
             })
-            .catch(error => console.error('Error loading species list:', error));
+            .catch(error => console.error('Error loading species data:', error));
     };
 
-    const showSpeciesInfo = (bird) => {
-        const popupContent =
-            `<div class="SpeciesInfo">
-                <button id="backButton" class="back-button" onclick="handleBackButtonClick()">Back to list</button>
-                <h2>${bird.name} (${bird.scientific_name})</h2>
-                <p>${bird.comenta}</p>
-                <p>${bird.description}</p>
-                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
-                <div class="sounddiv">
-                ${bird.sound_url}
-                </div>
-            </div>`;
+    const showSpeciesInfo = (species, latLng) => {
+        const popupContent = `
+            <h2>${species.name} (${species.scientific_name})</h2>
+            <p class="description">${species.description}</p>
+            <p class="comments"><strong>Comments:</strong> ${species.comenta}</p>
+            <p class="months"><strong>Best months to listen:</strong> ${species.most_probable_months.join(', ')}</p>
+            <div class="sound-url">${species.sound_url}</div>
+        `;
 
         if (currentPopup) {
             currentPopup.remove();
         }
 
         currentPopup = L.popup()
-            .setLatLng(lastLocation)
+            .setLatLng(latLng)
             .setContent(popupContent)
             .openOn(map);
-
-        window.handleBackButtonClick = () => {
-            if (currentPopup) {
-                currentPopup.remove();
-                showSpeciesList(lastAssociation, lastLocation);
-            }
-        };
     };
 
-    // Handle location and species from URL
-    if (queryParams.location) {
-        const locationName = decodeURIComponent(queryParams.location);
-        const marker = locationMarkers[locationName];
-        if (marker) {
-            map.setView(marker.getLatLng(), 15);
-            marker.openPopup();
+    // Handle URL parameters for location and species
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.has('location')) {
+        const locationName = decodeURIComponent(queryParams.get('location'));
+        const speciesName = decodeURIComponent(queryParams.get('species'));
+
+        let found = false;
+
+        // Check and center on markers
+        if (locationMarkers[locationName]) {
+            map.setView(locationMarkers[locationName].getLatLng(), 15);
+            found = true;
         }
 
-        if (queryParams.species) {
+        // Check and center on tracks
+        if (trackBounds[locationName]) {
+            map.fitBounds(trackBounds[locationName]);
+            found = true;
+        }
+
+        if (found && speciesName) {
             fetch('species.json')
                 .then(response => response.json())
                 .then(data => {
-                    const bird = data.find(bird => bird.name === queryParams.species);
-                    if (bird) {
-                        showSpeciesInfo(bird);
+                    const species = data.find(bird => bird.name === speciesName && bird.association === locationName);
+                    if (species) {
+                        const latLng = trackBounds[locationName] ? trackBounds[locationName].getCenter() : locationMarkers[locationName].getLatLng();
+                        showSpeciesInfo(species, latLng);
                     } else {
-                        console.warn(`Species not found: ${queryParams.species}`);
+                        console.warn(`Species ${speciesName} not found for location ${locationName}`);
                     }
                 })
                 .catch(error => console.error('Error loading species data:', error));
