@@ -28,7 +28,6 @@ header h1 {
     font-size: 1.5rem;
 }
 
-
 nav {
     display: flex;
     align-content: center;
@@ -150,10 +149,10 @@ h2 {
 }
 
 .bird-item {
-    background-color: #1f1f1f;
+    background-color: #333;
     border: 1px solid #333;
     border-radius: 5px;
-    padding: 1rem;
+    padding: 15px;
     transition: background-color 0.3s, border-color 0.3s;
 }
 
@@ -162,34 +161,17 @@ h2 {
     border-color: #444;
 }
 
-.bird-item h2 {
-    margin: 0 0 0.5rem;
-    font-size: 1.2rem;
-}
-
-.bird-item p {
-    margin: 0.5rem 0;
-    font-size: 0.9rem;
-}
-
-.bird-item img {
-    width: 100%;
-    border-radius: 5px;
-}
-
-.bird-item audio {
-    width: 100%;
-    margin-top: 0.5rem;
-}
-
 .bird-item a {
-    color: #1e90ff;
-    text-decoration: none;
-    font-size: 0.9rem;
+    color: #cccccc;
+    margin-left: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .bird-item a:hover {
-    text-decoration: underline;
+    color: #ffffff;
 }
 
 .filter-options {
@@ -238,8 +220,6 @@ h2 {
     margin-left: 40px;
     margin-right: 40px;
 }
-
-
 
 /* Card styles */
 .card-container {
@@ -291,7 +271,7 @@ h2 {
 .card-link {
     font-size: medium;
     text-decoration: none;
-    color: #007BFF;
+    color: #007bff;
     font-weight: bold;
 }
 
@@ -307,7 +287,7 @@ h2 {
     background-color: #484848;
     border: none;
     text-decoration: none;
-    color: #007BFF;
+    color: #007bff;
     font-weight: bold;
 }
 
@@ -325,7 +305,6 @@ h2 {
     flex-direction: column;
     align-items: center;
     padding: 10px;
-
 }
 
 .speciesli {
@@ -349,7 +328,6 @@ h2 {
     margin-bottom: 20px;
     cursor: pointer;
 }
-
 
 .species-button {
     background-color: #404040;
@@ -400,7 +378,7 @@ h2 {
     border: 2px solid #4d4d4d;
     color: #b0b0b0;
     font-weight: 600;
-    cursor: pointer;    
+    cursor: pointer;
 }
 #search-button:hover {
     background-color: #222222;
@@ -430,4 +408,15 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.placediv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+.placepopup {
+    margin-bottom: 20px;
 }

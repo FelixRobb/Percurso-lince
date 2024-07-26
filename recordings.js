@@ -12,12 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('species.json')
         .then(response => response.json())
         .then(birds => {
-            allBirds = sortByName(birds);
+            // Aggregate data to get unique species with averaged months
+            const aggregatedBirds = aggregateBirds(birds);
+            allBirds = sortByName(aggregatedBirds);
             populateAssociationFilter(allBirds);
-            // Display all birds initially
-            filteredBirds = allBirds;
+            filteredBirds = allBirds; // Initialize filteredBirds
             displayBirds(filteredBirds);
 
+            // Event listeners for filtering and search
             filterNameButton.addEventListener('click', () => {
                 filteredBirds = sortByName(filteredBirds);
                 displayBirds(filteredBirds);
@@ -44,6 +46,36 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error loading bird data:', error));
 
+    function aggregateBirds(birds) {
+        const uniqueBirds = {};
+
+        birds.forEach(bird => {
+            if (!uniqueBirds[bird.name]) {
+                uniqueBirds[bird.name] = {
+                    name: bird.name,
+                    scientific_name: bird.scientific_name,
+                    most_probable_months: new Set(bird.most_probable_months),
+                    association: bird.association,
+                    comenta: bird.comenta,
+                    description: bird.description,
+                    sound_url: bird.sound_url
+                };
+            } else {
+                bird.most_probable_months.forEach(month => uniqueBirds[bird.name].most_probable_months.add(month));
+            }
+        });
+
+        return Object.values(uniqueBirds).map(bird => ({
+            ...bird,
+            most_probable_months: averageMonths([...bird.most_probable_months])
+        }));
+    }
+
+    function averageMonths(months) {
+        // Assuming each month is equally weighted for simplicity
+        return months.sort((a, b) => a.localeCompare(b));
+    }
+
     function updateFilteredBirds() {
         const selectedLocation = filterAssociationSelect.value;
         filteredBirds = selectedLocation
@@ -57,29 +89,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const birdItem = document.createElement('div');
             birdItem.classList.add('bird-item');
             birdItem.innerHTML = `
-                <h2 style="margin-left: 10px; text-align: center; display: flex; justify-content: center; align-items: center;">${bird.name} (${bird.scientific_name})</h2>
-                <p>${bird.comenta}</p>
-                <p>${bird.description}</p>
-                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(", ")}</p>
-                <button class="load-sound-btn">Load Sound</button>
-                <div class="sound-container"></div>
-                <p><strong>Location:</strong> ${bird.association}</p>
+                <a href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
             `;
-
-            const loadSoundButton = birdItem.querySelector('.load-sound-btn');
-            const soundContainer = birdItem.querySelector('.sound-container');
-            loadSoundButton.addEventListener('click', () => {
-                soundContainer.innerHTML = bird.sound_url;
-                loadSoundButton.disabled = true;
-            });
-
             recordingsList.appendChild(birdItem);
         });
     }
 
     function populateAssociationFilter(birds) {
         const uniqueLocations = [...new Set(birds.map(bird => bird.association))];
-        filterAssociationSelect.innerHTML = '<option value="">All Locations</option>'; // Reset filter options
+        filterAssociationSelect.innerHTML = '<option value="">Todas as Localizações</option>'; // Reset filter options
         uniqueLocations.forEach(location => {
             const option = document.createElement('option');
             option.value = location;

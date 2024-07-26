@@ -25,23 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const queryParams = getQueryParams();
-    console.log('Query Params:', queryParams);
+    console.log('Query Params:', queryParams); // Debugging line
 
     if (queryParams.lat && queryParams.lng) {
         const lat = parseFloat(queryParams.lat);
         const lng = parseFloat(queryParams.lng);
-        map.setView([lat, lng], 15);
+        map.setView([lat, lng], 15); // Adjust zoom level if needed
     }
 
     const locationMarkers = {};
-    let previousPopup = null; // Store the previous popup content
-    let previousPopupLatLng = null; // Store the latLng of the previous popup
-    let previousAssociation = 'all'; // Track the last association shown
 
     locations.forEach(location => {
         const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
         marker.bindPopup(
-            `<button class="species-button" data-location="${location.name}">View Species</button>`
+            <button class="species-button" data-location="${location.name}">View Species</button>
         );
 
         marker.on('popupopen', () => {
@@ -63,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gpxLayer = new L.GPX(gpxData, {
                     async: true,
                     polyline_options: {
-                        color: 'grey',
+                        color: 'grey', // Default color
                         weight: 5,
                         opacity: 0.75
                     },
@@ -79,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     trackBounds[trackName] = bounds;
                     trackLayers[trackName] = e.target;
 
-                    console.log(`Track loaded: ${trackName}`);
+                    console.log(Track loaded: ${trackName});
                 });
 
                 gpxLayer.on('click', (e) => {
@@ -87,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showSpeciesList(trackName, latLng);
                 });
             })
-            .catch(error => console.error(`Error loading track ${trackName}:`, error));
+            .catch(error => console.error(Error loading track ${trackName}:, error));
     };
 
     const tracks = [
@@ -102,20 +99,58 @@ document.addEventListener('DOMContentLoaded', () => {
     trackSelect.addEventListener('change', (event) => {
         const selectedTrack = event.target.value;
 
+        // Reset all track colors to grey
         for (const trackName in trackLayers) {
             if (trackLayers[trackName]) {
                 trackLayers[trackName].setStyle({ color: 'grey' });
             }
         }
 
+        // Highlight the selected track
         if (trackLayers[selectedTrack]) {
             trackLayers[selectedTrack].setStyle({ color: 'red' });
             map.fitBounds(trackBounds[selectedTrack]);
 
+            // Open popup at the middle of the selected track
             const middlePoint = trackBounds[selectedTrack].getCenter();
             showSpeciesList(selectedTrack, middlePoint);
         }
     });
+
+    let currentPopup = null; // Track the current popup
+    let lastLocation = null; // Track the last location shown
+    let lastAssociation = 'all'; // Track the last association shown
+
+    fetch('species.json')
+        .then(response => response.json())
+        .then(data => {
+            const speciesData = data;
+            const tracks = Array.from(new Set(speciesData.filter(bird => bird.association.includes('PR')).map(bird => bird.association)));
+
+            tracks.forEach(track => {
+                const option = document.createElement('option');
+                option.value = track;
+                option.textContent = track;
+                trackSelect.appendChild(option);
+            });
+
+            if (queryParams.track) {
+                const trackName = decodeURIComponent(queryParams.track).replace(/\.gpx$/, '');
+                console.log('Track from URL:', trackName); // Debugging line
+
+                if (trackBounds[trackName]) {
+                    trackSelect.value = trackName;
+                    trackLayers[trackName].setStyle({ color: 'red' }); // Set the color to red
+                    map.fitBounds(trackBounds[trackName]);
+
+                    const middlePoint = trackBounds[trackName].getCenter();
+                    showSpeciesList(trackName, middlePoint);
+                } else {
+                    console.warn(Track not found: ${trackName}); // Debugging line
+                }
+            }
+        })
+        .catch(error => console.error('Error loading bird data:', error));
 
     const showSpeciesList = (association, latLng) => {
         fetch('species.json')
@@ -123,46 +158,46 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 const filteredData = association === 'all' ? data : data.filter(bird => bird.association === association);
                 filteredData.sort((a, b) => {
-                    const dateA = new Date(`2024-${a.most_probable_months[0]}`);
-                    const dateB = new Date(`2024-${b.most_probable_months[0]}`);
+                    const dateA = new Date(2024-${a.most_probable_months[0]});
+                    const dateB = new Date(2024-${b.most_probable_months[0]});
                     return dateA - dateB;
                 });
 
-                const speciesList = filteredData.map(bird => `<li data-species="${bird.name}" class="speciesli">${bird.name}</li>`).join('');
+                const speciesList = filteredData.map(bird => <li data-species="${bird.name}" class="speciesli">${bird.name}</li>).join('');
                 const popupContent =
-                    `<div class="speciesdiv">
+                    <div class="speciesdiv">
                         <h2>Species at ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
-                    </div>`;
+                    </div>;
 
-                if (previousPopup) {
-                    previousPopup.remove();
+                if (currentPopup) {
+                    currentPopup.remove();
                 }
 
-                previousPopupLatLng = latLng;
-                previousAssociation = association;
-
                 if (latLng) {
-                    previousPopup = L.popup()
+                    currentPopup = L.popup()
                         .setLatLng(latLng)
                         .setContent(popupContent)
                         .openOn(map);
                 } else {
                     const location = locations.find(loc => loc.name === association);
                     if (location) {
-                        previousPopup = L.popup()
+                        currentPopup = L.popup()
                             .setLatLng([location.lat, location.lng])
                             .setContent(popupContent)
                             .openOn(map);
                         latLng = [location.lat, location.lng];
                     } else {
-                        previousPopup = L.popup()
+                        currentPopup = L.popup()
                             .setLatLng(map.getCenter())
                             .setContent(popupContent)
                             .openOn(map);
                         latLng = map.getCenter();
                     }
                 }
+
+                lastLocation = latLng;
+                lastAssociation = association;
 
                 document.querySelectorAll('.species-list li').forEach(item => {
                     item.addEventListener('click', () => {
@@ -177,8 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showSpeciesInfo = (bird) => {
         const popupContent =
-            `<div class="SpeciesInfo">
-                <button id="backButton" class="back-button">Back to list</button>
+            <div class="SpeciesInfo">
+                <button id="backButton" class="back-button" onclick="handleBackButtonClick()">Back to list</button>
                 <h2>${bird.name} (${bird.scientific_name})</h2>
                 <p>${bird.comenta}</p>
                 <p>${bird.description}</p>
@@ -186,43 +221,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="sounddiv">
                 ${bird.sound_url}
                 </div>
-            </div>`;
+            </div>;
 
-        if (previousPopup) {
-            previousPopup.remove();
+        if (currentPopup) {
+            currentPopup.remove();
         }
 
-        previousPopup = L.popup()
-            .setLatLng(previousPopupLatLng || map.getCenter())
+        currentPopup = L.popup()
+            .setLatLng(lastLocation)
             .setContent(popupContent)
             .openOn(map);
 
-        document.querySelector('#backButton').addEventListener('click', () => {
-            if (previousPopup) {
-                previousPopup.remove();
-                showSpeciesList(previousAssociation, previousPopupLatLng);
+        window.handleBackButtonClick = () => {
+            if (currentPopup) {
+                currentPopup.remove();
+                showSpeciesList(lastAssociation, lastLocation);
             }
-        });
+        };
     };
-
-    const checkUrlParameters = () => {
-        const queryParams = new URLSearchParams(window.location.search);
-        if (queryParams.has('lat') && queryParams.has('lng')) {
-            const lat = parseFloat(queryParams.get('lat'));
-            const lng = parseFloat(queryParams.get('lng'));
-            map.setView([lat, lng], 15);
-        } else if (queryParams.has('track')) {
-            const trackName = decodeURIComponent(queryParams.get('track'));
-            if (trackBounds[trackName]) {
-                trackSelect.value = trackName;
-                trackLayers[trackName].setStyle({ color: 'red' });
-                map.fitBounds(trackBounds[trackName]);
-
-                const middlePoint = trackBounds[trackName].getCenter();
-                showSpeciesList(trackName, middlePoint);
-            }
-        }
-    };
-
-    checkUrlParameters();
 });
