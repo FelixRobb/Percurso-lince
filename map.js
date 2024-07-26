@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add "All Tracks" option
         const allTracksOption = document.createElement('option');
         allTracksOption.value = 'all';
-        allTracksOption.textContent = 'All Tracks';
+        allTracksOption.textContent = 'All Locations';
         trackSelect.appendChild(allTracksOption);
 
         // Add options for marker locations
@@ -61,7 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Creating marker for location: ${location.name}`);
         const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
         marker.bindPopup(
-            `<button class="species-button" data-location="${location.name}">View Species</button>`
+            `<div class="placediv">
+            <h2 class="placepopup">${location.name}</h2>
+            <button class="species-button" data-location="${location.name}">View Species</button>
+            </div>`
         );
 
         marker.on('popupopen', () => {
@@ -152,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (locationMarkers[selectedTrack]) {
             const marker = locationMarkers[selectedTrack];
             map.setView(marker.getLatLng(), 15);
-            marker.openPopup();
+            /*marker.openPopup();*/
             console.log(`Centering on marker: ${selectedTrack}`);
         }
     });
