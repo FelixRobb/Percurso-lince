@@ -13,35 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Vila de Mértola", lat: 37.6438, lng: -7.6604 }
     ];
 
-    function getQueryParams() {
-        const params = {};
-        const queryString = window.location.search.substring(1);
-        const regex = /([^&=]+)=([^&]*)/g;
-        let match;
-        while (match = regex.exec(queryString)) {
-            params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
-        }
-        return params;
-    }
-
-    const queryParams = getQueryParams();
-    console.log('Query Params:', queryParams); // Debugging line
-
-    if (queryParams.lat && queryParams.lng) {
-        const lat = parseFloat(queryParams.lat);
-        const lng = parseFloat(queryParams.lng);
-        map.setView([lat, lng], 15); // Adjust zoom level if needed
-    }
-
     const locationMarkers = {};
-
     locations.forEach(location => {
         const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
-        marker.bindPopup(9~
-            <button class="species-button" data-location="${location.name}">View Species</button>
+        marker.bindPopup(
+            `<button class="species-button" data-location="${location.name}">View Species</button>`
         );
 
         marker.on('popupopen', () => {
+            console.log(`Popup opened for location: ${location.name}`); // Debugging line
             document.querySelector('.species-button').addEventListener('click', () => {
                 showSpeciesList(location.name, [location.lat, location.lng]);
             });
@@ -54,13 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const trackBounds = {};
 
     const loadTrack = (trackFile, trackName) => {
+        console.log(`Loading track: ${trackName} from file: ${trackFile}`); // Debugging line
         fetch(trackFile)
             .then(response => response.text())
             .then(gpxData => {
                 const gpxLayer = new L.GPX(gpxData, {
                     async: true,
                     polyline_options: {
-                        color: 'grey', // Default color
+                        color: 'grey',
                         weight: 5,
                         opacity: 0.75
                     },
@@ -76,15 +57,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     trackBounds[trackName] = bounds;
                     trackLayers[trackName] = e.target;
 
-                    console.log(Track loaded: ${trackName});
+                    console.log(`Track loaded: ${trackName}`); // Debugging line
                 });
 
                 gpxLayer.on('click', (e) => {
                     const latLng = e.latlng;
+                    console.log(`Track click at: ${latLng}`); // Debugging line
                     showSpeciesList(trackName, latLng);
                 });
             })
-            .catch(error => console.error(Error loading track ${trackName}:, error));
+            .catch(error => console.error(`Error loading track ${trackName}:`, error));
     };
 
     const tracks = [
@@ -98,6 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const trackSelect = document.getElementById('trackSelect');
     trackSelect.addEventListener('change', (event) => {
         const selectedTrack = event.target.value;
+
+        console.log(`Track selected: ${selectedTrack}`); // Debugging line
 
         // Reset all track colors to grey
         for (const trackName in trackLayers) {
@@ -121,54 +105,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastLocation = null; // Track the last location shown
     let lastAssociation = 'all'; // Track the last association shown
 
-    fetch('species.json')
-        .then(response => response.json())
-        .then(data => {
-            const speciesData = data;
-            const tracks = Array.from(new Set(speciesData.filter(bird => bird.association.includes('PR')).map(bird => bird.association)));
-
-            tracks.forEach(track => {
-                const option = document.createElement('option');
-                option.value = track;
-                option.textContent = track;
-                trackSelect.appendChild(option);
-            });
-
-            if (queryParams.track) {
-                const trackName = decodeURIComponent(queryParams.track).replace(/\.gpx$/, '');
-                console.log('Track from URL:', trackName); // Debugging line
-
-                if (trackBounds[trackName]) {
-                    trackSelect.value = trackName;
-                    trackLayers[trackName].setStyle({ color: 'red' }); // Set the color to red
-                    map.fitBounds(trackBounds[trackName]);
-
-                    const middlePoint = trackBounds[trackName].getCenter();
-                    showSpeciesList(trackName, middlePoint);
-                } else {
-                    console.warn(Track not found: ${trackName}); // Debugging line
-                }
-            }
-        })
-        .catch(error => console.error('Error loading bird data:', error));
-
     const showSpeciesList = (association, latLng) => {
+        console.log(`Showing species list for association: ${association}, at: ${latLng}`); // Debugging line
         fetch('species.json')
             .then(response => response.json())
             .then(data => {
                 const filteredData = association === 'all' ? data : data.filter(bird => bird.association === association);
                 filteredData.sort((a, b) => {
-                    const dateA = new Date(2024-${a.most_probable_months[0]});
-                    const dateB = new Date(2024-${b.most_probable_months[0]});
+                    const dateA = new Date(`2024-${a.most_probable_months[0]}`);
+                    const dateB = new Date(`2024-${b.most_probable_months[0]}`);
                     return dateA - dateB;
                 });
 
-                const speciesList = filteredData.map(bird => <li data-species="${bird.name}" class="speciesli">${bird.name}</li>).join('');
+                const speciesList = filteredData.map(bird => `<li data-species="${bird.name}" class="speciesli">${bird.name}</li>`).join('');
                 const popupContent =
-                    <div class="speciesdiv">
+                    `<div class="speciesdiv">
                         <h2>Species at ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
-                    </div>;
+                    </div>`;
 
                 if (currentPopup) {
                     currentPopup.remove();
@@ -196,47 +150,59 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                lastLocation = latLng;
-                lastAssociation = association;
-
-                document.querySelectorAll('.species-list li').forEach(item => {
-                    item.addEventListener('click', () => {
-                        const speciesName = item.dataset.species;
-                        const bird = data.find(bird => bird.name === speciesName);
-                        showSpeciesInfo(bird);
+                document.querySelectorAll('.speciesli').forEach(item => {
+                    item.addEventListener('click', (event) => {
+                        const speciesName = event.target.getAttribute('data-species');
+                        console.log(`Species clicked: ${speciesName}`); // Debugging line
+                        showSpeciesInfo(filteredData.find(bird => bird.name === speciesName), latLng);
                     });
                 });
             })
-            .catch(error => console.error('Error loading species list:', error));
+            .catch(error => console.error('Error loading species data:', error));
     };
 
-    const showSpeciesInfo = (bird) => {
-        const popupContent =
-            <div class="SpeciesInfo">
-                <button id="backButton" class="back-button" onclick="handleBackButtonClick()">Back to list</button>
-                <h2>${bird.name} (${bird.scientific_name})</h2>
-                <p>${bird.comenta}</p>
-                <p>${bird.description}</p>
-                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
-                <div class="sounddiv">
-                ${bird.sound_url}
-                </div>
-            </div>;
+    const showSpeciesInfo = (species, latLng) => {
+        console.log(`Showing info for species: ${species.name}, at: ${latLng}`); // Debugging line
+        const popupContent = `
+            <h2>${species.name} (${species.scientific_name})</h2>
+            <p class="description">${species.description}</p>
+            <p class="comments"><strong>Comments:</strong> ${species.comenta}</p>
+            <p class="months"><strong>Best months to listen:</strong> ${species.most_probable_months.join(', ')}</p>
+            <div class="sound-url">${species.sound_url}</div>
+        `;
 
         if (currentPopup) {
             currentPopup.remove();
         }
 
         currentPopup = L.popup()
-            .setLatLng(lastLocation)
+            .setLatLng(latLng)
             .setContent(popupContent)
             .openOn(map);
-
-        window.handleBackButtonClick = () => {
-            if (currentPopup) {
-                currentPopup.remove();
-                showSpeciesList(lastAssociation, lastLocation);
-            }
-        };
     };
+
+    // Handle URL parameters for track selection
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.has('track')) {
+        const trackName = decodeURIComponent(queryParams.get('track'));
+        console.log(`Query parameters: track=${trackName}`); // Debugging line
+
+        // Reset all track colors to grey
+        for (const trackName in trackLayers) {
+            if (trackLayers[trackName]) {
+                trackLayers[trackName].setStyle({ color: 'grey' });
+            }
+        }
+
+        // Highlight the selected track
+        if (trackLayers[trackName]) {
+            console.log(`Centering on track: ${trackName}`); // Debugging line
+            trackLayers[trackName].setStyle({ color: 'red' });
+            map.fitBounds(trackBounds[trackName]);
+
+            // Open popup at the middle of the selected track
+            const middlePoint = trackBounds[trackName].getCenter();
+            showSpeciesList(trackName, middlePoint);
+        }
+    }
 });
