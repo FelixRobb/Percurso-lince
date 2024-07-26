@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const locationMarkers = {};
     const trackLayers = {};
     const trackBounds = {};
+    let previousPopup = null; // Store the previous popup content
+    let previousPopupLatLng = null; // Store the latLng of the previous popup
+    let previousAssociation = 'all'; // Track the last association shown
 
     // Function to populate the track select dropdown
     const populateTrackSelect = () => {
@@ -214,24 +217,34 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error loading species data:', error));
     };
 
-    const showSpeciesInfo = (species, latLng) => {
-        console.log(`Showing info for species: ${species.name}, at: ${latLng}`);
-        const popupContent = `
-            <h2>${species.name} (${species.scientific_name})</h2>
-            <p class="description">${species.description}</p>
-            <p class="comments"><strong>Comments:</strong> ${species.comenta}</p>
-            <p class="months"><strong>Best months to listen:</strong> ${species.most_probable_months.join(', ')}</p>
-            <div class="sound-url">${species.sound_url}</div>
-        `;
+    const showSpeciesInfo = (bird) => {
+        const popupContent =
+            `<div class="SpeciesInfo">
+                <button id="backButton" class="back-button">Back to list</button>
+                <h2>${bird.name} (${bird.scientific_name})</h2>
+                <p>${bird.comenta}</p>
+                <p>${bird.description}</p>
+                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
+                <div class="sounddiv">
+                ${bird.sound_url}
+                </div>
+            </div>`;
 
-        if (currentPopup) {
-            currentPopup.remove();
+        if (previousPopup) {
+            previousPopup.remove();
         }
 
-        currentPopup = L.popup()
-            .setLatLng(latLng)
+        previousPopup = L.popup()
+            .setLatLng(previousPopupLatLng || map.getCenter())
             .setContent(popupContent)
             .openOn(map);
+
+        document.querySelector('#backButton').addEventListener('click', () => {
+            if (previousPopup) {
+                previousPopup.remove();
+                showSpeciesList(previousAssociation, previousPopupLatLng);
+            }
+        });
     };
 
     // Handle URL parameters for track selection
