@@ -409,3 +409,14 @@ h2 {
     flex-direction: column;
     align-items: center;
 }
+
+.placediv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+.placepopup {
+    margin-bottom: 20px;
+}

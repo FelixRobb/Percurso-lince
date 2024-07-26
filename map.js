@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
 
-    const map = L.map('map').setView([37.6364, -7.6673], 12.5);
+    const map = L.map('map').setView([37.6364, -7.6673], 11);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -20,11 +20,48 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const locationMarkers = {};
+    const trackLayers = {};
+    const trackBounds = {};
+
+    // Function to populate the track select dropdown
+    const populateTrackSelect = () => {
+        const trackSelect = document.getElementById('trackSelect');
+        trackSelect.innerHTML = ''; // Clear existing options
+
+        // Add "All Tracks" option
+        const allTracksOption = document.createElement('option');
+        allTracksOption.value = 'all';
+        allTracksOption.textContent = 'All Tracks';
+        trackSelect.appendChild(allTracksOption);
+
+        // Add options for marker locations
+        locations.forEach(location => {
+            const locationOption = document.createElement('option');
+            locationOption.value = location.name;
+            locationOption.textContent = location.name;
+            trackSelect.appendChild(locationOption);
+        });
+
+        // Add options for tracks
+        for (const trackName in trackLayers) {
+            if (trackLayers[trackName]) {
+                const trackOption = document.createElement('option');
+                trackOption.value = trackName;
+                trackOption.textContent = trackName;
+                trackSelect.appendChild(trackOption);
+            }
+        }
+    };
+
+    // Create markers and add them to the map
     locations.forEach(location => {
         console.log(`Creating marker for location: ${location.name}`);
         const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
         marker.bindPopup(
-            `<button class="species-button" data-location="${location.name}">View Species</button>`
+            `<div class="placediv">
+            <h2 class="placepopup">${location.name}</h2>
+            <button class="species-button" data-location="${location.name}">View Species</button>
+            </div>`
         );
 
         marker.on('popupopen', () => {
@@ -37,9 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         locationMarkers[location.name] = marker;
     });
 
-    const trackLayers = {};
-    const trackBounds = {};
-
+    // Load tracks and add them to the map
     const loadTrack = (trackFile, trackName) => {
         console.log(`Loading track: ${trackName} from file: ${trackFile}`);
         fetch(trackFile)
@@ -64,8 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     trackBounds[trackName] = bounds;
                     trackLayers[trackName] = e.target;
                     console.log(`Track loaded: ${trackName}`);
-                    
-                    // Check URL parameters after loading all tracks
+
+                    // Populate dropdown after all tracks are loaded
+                    if (Object.keys(trackLayers).length === tracks.length) {
+                        populateTrackSelect();
+                    }
+
+                    // Check URL parameters after populating dropdown
                     checkUrlParameters();
                 });
 
@@ -86,11 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tracks.forEach(track => loadTrack(track.file, track.name));
 
+    // Handle track selection from the dropdown
     const trackSelect = document.getElementById('trackSelect');
     trackSelect.addEventListener('change', (event) => {
         const selectedTrack = event.target.value;
         console.log(`Track selected: ${selectedTrack}`);
 
+        // Reset all track colors to grey
         for (const trackName in trackLayers) {
             if (trackLayers[trackName]) {
                 trackLayers[trackName].setStyle({ color: 'grey' });
@@ -98,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (selectedTrack === 'all') {
-            map.setView([37.6364, -7.6673], 12.5);
+            map.setView([37.6364, -7.6673], 14);
             console.log('View set to default');
         } else if (trackLayers[selectedTrack]) {
             console.log(`Highlighting track: ${selectedTrack}`);
@@ -187,7 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (currentPopup) {
             currentPopup.remove();
-            console.log('Previous popup removed');
         }
 
         currentPopup = L.popup()
@@ -196,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .openOn(map);
     };
 
+    // Handle URL parameters for track selection
     const checkUrlParameters = () => {
         const queryParams = new URLSearchParams(window.location.search);
         if (queryParams.has('lat') && queryParams.has('lng')) {
@@ -207,9 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const trackName = decodeURIComponent(queryParams.get('track'));
             console.log(`URL parameters: track=${trackName}`);
 
-            for (const trackName in trackLayers) {
-                if (trackLayers[trackName]) {
-                    trackLayers[trackName].setStyle({ color: 'grey' });
+            for (const track in trackLayers) {
+                if (trackLayers[track]) {
+                    trackLayers[track].setStyle({ color: 'grey' });
                 }
             }
 
