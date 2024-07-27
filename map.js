@@ -225,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `<div class="SpeciesInfo">
                 <button id="backButton" class="back-button">Back to list</button>
                 <h2>${bird.name} (${bird.scientific_name})</h2>
+                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
                 <p>${bird.comenta}</p>
                 <p>${bird.description}</p>
                 <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
