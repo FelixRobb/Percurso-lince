@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gpxLayer = new L.GPX(gpxData, {
                     async: true,
                     polyline_options: {
-                        color: 'grey',
+                        color: 'red',
                         weight: 5,
                         opacity: 0.75
                     },
