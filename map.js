@@ -1,4 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Language setting - default to English
+    let currentLanguage = 'pt';
+
+    // Load the language JSON file based on the current language
+    const loadLanguage = (language) => {
+        fetch(`${language}.json`)
+            .then(response => response.json())
+            .then(data => {
+                // Update the UI with the loaded language data
+                updateUIWithLanguageData(data);
+            })
+            .catch(error => console.error(`Error loading ${language} language file:`, error));
+    };
+
+    // Update the UI elements with the language data
+    const updateUIWithLanguageData = (data) => {
+        document.querySelector('header h1').textContent = data.header;
+        document.querySelector('#description p').textContent = data.description;
+
+        // Update dropdown options
+        const trackSelect = document.getElementById('trackSelect');
+        trackSelect.innerHTML = '';
+        data.locations.forEach(location => {
+            const option = document.createElement('option');
+            option.value = location.value;
+            option.textContent = location.text;
+            trackSelect.appendChild(option);
+        });
+
+        // Update map legend or other language-dependent elements
+        // e.g., document.querySelector('.legend').textContent = data.legend;
+    };
 
     // Initialize the map and tile layer
     const map = L.map('map').setView([37.6364, -7.6673], 12.5);
@@ -167,10 +199,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     return dateA - dateB;
                 });
 
-                const speciesList = filteredData.map(bird => `<li data-species="${bird.name}" class="speciesli">${bird.name}</li>`).join('');
+                const speciesList = filteredData.map(bird => {
+                    return `<li data-species="${bird.name}" class="speciesli">${currentLanguage === 'en' ? bird.nomeEN : bird.name}</li>`;
+                }).join('');
+
                 const popupContent =
                     `<div class="speciesdiv">
-                        <h2>Species at ${association}</h2>
+                        <h2>${currentLanguage === 'en' ? 'Species at' : 'Espécies em'} ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
 
@@ -200,81 +235,59 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                document.querySelectorAll('.speciesli').forEach(item => {
-                    item.addEventListener('click', (event) => {
-                        const speciesName = event.target.getAttribute('data-species');
-                        showSpeciesInfo(filteredData.find(bird => bird.name === speciesName), latLng);
+                document.querySelectorAll('.speciesli').forEach(li => {
+                    li.addEventListener('click', () => {
+                        showSpeciesDetails(li.getAttribute('data-species'));
                     });
                 });
             })
             .catch(error => console.error('Error loading species data:', error));
     };
 
-    const showSpeciesInfo = (bird) => {
-        if (!bird) {
-            console.error('Species information is missing');
-            return;
-        }
-
-        const popupContent =
-            `<div class="SpeciesInfo">
-                <button id="backButton" class="back-button">Back to list</button>
-                <h2>${bird.name} (${bird.scientific_name})</h2>
-                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
-                <p>${bird.comenta}</p>
-                <p>${bird.description}</p>
-                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
-                <div class="sounddiv">
-                ${bird.sound_url}
-                </div>
-            </div>`;
-
-        if (previousPopup) {
-            previousPopup.remove();
-        }
-
-        previousPopup = L.popup()
-            .setLatLng(previousPopupLatLng || map.getCenter())
-            .setContent(popupContent)
-            .openOn(map);
-
-        document.querySelector('#backButton').addEventListener('click', () => {
-            if (previousPopup) {
-                previousPopup.remove();
-                showSpeciesList(previousAssociation, previousPopupLatLng);
-            }
-        });
-    };
-
-    // Handle URL parameters for track selection
-    const checkUrlParameters = () => {
-        const queryParams = new URLSearchParams(window.location.search);
-        if (queryParams.has('lat') && queryParams.has('lng')) {
-            const lat = parseFloat(queryParams.get('lat'));
-            const lng = parseFloat(queryParams.get('lng'));
-            if (!isNaN(lat) && !isNaN(lng)) {
-                map.setView([lat, lng], 15);
-            } else {
-                console.error('Invalid lat or lng URL parameters');
-            }
-        } else if (queryParams.has('track')) {
-            const trackName = decodeURIComponent(queryParams.get('track'));
-
-            for (const track in trackLayers) {
-                if (trackLayers[track]) {
-                    trackLayers[track].setStyle({ color: 'grey' });
+    const showSpeciesDetails = (speciesName) => {
+        fetch('species.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
                 }
-            }
-
-            if (trackLayers[trackName]) {
-                trackLayers[trackName].setStyle({ color: 'red' });
-                map.fitBounds(trackBounds[trackName]);
-
-                const middlePoint = trackBounds[trackName].getCenter();
-                showSpeciesList(trackName, middlePoint);
-            } else {
-                console.error(`Track not found: ${trackName}`);
-            }
-        }
+                return response.json();
+            })
+            .then(data => {
+                const species = data.find(bird => bird.name === speciesName);
+                if (species) {
+                    const details = `
+                    <div class="SpeciesInfo">
+                        <h3>${currentLanguage === 'en' ? species.nomeEN : species.name}</h3>
+                        <p>${currentLanguage === 'en' ? species.descriEN : species.description}</p>
+                        <p>${currentLanguage === 'en' ? 'Best months to listen: ' : 'Melhores meses para ouvir: '}${species.most_probable_months.join(', ')}</p>
+                        <p>${currentLanguage === 'en' ? 'Where to find: ' : 'Onde encontrar: '}${currentLanguage === 'en' ? species.ondeEN : species.onde}</p>
+                        <p>${currentLanguage === 'en' ? 'Habitat: ' : 'Habitat: '}${currentLanguage === 'en' ? species.habitatEN : species.habitat}</p>
+                        <p>${currentLanguage === 'en' ? 'When: ' : 'Quando: '}${currentLanguage === 'en' ? species.ondeEN__1 : species.quando}</p>
+                        <p>${currentLanguage === 'en' ? 'Comments: ' : 'Comentários: '}${currentLanguage === 'en' ? species.cometaEN : species.comenta}</p>
+                        <p><a href="${species.url}" target="_blank">${currentLanguage === 'en' ? 'Listen to the sound' : 'Ouça o som'}</a></p>
+                        <div class="sounddiv">
+                            ${bird.sound_url}
+                        </div>
+                        <p>${currentLanguage === 'en' ? 'Author: ' : 'Autor: '}${species.autor}</p>
+                        </div>
+                    `;
+                    L.popup()
+                        .setLatLng(map.getCenter())
+                        .setContent(details)
+                        .openOn(map);
+                }
+            })
+            .catch(error => console.error('Error loading species details:', error));
     };
+
+    // Initialize with default language
+    loadLanguage(currentLanguage);
+
+    // Language switcher event
+    const languageSwitcher = document.getElementById('language-switcher');
+    languageSwitcher.addEventListener('change', (event) => {
+        const selectedLanguage = event.target.value;
+        currentLanguage = selectedLanguage;
+        loadLanguage(selectedLanguage);
+    });
 });

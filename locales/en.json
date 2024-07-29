@@ -1,0 +1,16 @@
+{
+  "header": "Iberian Lynx Sound Trails",
+  "mapDescription": "To listen to the recordings, choose a marker on the map. You can also choose one of the trails to highlight recordings from those trails",
+  "selectLocation": "Select location:",
+  "allLocations": "All Locations",
+  "speciesTitle": "Species at ${association}",
+  "speciesList": "Species List",
+  "bestMonths": "Best months to listen:",
+  "author": "Magnus Robb",
+  "backButton": "Back to list",
+  "searchPlaceholder": "Search by name or scientific name",
+  "searchButton": "Search",
+  "filterBySeason": "Organize by season",
+  "filterByName": "Organize by Name",
+  "allLocationsOption": "All Locations"
+}

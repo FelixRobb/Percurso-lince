@@ -14,14 +14,19 @@
 <body>
     <header>
         <div class="container">
-            <h1>Percursos sonoros Lince-ibérico</h1>
+            <h1 id="header-title">Percursos sonoros Lince-ibérico</h1>
             <nav>
                 <a href="home.html" class="nav-button">Início</a>
                 <a href="map.html" class="nav-button active">Mapa</a>
                 <a href="recordings.html" class="nav-button">Gravações</a>
             </nav>
+            <select id="language-switcher">
+                <option value="pt">Português</option>
+                <option value="en">English</option>
+            </select>
         </div>
     </header>
+    
     <main>
         <div id="description">
             <p>Para ouvir as gravações, escolha um marcador no mapa. Poderá também escolher um dos trilhos, para destacar as gravações desses trilhos</p>
@@ -40,10 +45,11 @@
             <p>&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
         </div>
     </footer>
+    <script src="map.js"></script>
+    <script src="translations.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
-    <script src="map.js"></script>
 </body>
 </html>

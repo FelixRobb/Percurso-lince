@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Initialize the map and tile layer
     const map = L.map('map').setView([37.6364, -7.6673], 12.5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    // Add locate control
     L.control.locate().addTo(map);
+
+    // Create marker cluster group
     const markerCluster = L.markerClusterGroup().addTo(map);
 
     const locations = [
@@ -13,35 +18,48 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Vila de Mértola", lat: 37.6438, lng: -7.6604 }
     ];
 
-    function getQueryParams() {
-        const params = {};
-        const queryString = window.location.search.substring(1);
-        const regex = /([^&=]+)=([^&]*)/g;
-        let match;
-        while (match = regex.exec(queryString)) {
-            params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
-        }
-        return params;
-    }
-
-    const queryParams = getQueryParams();
-    console.log('Query Params:', queryParams);
-
-    if (queryParams.lat && queryParams.lng) {
-        const lat = parseFloat(queryParams.lat);
-        const lng = parseFloat(queryParams.lng);
-        map.setView([lat, lng], 15);
-    }
-
     const locationMarkers = {};
-    let previousPopup = null; // Store the previous popup content
-    let previousPopupLatLng = null; // Store the latLng of the previous popup
-    let previousAssociation = 'all'; // Track the last association shown
+    const trackLayers = {};
+    const trackBounds = {};
+    let previousPopup = null;
+    let previousPopupLatLng = null;
+    let previousAssociation = 'all';
 
+    // Function to populate the track select dropdown
+    const populateTrackSelect = () => {
+        const trackSelect = document.getElementById('trackSelect');
+        trackSelect.innerHTML = '';
+
+        const allTracksOption = document.createElement('option');
+        allTracksOption.value = 'all';
+        allTracksOption.textContent = 'All Locations';
+        trackSelect.appendChild(allTracksOption);
+
+        locations.forEach(location => {
+            const locationOption = document.createElement('option');
+            locationOption.value = location.name;
+            locationOption.textContent = location.name;
+            trackSelect.appendChild(locationOption);
+        });
+
+        Object.keys(trackLayers).forEach(trackName => {
+            if (trackLayers[trackName]) {
+                const trackOption = document.createElement('option');
+                trackOption.value = trackName;
+                trackOption.textContent = trackName;
+                trackSelect.appendChild(trackOption);
+            }
+        });
+    };
+
+    // Create markers and add them to the map
     locations.forEach(location => {
         const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
         marker.bindPopup(
-            `<button class="species-button" data-location="${location.name}">View Species</button>`
+            `<div class="placediv">
+            <h2 class="placepopup">${location.name}</h2>
+            <button class="species-button" data-location="${location.name}">View Species</button>
+            </div>`
         );
 
         marker.on('popupopen', () => {
@@ -53,17 +71,20 @@ document.addEventListener('DOMContentLoaded', () => {
         locationMarkers[location.name] = marker;
     });
 
-    const trackLayers = {};
-    const trackBounds = {};
-
+    // Load tracks and add them to the map
     const loadTrack = (trackFile, trackName) => {
         fetch(trackFile)
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+                return response.text();
+            })
             .then(gpxData => {
                 const gpxLayer = new L.GPX(gpxData, {
                     async: true,
                     polyline_options: {
-                        color: 'grey',
+                        color: 'red',
                         weight: 5,
                         opacity: 0.75
                     },
@@ -79,7 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     trackBounds[trackName] = bounds;
                     trackLayers[trackName] = e.target;
 
-                    console.log(`Track loaded: ${trackName}`);
+                    if (Object.keys(trackLayers).length === tracks.length) {
+                        populateTrackSelect();
+                        checkUrlParameters();
+                    }
                 });
 
                 gpxLayer.on('click', (e) => {
@@ -98,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tracks.forEach(track => loadTrack(track.file, track.name));
 
+    // Handle track selection from the dropdown
     const trackSelect = document.getElementById('trackSelect');
     trackSelect.addEventListener('change', (event) => {
         const selectedTrack = event.target.value;
@@ -108,18 +133,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (trackLayers[selectedTrack]) {
+        if (selectedTrack === 'all') {
+            map.setView([37.6364, -7.6673], 12.5);
+        } else if (trackLayers[selectedTrack]) {
             trackLayers[selectedTrack].setStyle({ color: 'red' });
             map.fitBounds(trackBounds[selectedTrack]);
 
             const middlePoint = trackBounds[selectedTrack].getCenter();
             showSpeciesList(selectedTrack, middlePoint);
+        } else if (locationMarkers[selectedTrack]) {
+            const marker = locationMarkers[selectedTrack];
+            map.setView(marker.getLatLng(), 15);
+        } else {
+            console.error(`Selected track or marker not found: ${selectedTrack}`);
         }
     });
 
+    let currentPopup = null;
+
     const showSpeciesList = (association, latLng) => {
         fetch('species.json')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 const filteredData = association === 'all' ? data : data.filter(bird => bird.association === association);
                 filteredData.sort((a, b) => {
@@ -135,28 +174,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
 
-                if (previousPopup) {
-                    previousPopup.remove();
+                if (currentPopup) {
+                    currentPopup.remove();
                 }
 
-                previousPopupLatLng = latLng;
-                previousAssociation = association;
-
                 if (latLng) {
-                    previousPopup = L.popup()
+                    currentPopup = L.popup()
                         .setLatLng(latLng)
                         .setContent(popupContent)
                         .openOn(map);
                 } else {
                     const location = locations.find(loc => loc.name === association);
                     if (location) {
-                        previousPopup = L.popup()
+                        currentPopup = L.popup()
                             .setLatLng([location.lat, location.lng])
                             .setContent(popupContent)
                             .openOn(map);
                         latLng = [location.lat, location.lng];
                     } else {
-                        previousPopup = L.popup()
+                        currentPopup = L.popup()
                             .setLatLng(map.getCenter())
                             .setContent(popupContent)
                             .openOn(map);
@@ -164,22 +200,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                document.querySelectorAll('.species-list li').forEach(item => {
-                    item.addEventListener('click', () => {
-                        const speciesName = item.dataset.species;
-                        const bird = data.find(bird => bird.name === speciesName);
-                        showSpeciesInfo(bird);
+                document.querySelectorAll('.speciesli').forEach(item => {
+                    item.addEventListener('click', (event) => {
+                        const speciesName = event.target.getAttribute('data-species');
+                        showSpeciesInfo(filteredData.find(bird => bird.name === speciesName), latLng);
                     });
                 });
             })
-            .catch(error => console.error('Error loading species list:', error));
+            .catch(error => console.error('Error loading species data:', error));
     };
 
     const showSpeciesInfo = (bird) => {
+        if (!bird) {
+            console.error('Species information is missing');
+            return;
+        }
+
         const popupContent =
             `<div class="SpeciesInfo">
                 <button id="backButton" class="back-button">Back to list</button>
                 <h2>${bird.name} (${bird.scientific_name})</h2>
+                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
                 <p>${bird.comenta}</p>
                 <p>${bird.description}</p>
                 <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
@@ -205,24 +246,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Handle URL parameters for track selection
     const checkUrlParameters = () => {
         const queryParams = new URLSearchParams(window.location.search);
         if (queryParams.has('lat') && queryParams.has('lng')) {
             const lat = parseFloat(queryParams.get('lat'));
             const lng = parseFloat(queryParams.get('lng'));
-            map.setView([lat, lng], 15);
+            if (!isNaN(lat) && !isNaN(lng)) {
+                map.setView([lat, lng], 15);
+            } else {
+                console.error('Invalid lat or lng URL parameters');
+            }
         } else if (queryParams.has('track')) {
             const trackName = decodeURIComponent(queryParams.get('track'));
-            if (trackBounds[trackName]) {
-                trackSelect.value = trackName;
+
+            for (const track in trackLayers) {
+                if (trackLayers[track]) {
+                    trackLayers[track].setStyle({ color: 'grey' });
+                }
+            }
+
+            if (trackLayers[trackName]) {
                 trackLayers[trackName].setStyle({ color: 'red' });
                 map.fitBounds(trackBounds[trackName]);
 
                 const middlePoint = trackBounds[trackName].getCenter();
                 showSpeciesList(trackName, middlePoint);
+            } else {
+                console.error(`Track not found: ${trackName}`);
             }
         }
     };
-
-    checkUrlParameters();
 });

@@ -1,0 +1,16 @@
+{
+  "header": "Percursos sonoros do lince ibérico",
+  "mapDescription": "Para ouvir as gravações, escolha um marcador no mapa. Poderá também escolher um dos trilhos, para destacar as gravações desses trilhos",
+  "selectLocation": "Escolher localização:",
+  "allLocations": "Todas as Localizações",
+  "speciesTitle": "Espécies em ${association}",
+  "speciesList": "Lista de espécies",
+  "bestMonths": "Melhores meses para ouvir:",
+  "author": "Magnus Robb",
+  "backButton": "Voltar à lista",
+  "searchPlaceholder": "Pesquisar por nome ou nome científico",
+  "searchButton": "Pesquisar",
+  "filterBySeason": "Organizar por época",
+  "filterByName": "Organizar por Nome",
+  "allLocationsOption": "Todas as Localizações"
+}
