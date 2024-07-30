@@ -4,46 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Percursos sonoros Lince-ibérico - Gravações</title>
+    <title data-translate="title">Percursos sonoros Lince-ibérico - Gravações</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="/icons/favicon.ico">
+    <script src="translations.js"></script>
 </head>
 
 <body>
     <header>
         <div class="container">
-            <h1>Percursos sonoros Lince-ibérico</h1>
+            <h1 data-translate="title">Percursos sonoros Lince-ibérico</h1>
             <nav>
-                <a href="home.html" class="nav-button">Início</a>
-                <a href="map.html" class="nav-button">Mapa</a>
-                <a href="recordings.html" class="nav-button active">Gravações</a>
+                <a href="home.html" class="nav-button" data-translate="home">Início</a>
+                <a href="map.html" class="nav-button" data-translate="map">Mapa</a>
+                <a href="recordings.html" class="nav-button active" data-translate="recordings">Gravações</a>
             </nav>
+            <button id="languageToggle" onclick="toggleLanguage()">EN/PT</button>
         </div>
     </header>
 
     <main>
         <div class="container">
             <div class="searchdiv">
-                <input type="text" id="search-input" placeholder="Search by name or scientific name">
-                <button id="search-button">Search</button>
+                <input type="text" id="search-input" data-translate-placeholder="searchPlaceholder">
+                <button id="search-button" data-translate="search">Search</button>
             </div>
             <div class="filtersdiv">
-            <div class="filter-options">
-                <button id="filter-season">Organizar por época</button>
-                <button id="filter-name">Organizar por Nome</button>
-            </div>
-            <div class="filterselectdiv">
-            <select id="filter-association">
-                <option value="">All Locations</option>
-            </select>
-            </div>
+                <div class="filter-options">
+                    <button id="filter-season" data-translate="organizeByMonth">Organizar por época</button>
+                    <button id="filter-name" data-translate="organizeByName">Organizar por Nome</button>
+                </div>
+                <div class="filterselectdiv">
+                    <select id="filter-association">
+                        <option value="" data-translate="allLocations">All Locations</option>
+                    </select>
+                </div>
             </div>
             <div id="recordings-list"></div>
         </div>
     </main>
     <footer>
         <div class="container">
-            <p>&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
+            <p data-translate="copyright">&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
         </div>
     </footer>
 

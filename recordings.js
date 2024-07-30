@@ -8,18 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let allBirds = [];
     let filteredBirds = [];
+    let currentLanguage = 'pt'; // Default language, adjust as needed
 
     fetch('species.json')
         .then(response => response.json())
         .then(birds => {
-            // Aggregate data to get unique species with averaged months
-            const aggregatedBirds = aggregateBirds(birds);
-            allBirds = sortByName(aggregatedBirds);
+            allBirds = aggregateBirds(birds);
             populateAssociationFilter(allBirds);
-            filteredBirds = allBirds; // Initialize filteredBirds
+            filteredBirds = allBirds;
             displayBirds(filteredBirds);
 
-            // Event listeners for filtering and search
             filterNameButton.addEventListener('click', () => {
                 filteredBirds = sortByName(filteredBirds);
                 displayBirds(filteredBirds);
@@ -30,21 +28,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayBirds(filteredBirds);
             });
 
-            searchButton.addEventListener('click', () => {
-                const query = searchInput.value.toLowerCase();
-                filteredBirds = allBirds.filter(bird =>
-                    (bird.association === filterAssociationSelect.value || filterAssociationSelect.value === '') &&
-                    (bird.name.toLowerCase().includes(query) || bird.scientific_name.toLowerCase().includes(query))
-                );
-                displayBirds(filteredBirds);
+            searchButton.addEventListener('click', performSearch);
+
+            searchInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
             });
 
             filterAssociationSelect.addEventListener('change', () => {
                 updateFilteredBirds();
                 displayBirds(filteredBirds);
             });
+
+            // Handle language change event
+            document.addEventListener('languageChanged', () => {
+                updatePageLanguage();
+                searchInput.placeholder = translate('searchPlaceholder');
+                populateAssociationFilter(allBirds);
+                filteredBirds = sortByName(filteredBirds);
+                displayBirds(filteredBirds);
+            });
         })
         .catch(error => console.error('Error loading bird data:', error));
+
+    function performSearch() {
+        const query = searchInput.value.toLowerCase();
+        filteredBirds = allBirds.filter(bird =>
+            (bird.association === filterAssociationSelect.value || filterAssociationSelect.value === '') &&
+            (bird.name.toLowerCase().includes(query) || 
+             bird.nameEN.toLowerCase().includes(query) || 
+             bird.scientific_name.toLowerCase().includes(query))
+        );
+        displayBirds(filteredBirds);
+    }
 
     function aggregateBirds(birds) {
         const uniqueBirds = {};
@@ -53,11 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!uniqueBirds[bird.name]) {
                 uniqueBirds[bird.name] = {
                     name: bird.name,
+                    nameEN: bird.nameEN,
                     scientific_name: bird.scientific_name,
                     most_probable_months: new Set(bird.most_probable_months),
                     association: bird.association,
-                    comenta: bird.comenta,
-                    description: bird.description,
+                    notasPT: bird.notasPT,
+                    notesEN: bird.notesEN,
+                    descricaoPT: bird.descricaoPT,
+                    descriptionEN: bird.descriptionEN,
                     sound_url: bird.sound_url
                 };
             } else {
@@ -72,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function averageMonths(months) {
-        // Assuming each month is equally weighted for simplicity
         return months.sort((a, b) => a.localeCompare(b));
     }
 
@@ -89,7 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const birdItem = document.createElement('div');
             birdItem.classList.add('bird-item');
             birdItem.innerHTML = `
-                <a href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
+                <a href="species.html?name=${encodeURIComponent(bird.name)}">
+                    ${currentLanguage === 'pt' ? bird.name : bird.nameEN} (${bird.scientific_name})
+                </a>
             `;
             recordingsList.appendChild(birdItem);
         });
@@ -97,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function populateAssociationFilter(birds) {
         const uniqueLocations = [...new Set(birds.map(bird => bird.association))];
-        filterAssociationSelect.innerHTML = '<option value="">Todas as Localizações</option>'; // Reset filter options
+        filterAssociationSelect.innerHTML = `<option value="">${translate('allLocations')}</option>`;
         uniqueLocations.forEach(location => {
             const option = document.createElement('option');
             option.value = location;
@@ -114,13 +135,39 @@ document.addEventListener('DOMContentLoaded', () => {
         const birdsThisMonth = birds.filter(bird => bird.most_probable_months.includes(currentMonth));
         const birdsNotThisMonth = birds.filter(bird => !bird.most_probable_months.includes(currentMonth));
 
-        birdsThisMonth.sort((a, b) => a.name.localeCompare(b.name));
-        birdsNotThisMonth.sort((a, b) => a.name.localeCompare(b.name));
+        birdsThisMonth.sort((a, b) => (currentLanguage === 'pt' ? a.name : a.nameEN).localeCompare(currentLanguage === 'pt' ? b.name : b.nameEN));
+        birdsNotThisMonth.sort((a, b) => (currentLanguage === 'pt' ? a.name : a.nameEN).localeCompare(currentLanguage === 'pt' ? b.name : b.nameEN));
 
         return birdsThisMonth.concat(birdsNotThisMonth);
     }
 
     function sortByName(birds) {
-        return birds.sort((a, b) => a.name.localeCompare(b.name));
+        return birds.sort((a, b) => {
+            const nameA = currentLanguage === 'pt' ? a.name : a.nameEN;
+            const nameB = currentLanguage === 'pt' ? b.name : b.nameEN;
+            return nameA.localeCompare(nameB);
+        });
+    }
+
+    function updatePageLanguage() {
+        // Implement language update logic here
+        // For example, you might update the `currentLanguage` variable based on user selection
+        currentLanguage = getCurrentLanguage(); // Replace with your actual method of getting the current language
+    }
+
+    function translate(key) {
+        // Implement translation logic here
+        // This function should return the translated string for the given key
+        // Example:
+        const translations = {
+            'searchPlaceholder': currentLanguage === 'pt' ? 'Procurar...' : 'Search...',
+            'allLocations': currentLanguage === 'pt' ? 'Todos os locais' : 'All locations'
+        };
+        return translations[key] || key;
+    }
+
+    function getCurrentLanguage() {
+        // Example implementation, replace with your actual logic
+        return 'pt'; // or 'en' or whatever language based on user selection
     }
 });

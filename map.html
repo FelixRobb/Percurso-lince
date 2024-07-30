@@ -3,31 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Percursos sonoros Lince-ibérico - Mapa</title>
+    <title data-translate="title">Percursos sonoros Lince-ibérico</title>
     <link rel="icon" type="image/x-icon" href="/icons/favicon.ico">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster/dist/MarkerCluster.Default.css" />
     <link rel="stylesheet" href="styles.css">
+    <script src="translations.js"></script>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>Percursos sonoros Lince-ibérico</h1>
+            <h1 data-translate="title">Percursos sonoros Lince-ibérico</h1>
             <nav>
-                <a href="home.html" class="nav-button">Início</a>
-                <a href="map.html" class="nav-button active">Mapa</a>
-                <a href="recordings.html" class="nav-button">Gravações</a>
+                <a href="home.html" class="nav-button" data-translate="home">Início</a>
+                <a href="map.html" class="nav-button active" data-translate="map">Mapa</a>
+                <a href="recordings.html" class="nav-button" data-translate="recordings">Gravações</a>
             </nav>
+            <button id="languageToggle" onclick="toggleLanguage()">EN/PT</button>
         </div>
     </header>
     <main>
         <div id="description">
-            <p>Para ouvir as gravações, escolha um marcador no mapa. Poderá também escolher um dos trilhos, para destacar as gravações desses trilhos</p>
+            <p data-translate="description">Para ouvir as gravações, escolha um marcador no mapa. Poderá também escolher um dos trilhos, para destacar as gravações desses trilhos</p>
         </div>
         <section id="controls">
-            <label for="trackSelect">Select location:</label>
+            <label for="trackSelect" data-translate="selectLocation">Select location:</label>
             <select id="trackSelect">
             </select>
         </section>
@@ -37,7 +39,7 @@
     </main>
     <footer>
         <div class="container">
-            <p>&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
+            <p data-translate="copyright">&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
         </div>
     </footer>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

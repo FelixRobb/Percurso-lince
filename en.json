@@ -1,0 +1,19 @@
+{
+    "title": "Iberian Lynx Sound Routes",
+    "home": "Home",
+    "map": "Map",
+    "recordings": "Recordings",
+    "description": "To listen to the recordings, choose a marker on the map. You can also choose one of the trails to highlight the recordings from those trails",
+    "selectLocation": "Select location:",
+    "allLocations": "All Locations",
+    "searchPlaceholder": "Search by name or scientific name",
+    "search": "Search",
+    "organizeByMonth": "Organize by season",
+    "organizeByName": "Organize by Name",
+    "otherLocations": "Other Locations",
+    "noDetailsFound": "No details found for species:",
+    "comments": "Comments:",
+    "bestMonths": "Best months to listen:",
+    "location": "Location:",
+    "copyright": "© 2024 Iberian Lynx Sound Routes. All rights reserved."
+  }

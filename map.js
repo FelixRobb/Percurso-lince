@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // Initialize the map and tile layer
     const map = L.map('map').setView([37.6364, -7.6673], 12.5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const allTracksOption = document.createElement('option');
         allTracksOption.value = 'all';
-        allTracksOption.textContent = 'All Locations';
+        allTracksOption.textContent = translate('allLocations');
         trackSelect.appendChild(allTracksOption);
 
         locations.forEach(location => {
@@ -58,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         marker.bindPopup(
             `<div class="placediv">
             <h2 class="placepopup">${location.name}</h2>
-            <button class="species-button" data-location="${location.name}">View Species</button>
+            <button class="species-button" data-location="${location.name}">${translate('viewSpecies')}</button>
             </div>`
         );
 
@@ -167,10 +166,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     return dateA - dateB;
                 });
 
-                const speciesList = filteredData.map(bird => `<li data-species="${bird.name}" class="speciesli">${bird.name}</li>`).join('');
+                const speciesList = filteredData.map(bird => `<li data-species="${bird.name}" class="speciesli">${currentLanguage === 'pt' ? bird.name : bird.nameEN}</li>`).join('');
                 const popupContent =
                     `<div class="speciesdiv">
-                        <h2>Species at ${association}</h2>
+                        <h2>${translate('speciesAt')} ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
 
@@ -210,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error loading species data:', error));
     };
 
-    const showSpeciesInfo = (bird) => {
+    const showSpeciesInfo = (bird, latLng) => {
         if (!bird) {
             console.error('Species information is missing');
             return;
@@ -218,12 +217,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const popupContent =
             `<div class="SpeciesInfo">
-                <button id="backButton" class="back-button">Back to list</button>
-                <h2>${bird.name} (${bird.scientific_name})</h2>
-                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
-                <p>${bird.notasPT}</p>
-                <p>${bird.descricaoPT}</p>
-                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
+                <button id="backButton" class="back-button">${translate('back')}</button>
+                <h2>${currentLanguage === 'pt' ? bird.name : bird.nameEN} (${bird.scientific_name})</h2>
+                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird.name)}">${currentLanguage === 'pt' ? bird.name : bird.nameEN} (${bird.scientific_name})</a>
+                <p>${currentLanguage === 'pt' ? bird.notasPT : bird.notesEN}</p>
+                <p>${currentLanguage === 'pt' ? bird.descricaoPT : bird.descriptionEN}</p>
+                <p><strong>${translate('bestMonths')}</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
                 ${bird.sound_url}
                 </div>
@@ -234,9 +233,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         previousPopup = L.popup()
-            .setLatLng(previousPopupLatLng || map.getCenter())
+            .setLatLng(latLng || map.getCenter())
             .setContent(popupContent)
             .openOn(map);
+
+        previousPopupLatLng = latLng;
+        previousAssociation = bird.association;
 
         document.querySelector('#backButton').addEventListener('click', () => {
             if (previousPopup) {
@@ -277,4 +279,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
+
+    // Update language-specific content when language changes
+    document.addEventListener('languageChanged', () => {
+        updatePageLanguage();
+        populateTrackSelect();
+        if (currentPopup) {
+            currentPopup.remove();
+            showSpeciesList(previousAssociation, previousPopupLatLng);
+        }
+    });
 });
