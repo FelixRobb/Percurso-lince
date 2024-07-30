@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a class="specieslink" href="species.html?name=${encodeURIComponent(bird.name)}">${currentLanguage === 'pt' ? bird.name : bird.nameEN} (${bird.scientific_name})</a>
                 <p>${currentLanguage === 'pt' ? bird.notasPT : bird.notesEN}</p>
                 <p>${currentLanguage === 'pt' ? bird.descricaoPT : bird.descriptionEN}</p>
-                <p><strong>${translate('bestMonths')}</strong> ${bird.most_probable_months.join(', ')}</p>
+                <p><strong>${translate('bestMonths')}:</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
                 ${bird.sound_url}
                 </div>
