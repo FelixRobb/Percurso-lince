@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 details.innerHTML = `
                     <h2>${entry.name} (${entry.scientific_name})</h2>
-                    <p class="description">${entry.description}</p>
-                    <p class="comments"><strong>Comments:</strong> ${entry.comenta}</p>
+                    <p class="description">${entry.descricaoPT}</p>
+                    <p class="comments"><strong>Comments:</strong> ${entry.notasPT}</p>
                     <p class="months"><strong>Best months to listen:</strong> ${entry.most_probable_months.join(', ')}</p>
                     <div class="sound-url">${entry.sound_url}</div>
                     <p class="location"><strong>Location:</strong> <a href="${locationUrl}">${entry.association}</a></p>
