@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize the map and tile layer
-    const map = L.map('map').setView([37.6364, -7.6673], 12.5);
+    const map = L.map('map').setView([37.6364, -7.6690], 10.5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -167,7 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     return dateA - dateB;
                 });
 
-                const speciesList = filteredData.map(bird => `<li data-species="${bird.name}" class="speciesli">${bird.name}</li>`).join('');
+                const speciesList = filteredData.map(bird => `<li data-species="${bird['nome-PT']}" class="speciesli">${bird['nome-PT']}</li>`).join('');
+
                 const popupContent =
                     `<div class="speciesdiv">
                         <h2>Species at ${association}</h2>
@@ -203,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.speciesli').forEach(item => {
                     item.addEventListener('click', (event) => {
                         const speciesName = event.target.getAttribute('data-species');
-                        showSpeciesInfo(filteredData.find(bird => bird.name === speciesName), latLng);
+                        showSpeciesInfo(filteredData.find(bird => bird['nome-PT'] === speciesName), latLng);
                     });
                 });
             })
@@ -215,29 +216,31 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Species information is missing');
             return;
         }
-
+    
+        console.log('Bird object:', bird);  // Add this line for debugging
+    
         const popupContent =
             `<div class="SpeciesInfo">
                 <button id="backButton" class="back-button">Back to list</button>
-                <h2>${bird.name} (${bird.scientific_name})</h2>
-                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
-                <p>${bird.notasPT}</p>
-                <p>${bird.descricaoPT}</p>
+                <h2>${bird['nome-PT']} (${bird.scientific_name})</h2>
+                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird['nome-PT'])}">${bird['nome-PT']} (${bird.scientific_name})</a>
+                <p>${bird['notas-PT']}</p>
+                <p>${bird['descricao-PT']}</p>
                 <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
                 ${bird.sound_url}
                 </div>
             </div>`;
-
+    
         if (previousPopup) {
             previousPopup.remove();
         }
-
+    
         previousPopup = L.popup()
             .setLatLng(previousPopupLatLng || map.getCenter())
             .setContent(popupContent)
             .openOn(map);
-
+    
         document.querySelector('#backButton').addEventListener('click', () => {
             if (previousPopup) {
                 previousPopup.remove();
@@ -245,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
+    
 
     // Handle URL parameters for track selection
     const checkUrlParameters = () => {

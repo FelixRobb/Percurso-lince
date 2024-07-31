@@ -12,14 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('species.json')
         .then(response => response.json())
         .then(birds => {
-            // Aggregate data to get unique species with averaged months
             const aggregatedBirds = aggregateBirds(birds);
             allBirds = sortByName(aggregatedBirds);
-            populateAssociationFilter(allBirds);
             filteredBirds = allBirds; // Initialize filteredBirds
+            populateAssociationFilter(allBirds);
             displayBirds(filteredBirds);
 
-            // Event listeners for filtering and search
             filterNameButton.addEventListener('click', () => {
                 filteredBirds = sortByName(filteredBirds);
                 displayBirds(filteredBirds);
@@ -31,10 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             searchButton.addEventListener('click', () => {
+                updateFilteredBirds(); // Apply association filter
                 const query = searchInput.value.toLowerCase();
-                filteredBirds = allBirds.filter(bird =>
-                    (bird.association === filterAssociationSelect.value || filterAssociationSelect.value === '') &&
-                    (bird.name.toLowerCase().includes(query) || bird.scientific_name.toLowerCase().includes(query))
+                filteredBirds = filteredBirds.filter(bird =>
+                    bird.name.toLowerCase().includes(query) || bird.scientific_name.toLowerCase().includes(query)
                 );
                 displayBirds(filteredBirds);
             });
@@ -50,18 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const uniqueBirds = {};
 
         birds.forEach(bird => {
-            if (!uniqueBirds[bird.name]) {
-                uniqueBirds[bird.name] = {
-                    name: bird.name,
+            if (!uniqueBirds[bird['nome-PT']]) {
+                uniqueBirds[bird['nome-PT']] = {
+                    name: bird['nome-PT'],
                     scientific_name: bird.scientific_name,
                     most_probable_months: new Set(bird.most_probable_months),
                     association: bird.association,
-                    comenta: bird.comenta,
-                    description: bird.description,
+                    comenta: bird['notas-PT'],
+                    description: bird['descricao-PT'],
                     sound_url: bird.sound_url
                 };
             } else {
-                bird.most_probable_months.forEach(month => uniqueBirds[bird.name].most_probable_months.add(month));
+                bird.most_probable_months.forEach(month => uniqueBirds[bird['nome-PT']].most_probable_months.add(month));
             }
         });
 
@@ -72,15 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function averageMonths(months) {
-        // Assuming each month is equally weighted for simplicity
         return months.sort((a, b) => a.localeCompare(b));
     }
 
     function updateFilteredBirds() {
         const selectedLocation = filterAssociationSelect.value;
-        filteredBirds = selectedLocation
-            ? allBirds.filter(bird => bird.association === selectedLocation)
-            : allBirds;
+        filteredBirds = allBirds.filter(bird =>
+            selectedLocation === '' || bird.association === selectedLocation
+        );
     }
 
     function displayBirds(birds) {
