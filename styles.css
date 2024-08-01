@@ -11,7 +11,7 @@ header {
     text-align: center;
     background: transparent;
     position: sticky;
-    top: 10px;
+    top: 0px;
     margin: 0 auto;
     z-index: 2000;
 
