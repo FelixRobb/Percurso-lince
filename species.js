@@ -22,8 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Extract the species name from the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const speciesName = urlParams.get('name');
-    
+
     console.log('Species name from URL:', speciesName);
+    document.title = speciesName;
 
     // Fetch bird data and filter for the selected species
     fetch('species.json')
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(birds => {
             console.log('Birds data received:', birds);
             const speciesEntries = birds.filter(bird => bird['nome-PT'] === speciesName);
-            
+
             console.log('Filtered species entries:', speciesEntries);
 
             if (speciesEntries.length === 0) {
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.addEventListener('click', (event) => {
                     const index = event.target.getAttribute('data-index');
                     console.log('Sidebar item clicked:', event.target.textContent, 'Index:', index);
-                    
+
                     document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
                     event.target.classList.add('active');
                     displayDetails(speciesEntries[index]);
@@ -86,15 +87,21 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error loading species data:', error));
 
-    // Toggle the sidebar collapse/expand
+    // Add event listener to toggle button to open sidebar
     toggleButton.addEventListener('click', () => {
-        console.log('Toggle button clicked');
-        sidebar.classList.toggle('visible');
+        console.log('button pressed')
+        sidebar.classList.add('visible');
     });
 
-    // Close the sidebar when the close button is clicked
+    // Add event listener to close button to close sidebar
     closeButton.addEventListener('click', () => {
-        console.log('Close button clicked');
         sidebar.classList.remove('visible');
+    });
+
+    // Add event listener to document to close sidebar when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+            sidebar.classList.remove('visible');
+        }
     });
 });
