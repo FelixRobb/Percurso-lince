@@ -13,17 +13,24 @@
 <body>
     <main>
         <header>
-            <div class="imagebg">
-            <div class="head">
             <h1>Percursos sonoros Lince-ibérico</h1>
-            <nav>
-                <a href="home.html" class="nav-button active">Início</a>
+            <nav id="main-nav">
+                <a href="home.html" class="nav-button">Início</a>
                 <a href="map.html" class="nav-button">Mapa</a>
                 <a href="recordings.html" class="nav-button">Gravações</a>
             </nav>
-        </div>
-    </div>
+            <div id="menu-icon">
+                <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Hamburger icon -->
+            </div>
         </header>
+        
+        <!-- Side Menu -->
+        <div id="side-menu">
+            <a href="home.html">Início</a>
+            <a href="map.html">Mapa</a>
+            <a href="recordings.html">Gravações</a>
+        </div>
+        
         <div class="indexcont" id="content">
             <div class="card-container">
                 <div class="card">
@@ -293,6 +300,7 @@
         </div>
     </footer>
     <script src="infopopup.js"></script>
+    <script src="menu.js"></script>
 </body>
 
 </html>

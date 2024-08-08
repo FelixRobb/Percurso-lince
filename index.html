@@ -12,17 +12,24 @@
 
 <body>
     <header>
-        <div class="imagebg">
-        <div class="head">
         <h1>Percursos sonoros Lince-ibérico</h1>
-        <nav>
+        <nav id="main-nav">
             <a href="home.html" class="nav-button">Início</a>
             <a href="map.html" class="nav-button">Mapa</a>
             <a href="recordings.html" class="nav-button">Gravações</a>
         </nav>
-    </div>
-</div>
+        <div id="menu-icon">
+            <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Hamburger icon -->
+        </div>
     </header>
+    
+    <!-- Side Menu -->
+    <div id="side-menu">
+        <a href="home.html">Início</a>
+        <a href="map.html">Mapa</a>
+        <a href="recordings.html">Gravações</a>
+    </div>
+    
     <main>
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -61,7 +68,19 @@
             <p>&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        function toggleMenu() {
+    var sideMenu = document.getElementById("side-menu");
+    if (sideMenu.style.width === "250px") {
+        sideMenu.style.width = "0";
+    } else {
+        sideMenu.style.width = "250px";
+    }
+}
+
+    </script>
     <script src="popup.js"></script>
+    <script src="menu.js"></script>
 </body>
 
 </html>
