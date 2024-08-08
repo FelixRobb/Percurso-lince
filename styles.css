@@ -38,9 +38,10 @@ header h1 {
     background: transparent;
     background: rgba(0, 0, 0, 0.4);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     border-radius: 50px;
-    padding: 20px;
+    padding: 10px;
     overflow-x: hidden;
     margin: 0px;
     background-position: center;
@@ -53,6 +54,7 @@ header h1 {
         font-size: 1rem;
         padding: 3vw;
         border-radius: 18px;
+        flex-direction: column;
     }   
 
     .imagebg{

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize the map and tile layer
-    const map = L.map('map').setView([37.6364, -7.6690], 10.5);
+    const map = L.map('map').setView([37.6364, -7.6690], 11);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         marker.on('popupopen', () => {
             document.querySelector('.species-button').addEventListener('click', () => {
+                previousPopupLatLng = [location.lat, location.lng];  // Store the location
                 showSpeciesList(location.name, [location.lat, location.lng]);
             });
         });
@@ -108,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 gpxLayer.on('click', (e) => {
                     const latLng = e.latlng;
+                    previousPopupLatLng = latLng;  // Store the location
                     showSpeciesList(trackName, latLng);
                 });
             })
@@ -140,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
             map.fitBounds(trackBounds[selectedTrack]);
 
             const middlePoint = trackBounds[selectedTrack].getCenter();
+            previousPopupLatLng = middlePoint;  // Store the location
             showSpeciesList(selectedTrack, middlePoint);
         } else if (locationMarkers[selectedTrack]) {
             const marker = locationMarkers[selectedTrack];
@@ -166,59 +169,52 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dateB = new Date(`2024-${b.most_probable_months[0]}`);
                     return dateA - dateB;
                 });
-
+    
                 const speciesList = filteredData.map(bird => `<li data-species="${bird['nome-PT']}" class="speciesli">${bird['nome-PT']}</li>`).join('');
-
+    
                 const popupContent =
                     `<div class="speciesdiv">
                         <h2>Species at ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
-
+    
+    
                 if (currentPopup) {
                     currentPopup.remove();
                 }
-
-                if (latLng) {
+    
+                // Ensure latLng is an object with lat and lng properties
+                let latLngObj = Array.isArray(latLng) ? { lat: latLng[0], lng: latLng[1] } : latLng;
+    
+                if (latLngObj && latLngObj.lat !== undefined && latLngObj.lng !== undefined) {
+                    console.log(`Opening popup at latLng: ${latLngObj.lat}, ${latLngObj.lng}`);
                     currentPopup = L.popup()
-                        .setLatLng(latLng)
+                        .setLatLng(latLngObj)
                         .setContent(popupContent)
                         .openOn(map);
                 } else {
-                    const location = locations.find(loc => loc.name === association);
-                    if (location) {
-                        currentPopup = L.popup()
-                            .setLatLng([location.lat, location.lng])
-                            .setContent(popupContent)
-                            .openOn(map);
-                        latLng = [location.lat, location.lng];
-                    } else {
-                        currentPopup = L.popup()
-                            .setLatLng(map.getCenter())
-                            .setContent(popupContent)
-                            .openOn(map);
-                        latLng = map.getCenter();
-                    }
+                    console.error('Invalid latLng value:', latLng);
                 }
-
+    
                 document.querySelectorAll('.speciesli').forEach(item => {
                     item.addEventListener('click', (event) => {
                         const speciesName = event.target.getAttribute('data-species');
-                        showSpeciesInfo(filteredData.find(bird => bird['nome-PT'] === speciesName), latLng);
+                        showSpeciesInfo(filteredData.find(bird => bird['nome-PT'] === speciesName));
                     });
                 });
             })
             .catch(error => console.error('Error loading species data:', error));
     };
+    
 
     const showSpeciesInfo = (bird) => {
         if (!bird) {
             console.error('Species information is missing');
             return;
         }
-    
+
         console.log('Bird object:', bird);  // Add this line for debugging
-    
+
         const popupContent =
             `<div class="SpeciesInfo">
                 <button id="backButton" class="back-button">Back to list</button>
@@ -231,16 +227,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${bird.sound_url}
                 </div>
             </div>`;
-    
+
         if (previousPopup) {
             previousPopup.remove();
         }
-    
-        previousPopup = L.popup()
-            .setLatLng(previousPopupLatLng || map.getCenter())
-            .setContent(popupContent)
-            .openOn(map);
-    
+
+        if (previousPopupLatLng) {
+            console.log(`Opening species info at previous latLng: ${previousPopupLatLng.lat}, ${previousPopupLatLng.lng}`);
+            previousPopup = L.popup()
+                .setLatLng(previousPopupLatLng)
+                .setContent(popupContent)
+                .openOn(map);
+        } else {
+            console.error('previousPopupLatLng is undefined');
+        }
+
         document.querySelector('#backButton').addEventListener('click', () => {
             if (previousPopup) {
                 previousPopup.remove();
@@ -248,7 +249,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-    
 
     // Handle URL parameters for track selection
     const checkUrlParameters = () => {
@@ -275,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 map.fitBounds(trackBounds[trackName]);
 
                 const middlePoint = trackBounds[trackName].getCenter();
+                previousPopupLatLng = middlePoint;  // Store the location
                 showSpeciesList(trackName, middlePoint);
             } else {
                 console.error(`Track not found: ${trackName}`);
