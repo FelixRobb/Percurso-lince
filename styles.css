@@ -24,7 +24,7 @@ header {
 }
 
 .mapbody {
-    max-height: 100vh;
+    height: 100vh;
 }
 
 header h1 {
@@ -126,12 +126,14 @@ nav a:hover {
     background-color: #1e90ff;
 }
 
+
+
 #map-container {
     margin: 0;
 }
 
 #map {
-    height: 70vh;
+    height: 80vh;
     max-width: 1200px;
     margin: 0 auto;
 }
