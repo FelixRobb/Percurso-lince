@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const setMapHeight = () => {
+        const headerHeight = document.querySelector('header').offsetHeight;
+        const controlsHeight = document.querySelector('#controls').offsetHeight;
+        const availableHeight = window.innerHeight - headerHeight - controlsHeight;
+
+        document.querySelector('#map').style.height = `${availableHeight - 10}px`;
+    };
+
+    // Call setMapHeight on load and resize events
+    setMapHeight();
+    window.addEventListener('resize', setMapHeight);
 
     // Initialize the map and tile layer
     const map = L.map('map').setView([37.6364, -7.6690], 11);

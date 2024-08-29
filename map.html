@@ -47,5 +47,15 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
     <script src="map.js"></script>
     <script src="menu.js"></script>
+    <script>
+        function setBodyHeight() {
+            document.body.style.height = `${window.innerHeight}px`;
+        }
+
+        // Set the height on load and when the window is resized/orientation changes
+        window.addEventListener('load', setBodyHeight);
+        window.addEventListener('resize', setBodyHeight);
+        window.addEventListener('orientationchange', setBodyHeight);
+    </script>
 </body>
 </html>
