@@ -28,14 +28,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayBirds(filteredBirds);
             });
 
-            searchButton.addEventListener('click', () => {
-                updateFilteredBirds(); // Apply association filter
-                const query = searchInput.value.toLowerCase();
-                filteredBirds = filteredBirds.filter(bird =>
-                    bird.name.toLowerCase().includes(query) || bird.scientific_name.toLowerCase().includes(query)
-                );
-                displayBirds(filteredBirds);
-            });
+            searchInput.addEventListener('input', () => {
+    updateFilteredBirds(); // Apply association filter
+    const query = removeAccents(searchInput.value.toLowerCase());
+
+    filteredBirds = filteredBirds.filter(bird => {
+        const birdName = removeAccents(bird.name.toLowerCase());
+        const birdScientificName = removeAccents(bird.scientific_name.toLowerCase());
+
+        // Prioritize matches at the beginning of words
+        return (
+            birdName.startsWith(query) || 
+            birdScientificName.startsWith(query) || 
+            birdName.includes(query) || 
+            birdScientificName.includes(query)
+        );
+    });
+
+    // Sort birds to prioritize those with names that start with the query
+    filteredBirds.sort((a, b) => {
+        const birdNameA = removeAccents(a.name.toLowerCase());
+        const birdNameB = removeAccents(b.name.toLowerCase());
+
+        const startsWithQueryA = birdNameA.startsWith(query);
+        const startsWithQueryB = birdNameB.startsWith(query);
+
+        if (startsWithQueryA && !startsWithQueryB) return -1;
+        if (!startsWithQueryA && startsWithQueryB) return 1;
+        return birdNameA.localeCompare(birdNameB);
+    });
+
+    displayBirds(filteredBirds);
+});
+
+function removeAccents(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
 
             filterAssociationSelect.addEventListener('change', () => {
                 updateFilteredBirds();
