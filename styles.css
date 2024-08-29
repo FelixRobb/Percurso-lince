@@ -99,9 +99,6 @@ header h1 {
         height: 40px;
     }
     
-    #map-container { 
-        height: calc(100dvh - 40px);
-    }
 }
 
 
