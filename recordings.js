@@ -5,95 +5,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const searchButton = document.getElementById('search-button');
     const filterAssociationSelect = document.getElementById('filter-association');
+    const filterTypeSelect = document.getElementById('filter-type');
+    const filterTimeSelect = document.getElementById('filter-time');
 
-    let allBirds = [];
-    let filteredBirds = [];
+    let allSpecies = [];
+    let filteredSpecies = [];
 
     fetch('species.json')
         .then(response => response.json())
-        .then(birds => {
-            const aggregatedBirds = aggregateBirds(birds);
-            allBirds = sortByName(aggregatedBirds);
-            filteredBirds = allBirds; // Initialize filteredBirds
-            populateAssociationFilter(allBirds);
-            displayBirds(filteredBirds);
+        .then(species => {
+            const aggregatedSpecies = aggregateSpecies(species);
+            allSpecies = sortByName(aggregatedSpecies);
+            filteredSpecies = allSpecies; // Initialize filteredSpecies
+            populateAssociationFilter(allSpecies);
+            populateTypeFilter(allSpecies);
+            populateTimeFilter(allSpecies);
+            displaySpecies(filteredSpecies);
 
             filterNameButton.addEventListener('click', () => {
-                filteredBirds = sortByName(filteredBirds);
-                displayBirds(filteredBirds);
+                filteredSpecies = sortByName(filteredSpecies);
+                displaySpecies(filteredSpecies);
             });
 
             filterMonthButton.addEventListener('click', () => {
-                filteredBirds = sortByMonth(filteredBirds);
-                displayBirds(filteredBirds);
+                filteredSpecies = sortByMonth(filteredSpecies);
+                displaySpecies(filteredSpecies);
             });
 
             searchInput.addEventListener('input', () => {
-    updateFilteredBirds(); // Apply association filter
-    const query = removeAccents(searchInput.value.toLowerCase());
-
-    filteredBirds = filteredBirds.filter(bird => {
-        const birdName = removeAccents(bird.name.toLowerCase());
-        const birdScientificName = removeAccents(bird.scientific_name.toLowerCase());
-
-        // Prioritize matches at the beginning of words
-        return (
-            birdName.startsWith(query) || 
-            birdScientificName.startsWith(query) || 
-            birdName.includes(query) || 
-            birdScientificName.includes(query)
-        );
-    });
-
-    // Sort birds to prioritize those with names that start with the query
-    filteredBirds.sort((a, b) => {
-        const birdNameA = removeAccents(a.name.toLowerCase());
-        const birdNameB = removeAccents(b.name.toLowerCase());
-
-        const startsWithQueryA = birdNameA.startsWith(query);
-        const startsWithQueryB = birdNameB.startsWith(query);
-
-        if (startsWithQueryA && !startsWithQueryB) return -1;
-        if (!startsWithQueryA && startsWithQueryB) return 1;
-        return birdNameA.localeCompare(birdNameB);
-    });
-
-    displayBirds(filteredBirds);
-});
-
-function removeAccents(str) {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
+                updateFilteredSpecies(); // Apply association, type, and time filters
+                const query = searchInput.value.toLowerCase();
+                filteredSpecies = filteredSpecies.filter(species =>
+                    species.name.toLowerCase().includes(query) || species.scientific_name.toLowerCase().includes(query)
+                );
+                displaySpecies(filteredSpecies);
+            });
 
             filterAssociationSelect.addEventListener('change', () => {
-                updateFilteredBirds();
-                displayBirds(filteredBirds);
+                updateFilteredSpecies();
+                displaySpecies(filteredSpecies);
+            });
+
+            filterTypeSelect.addEventListener('change', () => {
+                updateFilteredSpecies();
+                displaySpecies(filteredSpecies);
+            });
+
+            filterTimeSelect.addEventListener('change', () => {
+                updateFilteredSpecies();
+                displaySpecies(filteredSpecies);
             });
         })
-        .catch(error => console.error('Error loading bird data:', error));
+        .catch(error => console.error('Error loading species data:', error));
 
-    function aggregateBirds(birds) {
-        const uniqueBirds = {};
+    function aggregateSpecies(species) {
+        const uniqueSpecies = {};
 
-        birds.forEach(bird => {
-            if (!uniqueBirds[bird['nome-PT']]) {
-                uniqueBirds[bird['nome-PT']] = {
-                    name: bird['nome-PT'],
-                    scientific_name: bird.scientific_name,
-                    most_probable_months: new Set(bird.most_probable_months),
-                    association: bird.association,
-                    comenta: bird['notas-PT'],
-                    description: bird['descricao-PT'],
-                    sound_url: bird.sound_url
+        species.forEach(species => {
+            if (!uniqueSpecies[species['nome-PT']]) {
+                uniqueSpecies[species['nome-PT']] = {
+                    name: species['nome-PT'],
+                    scientific_name: species.scientific_name,
+                    most_probable_months: new Set(species.most_probable_months),
+                    association: species.association,
+                    group_PT: species['grupo-PT'],
+                    quando_PT: species['quando-PT'],
+                    comenta: species['notas-PT'],
+                    description: species['descricao-PT'],
+                    sound_url: species.sound_url
                 };
             } else {
-                bird.most_probable_months.forEach(month => uniqueBirds[bird['nome-PT']].most_probable_months.add(month));
+                species.most_probable_months.forEach(month => uniqueSpecies[species['nome-PT']].most_probable_months.add(month));
             }
         });
 
-        return Object.values(uniqueBirds).map(bird => ({
-            ...bird,
-            most_probable_months: averageMonths([...bird.most_probable_months])
+        return Object.values(uniqueSpecies).map(species => ({
+            ...species,
+            most_probable_months: averageMonths([...species.most_probable_months])
         }));
     }
 
@@ -101,27 +89,32 @@ function removeAccents(str) {
         return months.sort((a, b) => a.localeCompare(b));
     }
 
-    function updateFilteredBirds() {
+    function updateFilteredSpecies() {
         const selectedLocation = filterAssociationSelect.value;
-        filteredBirds = allBirds.filter(bird =>
-            selectedLocation === '' || bird.association === selectedLocation
+        const selectedType = filterTypeSelect.value;
+        const selectedTime = filterTimeSelect.value;
+
+        filteredSpecies = allSpecies.filter(species =>
+            (selectedLocation === '' || species.association === selectedLocation) &&
+            (selectedType === '' || species.group_PT === selectedType) &&
+            (selectedTime === '' || species.quando_PT === selectedTime)
         );
     }
 
-    function displayBirds(birds) {
+    function displaySpecies(species) {
         recordingsList.innerHTML = '';
-        birds.forEach(bird => {
-            const birdItem = document.createElement('div');
-            birdItem.classList.add('bird-item');
-            birdItem.innerHTML = `
-                <a href="species.html?name=${encodeURIComponent(bird.name)}">${bird.name} (${bird.scientific_name})</a>
+        species.forEach(species => {
+            const speciesItem = document.createElement('div');
+            speciesItem.classList.add('bird-item');
+            speciesItem.innerHTML = `
+                <a href="species.html?name=${encodeURIComponent(species.name)}">${species.name} (${species.scientific_name})</a>
             `;
-            recordingsList.appendChild(birdItem);
+            recordingsList.appendChild(speciesItem);
         });
     }
 
-    function populateAssociationFilter(birds) {
-        const uniqueLocations = [...new Set(birds.map(bird => bird.association))];
+    function populateAssociationFilter(species) {
+        const uniqueLocations = [...new Set(species.map(species => species.association))];
         filterAssociationSelect.innerHTML = '<option value="">Todas as Localizações</option>'; // Reset filter options
         uniqueLocations.forEach(location => {
             const option = document.createElement('option');
@@ -131,21 +124,43 @@ function removeAccents(str) {
         });
     }
 
-    function sortByMonth(birds) {
+    function populateTypeFilter(species) {
+        const uniqueTypes = [...new Set(species.map(species => species.group_PT))];
+        filterTypeSelect.innerHTML = '<option value="">Classe Animal</option>'; // Reset filter options
+        uniqueTypes.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type;
+            filterTypeSelect.appendChild(option);
+        });
+    }
+
+    function populateTimeFilter(species) {
+        const uniqueTimes = [...new Set(species.map(species => species.quando_PT))];
+        filterTimeSelect.innerHTML = '<option value="">Hora do dia</option>'; // Reset filter options
+        uniqueTimes.forEach(time => {
+            const option = document.createElement('option');
+            option.value = time;
+            option.textContent = time;
+            filterTimeSelect.appendChild(option);
+        });
+    }
+
+    function sortByMonth(species) {
         const monthNames = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
         const currentMonthIndex = new Date().getMonth();
         const currentMonth = monthNames[currentMonthIndex];
 
-        const birdsThisMonth = birds.filter(bird => bird.most_probable_months.includes(currentMonth));
-        const birdsNotThisMonth = birds.filter(bird => !bird.most_probable_months.includes(currentMonth));
+        const speciesThisMonth = species.filter(species => species.most_probable_months.includes(currentMonth));
+        const speciesNotThisMonth = species.filter(species => !species.most_probable_months.includes(currentMonth));
 
-        birdsThisMonth.sort((a, b) => a.name.localeCompare(b.name));
-        birdsNotThisMonth.sort((a, b) => a.name.localeCompare(b.name));
+        speciesThisMonth.sort((a, b) => a.name.localeCompare(b.name));
+        speciesNotThisMonth.sort((a, b) => a.name.localeCompare(b.name));
 
-        return birdsThisMonth.concat(birdsNotThisMonth);
+        return speciesThisMonth.concat(speciesNotThisMonth);
     }
 
-    function sortByName(birds) {
-        return birds.sort((a, b) => a.name.localeCompare(b.name));
+    function sortByName(species) {
+        return species.sort((a, b) => a.name.localeCompare(b.name));
     }
 });
