@@ -17,12 +17,12 @@ body {
 .modal-content {
     color: #000000;
     background-color: #efefef;
-    margin: 5% auto;
+    margin-top: 80px;
     padding: 20px;
     border: 2px solid #888;
     width: 80%;
     border-radius: 20px;
-    height: fit-content;
+    height: 80vh;
 }
 
 
