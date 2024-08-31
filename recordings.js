@@ -22,6 +22,22 @@ document.addEventListener('DOMContentLoaded', () => {
             populateTimeFilter(allSpecies);
             displaySpecies(filteredSpecies);
 
+            // Verifica a URL e seleciona a localização se for especificada
+            const urlParams = new URLSearchParams(window.location.search);
+            const locationFromUrl = urlParams.get('location'); // Assume que o parâmetro da URL é "location"
+
+            if (locationFromUrl) {
+                const locationOption = Array.from(filterAssociationSelect.options).find(option => option.value === locationFromUrl);
+                if (locationOption) {
+                    filterAssociationSelect.value = locationFromUrl;
+                    updateFilteredSpecies(); // Atualiza as espécies filtradas com base na localização
+                    displaySpecies(filteredSpecies); // Mostra as espécies filtradas
+                }
+            }
+
+            // Gera e loga os links das localizações possíveis
+            logLocationLinks();
+
             filterNameButton.addEventListener('click', () => {
                 filteredSpecies = sortByName(filteredSpecies);
                 displaySpecies(filteredSpecies);
@@ -121,6 +137,18 @@ document.addEventListener('DOMContentLoaded', () => {
             option.value = location;
             option.textContent = location;
             filterAssociationSelect.appendChild(option);
+        });
+    }
+
+    function logLocationLinks() {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const uniqueLocations = Array.from(filterAssociationSelect.options)
+                                    .filter(option => option.value !== "")
+                                    .map(option => option.value);
+
+        uniqueLocations.forEach(location => {
+            const url = `${baseUrl}?location=${encodeURIComponent(location)}`;
+            console.log(url);
         });
     }
 
