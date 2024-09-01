@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         marker.bindPopup(
             `<div class="placediv">
             <h2 class="placepopup">${location.name}</h2>
-            <button class="species-button" data-location="${location.name}">View Species</button>
+            <button class="species-button" data-location="${location.name}">Ver especies</button>
             </div>`
         );
 
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
                 const popupContent =
                     `<div class="speciesdiv">
-                        <h2>Species at ${association}</h2>
+                        <h2>Especies em ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
     
@@ -227,12 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const popupContent =
             `<div class="SpeciesInfo">
-                <button id="backButton" class="back-button">Back to list</button>
+                <button id="backButton" class="back-button">Voltar à lista</button>
                 <h2>${bird['nome-PT']} (${bird.scientific_name})</h2>
                 <a class="specieslink" href="species.html?name=${encodeURIComponent(bird['nome-PT'])}">${bird['nome-PT']} (${bird.scientific_name})}</a>
                 <p>${bird['notas-PT']}</p>
                 <p>${bird['descricao-PT']}</p>
-                <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
+                <p><strong>Melhores meses para se ouvir:</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
                 ${bird.sound_url}
                 </div>

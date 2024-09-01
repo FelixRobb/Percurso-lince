@@ -65,11 +65,19 @@ body {
 }
 
 #searchInput {
-    margin: 10px auto;
+    margin: 10px 10px 10px 0px;
+    width: 50vw;
     background-color: #2c2c2c;
-    width: 70vw;
     padding: 10px;
     border-radius: 20px;
     border: 2px solid #4d4d4d;
     color: #b3b3b3;
+}
+
+.searchbar {
+    width: 70vw;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

@@ -11,7 +11,7 @@ function displayHeardSpecies() {
 
         // Add delete button
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
+        deleteButton.textContent = 'Remover';
         deleteButton.onclick = () => deleteSpecies(species);
         li.appendChild(deleteButton);
 
