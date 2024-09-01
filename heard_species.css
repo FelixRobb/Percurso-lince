@@ -1,3 +1,10 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
 .maindiv {
     display: flex;
     flex-direction: column;
@@ -18,9 +25,12 @@
 
 
 #speciesList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     list-style: none;
     max-width: 600px;
-    margin: 20px auto;
     padding: 0;
 }
 
@@ -28,9 +38,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60vw;
+    width: 75vw;
     overflow-y: hidden;
     background-color: #4d4d4d;
+    margin: auto 5px !important;
     margin-bottom: 10px;
     padding: 6px 10px;
     padding-left: 20px;

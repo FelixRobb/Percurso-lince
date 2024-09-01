@@ -56,18 +56,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 const locationUrl = locationMap[entry.association] || '#';
                 console.log('Location URL for', entry.association, ':', locationUrl);
             
+                // Retrieve the current heard species list from localStorage
+                let heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
+            
+                // Function to update button text based on current state
+                function updateButton() {
+                    heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
+                    const isHeard = heardSpecies.includes(entry['nome-PT']);
+                    heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
+                }
+            
+                // Initial button label set
                 details.innerHTML = `
                     <h2>${entry['nome-PT']} (${entry.scientific_name})</h2>
-                    <button onclick="addSpeciesToHeardList('${entry['nome-PT']}')">Add to Heard</button>
+                    <button id="heardButton">${heardSpecies.includes(entry['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
                     <p class="description">${entry['descricao-PT']}</p>
-                    <p class="comments"><strong>Descrição</strong> ${entry['notas-PT']}</p>
+                    <p class="comments"><strong>Descrição:</strong> ${entry['notas-PT']}</p>
                     <p class="months"><strong>Melhores meses para se ouvir:</strong> ${entry.most_probable_months.join(', ')}</p>
                     <div class="sound-url">${entry.sound_url}</div>
                     <p class="location"><strong>Localização:</strong> <a href="${locationUrl}">${entry.association}</a></p>
                 `;
+            
+                // Add event listener to the button to toggle add/remove from the heard list
+                const heardButton = document.getElementById('heardButton');
+                heardButton.addEventListener('click', () => {
+                    heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
+                    const isHeard = heardSpecies.includes(entry['nome-PT']);
+                    
+                    if (isHeard) {
+                        // If species is already in the list, remove it
+                        heardSpecies = heardSpecies.filter(species => species !== entry['nome-PT']);
+                        console.log(`${entry['nome-PT']} removed from heard list!`);
+                    } else {
+                        // If species is not in the list, add it
+                        heardSpecies.push(entry['nome-PT']);
+                        console.log(`${entry['nome-PT']} added to heard list!`);
+                    }
+                    
+                    // Update the heardSpecies in localStorage
+                    localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
+                    
+                    // Update the button text based on the new state
+                    updateButton();
+                });
+            
+                // Initial call to set the correct button text
+                updateButton();
             }
             
-
+            
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.addEventListener('click', (event) => {
                     const index = event.target.getAttribute('data-index');
