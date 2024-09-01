@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Heard Species List</title>
+</head>
+<body>
+  <h1>Heard
+ Species</h1>
+
+  <input type="text" id="searchInput" placeholder="Search species...">
+
+  <ul id="speciesList"></ul>
+
+  <script>
+    function displayHeardSpecies() {
+      let heardSpecies = localStorage.getItem('heardSpecies');
+      if (heardSpecies) {
+        heardSpecies = JSON.parse(heardSpecies);
+        const speciesList = document.getElementById('speciesList');
+        speciesList.innerHTML = ''; // Clear the list
+
+        heardSpecies.forEach(species => {
+          const li = document.createElement('li');
+          li.textContent = species;
+
+          // Add delete button
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Delete';
+          deleteButton.onclick = () => deleteSpecies(species); 
+          li.appendChild(deleteButton);
+
+          speciesList.appendChild(li);
+        });
+      }
+    }
+
+    function deleteSpecies(speciesName) {
+      let heardSpecies = JSON.parse(localStorage.getItem('heardSpecies'));
+      heardSpecies = heardSpecies.filter(species => species !== speciesName);
+      localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
+      displayHeardSpecies(); // Refresh the list
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+      const searchTerm = searchInput.value.toLowerCase();
+      const speciesItems = document.querySelectorAll('#speciesList li');
+
+      speciesItems.forEach(item => {
+        const speciesName = item.textContent.toLowerCase();
+        if (speciesName.includes(searchTerm)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    displayHeardSpecies();
+  </script>
+</body>
+</html>
