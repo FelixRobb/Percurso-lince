@@ -16,17 +16,19 @@
             <a href="home.html" class="nav-button">Início</a>
             <a href="map.html" class="nav-button">Mapa</a>
             <a href="recordings.html" class="nav-button">Gravações</a>
+            <a href="heard_species.html" class="nav-button">Lista</a>
         </nav>
         <div id="menu-icon">
             <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Hamburger icon -->
         </div>
     </header>
-
+    
     <!-- Side Menu -->
     <div id="side-menu">
         <a style="margin-top: 10px;" href="home.html">Início</a>
         <a href="map.html">Mapa</a>
         <a href="recordings.html">Gravações</a>
+        <a href="heard_species.html" class="nav-button">Lista</a>
     </div>
 
     <main>
@@ -49,8 +51,26 @@
         <div class="container">
             <p>&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
         </div>
+    </footer>
         <script src="species.js"></script>
         <script src="menu.js"></script>
+        <script>
+
+            // Function to add a species to the heard list
+            function addSpeciesToHeardList(speciesName) {
+                let heardSpecies = localStorage.getItem('heardSpecies');
+                if (heardSpecies) {
+                    heardSpecies = JSON.parse(heardSpecies);
+                } else {
+                    heardSpecies = [];
+                }
+                if (!heardSpecies.includes(speciesName)) {
+                    heardSpecies.push(speciesName);
+                    localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
+                }
+            }
+
+        </script>
 </body>
 
 </html>

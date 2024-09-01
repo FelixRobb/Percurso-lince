@@ -1,63 +1,49 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Heard Species List</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="heard_species.css">
 </head>
+
 <body>
-  <h1>Heard
- Species</h1>
+  <header>
+    <h1>Percursos sonoros Lince-ibérico</h1>
+    <nav id="main-nav">
+        <a href="home.html" class="nav-button">Início</a>
+        <a href="map.html" class="nav-button">Mapa</a>
+        <a href="recordings.html" class="nav-button">Gravações</a>
+        <a href="heard_species.html" class="nav-button">Lista</a>
+    </nav>
+    <div id="menu-icon">
+        <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Hamburger icon -->
+    </div>
+</header>
 
-  <input type="text" id="searchInput" placeholder="Search species...">
+<!-- Side Menu -->
+<div id="side-menu">
+    <a style="margin-top: 10px;" href="home.html">Início</a>
+    <a href="map.html">Mapa</a>
+    <a href="recordings.html">Gravações</a>
+    <a href="heard_species.html" class="nav-button">Lista</a>
+</div>
 
+<div class="maindiv">
+  <div class="specieslistdiv">
+    <h2>Heard Species List</h2>
+    <input type="text" id="searchInput" placeholder="Search species...">
   <ul id="speciesList"></ul>
+ </div>
 
-  <script>
-    function displayHeardSpecies() {
-      let heardSpecies = localStorage.getItem('heardSpecies');
-      if (heardSpecies) {
-        heardSpecies = JSON.parse(heardSpecies);
-        const speciesList = document.getElementById('speciesList');
-        speciesList.innerHTML = ''; // Clear the list
-
-        heardSpecies.forEach(species => {
-          const li = document.createElement('li');
-          li.textContent = species;
-
-          // Add delete button
-          const deleteButton = document.createElement('button');
-          deleteButton.textContent = 'Delete';
-          deleteButton.onclick = () => deleteSpecies(species); 
-          li.appendChild(deleteButton);
-
-          speciesList.appendChild(li);
-        });
-      }
-    }
-
-    function deleteSpecies(speciesName) {
-      let heardSpecies = JSON.parse(localStorage.getItem('heardSpecies'));
-      heardSpecies = heardSpecies.filter(species => species !== speciesName);
-      localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
-      displayHeardSpecies(); // Refresh the list
-    }
-
-    // Search functionality
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', () => {
-      const searchTerm = searchInput.value.toLowerCase();
-      const speciesItems = document.querySelectorAll('#speciesList li');
-
-      speciesItems.forEach(item => {
-        const speciesName = item.textContent.toLowerCase();
-        if (speciesName.includes(searchTerm)) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-
-    displayHeardSpecies();
-  </script>
+</div>
+  <footer>
+    <div class="container">
+        <p>&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
+    </div>
+    </footer>
+    <script src="heard_species.js"></script>
+    <script src="menu.js"></script>
 </body>
+
 </html>

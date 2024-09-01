@@ -55,9 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
             function displayDetails(entry) {
                 const locationUrl = locationMap[entry.association] || '#';
                 console.log('Location URL for', entry.association, ':', locationUrl);
-
+            
                 details.innerHTML = `
                     <h2>${entry['nome-PT']} (${entry.scientific_name})</h2>
+                    <button onclick="addSpeciesToHeardList('${entry['nome-PT']}')">Add to Heard</button>
                     <p class="description">${entry['descricao-PT']}</p>
                     <p class="comments"><strong>Descrição</strong> ${entry['notas-PT']}</p>
                     <p class="months"><strong>Melhores meses para se ouvir:</strong> ${entry.most_probable_months.join(', ')}</p>
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="location"><strong>Localização:</strong> <a href="${locationUrl}">${entry.association}</a></p>
                 `;
             }
+            
 
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.addEventListener('click', (event) => {
@@ -103,5 +105,5 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
             sidebar.classList.remove('visible');
         }
-    });
+    });   
 });
