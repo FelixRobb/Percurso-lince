@@ -43,3 +43,14 @@ body {
 #modal-ok-button:hover {
     background-color: #0073e6;
 }
+
+.index-modal-content {
+    color: #000000;
+    background-color: #efefef;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #888;
+    width: 80%;
+    border-radius: 20px;
+    height: fit fit-content;
+}

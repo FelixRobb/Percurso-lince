@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', setMapHeight);
 
     // Initialize the map and tile layer
-    const map = L.map('map').setView([37.6364, -7.6690], 11);
+    const map = L.map('map').setView([37.6364, -7.6690], 10.4);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const allTracksOption = document.createElement('option');
         allTracksOption.value = 'all';
-        allTracksOption.textContent = 'All Locations';
+        allTracksOption.textContent = 'Todas as localizações';
         trackSelect.appendChild(allTracksOption);
 
         locations.forEach(location => {
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (Object.keys(trackLayers).length === tracks.length) {
                         populateTrackSelect();
-                        checkUrlParameters();
+                        checkUrlParameters(); // Check URL parameters after loading all tracks
                     }
                 });
 
@@ -189,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
     
-    
                 if (currentPopup) {
                     currentPopup.remove();
                 }
@@ -230,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `<div class="SpeciesInfo">
                 <button id="backButton" class="back-button">Back to list</button>
                 <h2>${bird['nome-PT']} (${bird.scientific_name})</h2>
-                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird['nome-PT'])}">${bird['nome-PT']} (${bird.scientific_name})</a>
+                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird['nome-PT'])}">${bird['nome-PT']} (${bird.scientific_name})}</a>
                 <p>${bird['notas-PT']}</p>
                 <p>${bird['descricao-PT']}</p>
                 <p><strong>Best months to listen:</strong> ${bird.most_probable_months.join(', ')}</p>
@@ -269,6 +268,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const lng = parseFloat(queryParams.get('lng'));
             if (!isNaN(lat) && !isNaN(lng)) {
                 map.setView([lat, lng], 15);
+
+                // Automatically select the closest location in the dropdown
+                const closestLocation = locations.reduce((prev, curr) => {
+                    const prevDist = Math.sqrt(Math.pow(prev.lat - lat, 2) + Math.pow(prev.lng - lng, 2));
+                    const currDist = Math.sqrt(Math.pow(curr.lat - lat, 2) + Math.pow(curr.lng - lng, 2));
+                    return prevDist < currDist ? prev : curr;
+                });
+
+                trackSelect.value = closestLocation.name;
             } else {
                 console.error('Invalid lat or lng URL parameters');
             }
@@ -288,6 +296,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const middlePoint = trackBounds[trackName].getCenter();
                 previousPopupLatLng = middlePoint;  // Store the location
                 showSpeciesList(trackName, middlePoint);
+
+                // Automatically select the track in the dropdown
+                trackSelect.value = trackName;
             } else {
                 console.error(`Track not found: ${trackName}`);
             }
