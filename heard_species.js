@@ -42,7 +42,7 @@ searchInput.addEventListener('input', () => {
     speciesItems.forEach(item => {
         const speciesName = item.childNodes[0].textContent.toLowerCase(); // Adjusted to focus on the species name only
         if (speciesName.includes(searchTerm)) {
-            item.style.display = 'block';
+            item.style.display = 'flex';
         } else {
             item.style.display = 'none';
         }
