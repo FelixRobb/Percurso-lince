@@ -55,6 +55,7 @@ body {
 
 .heardspecieslink {
     color: #fff;
+    overflow-y: hidden;
 }
 
 #speciesList li button {

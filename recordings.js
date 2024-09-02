@@ -51,12 +51,45 @@ document.addEventListener('DOMContentLoaded', () => {
             searchInput.addEventListener('input', () => {
                 updateFilteredSpecies(); // Apply association, type, and time filters
                 const query = searchInput.value.toLowerCase();
-                filteredSpecies = filteredSpecies.filter(species =>
-                    species.name.toLowerCase().includes(query) || species.scientific_name.toLowerCase().includes(query)
-                );
+            
+                filteredSpecies = filteredSpecies
+                    .map(species => {
+                        const name = species.name.toLowerCase();
+                        const scientificName = species.scientific_name.toLowerCase();
+            
+                        let weight = 0;
+            
+                        // Highest weight: common name starts with the query
+                        if (name.startsWith(query)) {
+                            weight += 3;
+                        }
+            
+                        // Second highest weight: scientific name starts with the query and is more than 3 characters
+                        if (scientificName.startsWith(query) && query.length > 3) {
+                            weight += 2;
+                        }
+            
+                        // Lower weight: query is found anywhere in the common name
+                        if (name.includes(query)) {
+                            weight += 1;
+                        }
+            
+                        // Lowest weight: query is found anywhere in the scientific name
+                        if (scientificName.includes(query)) {
+                            weight += 0.5;
+                        }
+            
+                        return { species, weight };
+                    })
+                    .filter(item => item.weight > 0) // Only include species that have a weight (i.e., matched the query)
+                    .sort((a, b) => b.weight - a.weight) // Sort by weight, highest weight first
+                    .map(item => item.species); // Map back to the species objects
+            
                 displaySpecies(filteredSpecies);
             });
-
+            
+            
+            
             filterAssociationSelect.addEventListener('change', () => {
                 updateFilteredSpecies();
                 displaySpecies(filteredSpecies);

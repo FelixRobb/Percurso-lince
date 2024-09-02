@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Percursos sonoros Lince-ibérico - Gravações</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="recordings.css">
     <link rel="icon" type="image/x-icon" href="/icons/favicon.ico">
 </head>
 
@@ -34,28 +35,35 @@
     <main>
         <div class="container">
             <div class="searchdiv">
+                <button id="open-filters-button">Filters</button>
                 <input type="text" id="search-input" placeholder="Pesquisar pelo nome ou nome científico...">
                 <button id="search-button">Pesquisar</button>
             </div>
-            <div class="filtersdiv">
-                <div class="filter-options">
-                    <button id="filter-season">Organizar por época</button>
-                    <button id="filter-name">Organizar por Nome</button>
-                </div>
-                <div class="filterselectdiv">
-                    <select id="filter-association">
-                        <option value="">All Locations</option>
-                    </select>
-                    <div class="filteroptions">
-                    <select id="filter-type">
-                        <option value="">All Types</option>
-                    </select>
-                    <select id="filter-time">
-                        <option value="">All Times</option>
-                    </select>
+
+            <!-- The Modal -->
+            <div id="filtersModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Filter Options</h2>
+                    <div class="filter-options">
+                        <button id="filter-season">Organizar por época</button>
+                        <button id="filter-name">Organizar por Nome</button>
                     </div>
+                    <div class="filterselectdiv">
+                        <select id="filter-association" class="filter">
+                            <option value="">All Locations</option>
+                        </select>
+                            <select id="filter-type" class="filter">
+                                <option value="">All Types</option>
+                            </select>
+                            <select id="filter-time" class="filter">
+                                <option value="">All Times</option>
+                            </select>
+                    </div>
+                    <button id="apply-filters-button" class="modal-button">Apply Filters</button>
                 </div>
             </div>
+
             <div id="recordings-list"></div>
         </div>
     </main>
@@ -67,6 +75,7 @@
 
     <script src="recordings.js"></script>
     <script src="menu.js"></script>
+    <script src="filters.js"></script>
 </body>
 
 </html>
