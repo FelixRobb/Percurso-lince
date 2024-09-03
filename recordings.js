@@ -173,17 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function logLocationLinks() {
-        const baseUrl = window.location.origin + window.location.pathname;
-        const uniqueLocations = Array.from(filterAssociationSelect.options)
-                                    .filter(option => option.value !== "")
-                                    .map(option => option.value);
-
-        uniqueLocations.forEach(location => {
-            const url = `${baseUrl}?location=${encodeURIComponent(location)}`;
-            console.log(url);
-        });
-    }
 
     function populateTypeFilter(species) {
         const uniqueTypes = [...new Set(species.map(species => species.group_PT))];

@@ -230,6 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button id="backButton" class="back-button">Voltar à lista</button>
                 <h2>${bird['nome-PT']} (${bird.scientific_name})</h2>
                 <a class="specieslink" href="species.html?name=${encodeURIComponent(bird['nome-PT'])}">${bird['nome-PT']} (${bird.scientific_name})}</a>
+                <button id="heardButton">${heardSpecies.includes(entry['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
                 <p>${bird['notas-PT']}</p>
                 <p>${bird['descricao-PT']}</p>
                 <p><strong>Melhores meses para se ouvir:</strong> ${bird.most_probable_months.join(', ')}</p>
