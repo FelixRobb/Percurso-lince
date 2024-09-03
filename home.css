@@ -1,3 +1,62 @@
+/* Card styles */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.card {
+    position: relative;
+    background-color: #484848;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    height: 300px;
+    width: 300px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card-description {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.card-link {
+    font-size: medium;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+
 /* Info button */
 .info-button {
     position: absolute;
@@ -18,6 +77,23 @@
 .info-button:hover {
     background-color: #0056b3;
 }
+
+.info-button-text {
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: medium;
+    padding: 0%;
+    background-color: #484848;
+    border: none;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.info-button-text:hover {
+    text-decoration: underline;
+}
+
 /* Popup modal */
 .info-modal {
     display: none;
