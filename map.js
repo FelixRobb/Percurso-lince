@@ -89,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         marker.on('popupopen', () => {
             if (!previousPopupLatLng) {
                 previousPopupLatLng = { lat: location.lat, lng: location.lng };  // Store the location as an object
-                console.log('First popup LatLng:', previousPopupLatLng);  // Log the LatLng of the first popup
             }
 
             document.querySelector('.species-button').addEventListener('click', () => {
@@ -141,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gpxLayer.on('click', (e) => {
                     const latLng = e.latlng;
                     previousPopupLatLng = { lat: latLng.lat, lng: latLng.lng };  // Store the location as an object  // Store the location
-                    showSpeciesList(trackName, latLng);
+                    showSpeciesList(trackName, latLng, true);
                 });
             })
             .catch(error => console.error(`Error loading track ${trackName}:`, error));
@@ -185,10 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentPopup = null;
 
-    const showSpeciesList = (association, latLng) => {
-        console.log(`showSpeciesList called with association: ${association}`);
-        console.log(`LatLng passed to showSpeciesList:`, latLng);
-
+    const showSpeciesList = (association, latLng, isTrack = false) => {
         fetch('species.json')
             .then(response => {
                 if (!response.ok) {
@@ -197,24 +193,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
-                console.log('Species data fetched:', data);
-
-                // Filter the data based on the association
                 const filteredData = association === 'all' ? data : data.filter(bird => bird.association === association);
-
-                // Sort the filtered data alphabetically by bird name
                 filteredData.sort((a, b) => {
-                    const nameA = a['nome-PT'].toUpperCase();
-                    const nameB = b['nome-PT'].toUpperCase();
-                    return nameA.localeCompare(nameB);
+                    const dateA = new Date(`2024-${a.most_probable_months[0]}`);
+                    const dateB = new Date(`2024-${b.most_probable_months[0]}`);
+                    return dateA - dateB;
                 });
 
-                console.log('Filtered and sorted species data:', filteredData);
-
-                // Create the species list HTML
                 const speciesList = filteredData.map(bird => `<li data-species="${bird['nome-PT']}" class="speciesli">${bird['nome-PT']}</li>`).join('');
-
-                console.log('Generated species list HTML:', speciesList);
 
                 const popupContent =
                     `<div class="speciesdiv">
@@ -228,12 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Ensure latLng is an object with lat and lng properties
                 let latLngObj = Array.isArray(latLng) ? { lat: latLng[0], lng: latLng[1] } : latLng;
-                console.log('Final latLng object for popup:', latLngObj);
 
                 if (latLngObj && latLngObj.lat !== undefined && latLngObj.lng !== undefined) {
-                    console.log(`Opening popup at latLng: ${latLngObj.lat}, ${latLngObj.lng}`);
                     currentPopup = L.popup({
-                        offset: L.point(0, -76)  // Adjust this offset as needed
+                        offset: isTrack ? L.point(0, 0) : L.point(0, -76)  // Apply offset conditionally
                     })
                         .setLatLng(latLngObj)
                         .setContent(popupContent)
@@ -245,10 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.speciesli').forEach(item => {
                     item.addEventListener('click', (event) => {
                         const speciesName = event.target.getAttribute('data-species');
-                        previousAssociation = association;
-                        previousPopupLatLng = latLng;
-                        console.log(`Species clicked: ${speciesName}`);
-                        showSpeciesInfo(filteredData.find(bird => bird['nome-PT'] === speciesName));
+                        showSpeciesInfo(filteredData.find(bird => bird['nome-PT'] === speciesName), isTrack);  // Pass isTrack
                     });
                 });
             })
@@ -257,8 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-    const showSpeciesInfo = (bird) => {
+    const showSpeciesInfo = (bird, isTrack = false) => {
         if (!bird) {
             console.error('Species information is missing');
             return;
@@ -274,7 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
         }
 
-        console.log('Bird object:', bird);  // Add this line for debugging
 
         const popupContent =
             `<div class="SpeciesInfo">
@@ -286,22 +265,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a class="specieslink" href="species.html?name=${encodeURIComponent(bird['nome-PT'])}">${bird['nome-PT']} (${bird.scientific_name})}</a>
                 <p>${bird['notas-PT']}</p>
                 <p>${bird['descricao-PT']}</p>
-                <p><strong>Localização:</strong> ${bird.association}</p>
                 <p><strong>Melhores meses para se ouvir:</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
                 ${bird.sound_url}
                 </div>
             </div>`;
 
-
         if (previousPopup) {
             previousPopup.remove();
         }
 
         if (previousPopupLatLng) {
-            console.log(`Opening species info at previous latLng: ${previousPopupLatLng.lat}, ${previousPopupLatLng.lng}`);
             previousPopup = L.popup({
-                offset: L.point(-3, -76)  // Adjust this offset as needed
+                offset: isTrack ? L.point(0, 0) : L.point(0, -76)  // Apply offset conditionally
             })
                 .setLatLng(previousPopupLatLng)
                 .setContent(popupContent)
@@ -311,21 +287,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         document.querySelector('#backButton').addEventListener('click', () => {
-            console.log('Back button clicked');
-            console.log('Previous popup:', previousPopup);
-            console.log('Previous association:', previousAssociation);
-            console.log('Previous popup latLng:', previousPopupLatLng);
-
             if (previousPopup) {
                 previousPopup.remove();
-                // Call showSpeciesList with previousAssociation and previousPopupLatLng
-                console.log('Calling showSpeciesList with:', previousAssociation, previousPopupLatLng);
-                showSpeciesList(previousAssociation, previousPopupLatLng);
-            } else {
-                console.error('No previous popup to close');
+                showSpeciesList(previousAssociation, previousPopupLatLng, isTrack);  // Pass isTrack parameter here
             }
         });
-
 
         const heardButton = document.getElementById('heardButton');
         heardButton.addEventListener('click', () => {
@@ -335,11 +301,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isHeard) {
                 // If species is already in the list, remove it
                 heardSpecies = heardSpecies.filter(species => species !== bird['nome-PT']);
-                console.log(`${bird['nome-PT']} removed from heard list!`);
             } else {
                 // If species is not in the list, add it
                 heardSpecies.push(bird['nome-PT']);
-                console.log(`${bird['nome-PT']} added to heard list!`);
             }
 
             // Update the heardSpecies in localStorage
@@ -351,8 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initial call to set the correct button text
         updateButton();
-
     };
+
 
     // Handle URL parameters for track selection
     const checkUrlParameters = () => {
