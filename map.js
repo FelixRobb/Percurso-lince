@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const controlsHeight = document.querySelector('#controls').offsetHeight;
         const availableHeight = window.innerHeight - headerHeight - controlsHeight;
 
-        document.querySelector('#map').style.height = `${availableHeight - 10}px`;
+        document.querySelector('#map').style.height = `${availableHeight - 12}px`;
     };
 
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         iconUrl: 'marker.svg',
         iconSize: [38, 95],
         iconAnchor: [22, 94],
-        popupAnchor: [-3, -76],
+        popupAnchor: [-3, -76]
     });
 
     // Add locate control
@@ -115,9 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const gpxLayer = new L.GPX(gpxData, {
                     async: true,
                     polyline_options: {
-                        color: 'red',
+                        color: "#f80000",
                         weight: 5,
-                        opacity: 0.75
+                        opacity: .8
                     },
                     marker_options: {
                         startIconUrl: null,
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (latLngObj && latLngObj.lat !== undefined && latLngObj.lng !== undefined) {
                     currentPopup = L.popup({
-                        offset: isTrack ? L.point(0, 0) : L.point(0, -76)  // Apply offset conditionally
+                        offset: isTrack ? L.point(0, 0) : L.point(-3, -76)  // Apply offset conditionally
                     })
                         .setLatLng(latLngObj)
                         .setContent(popupContent)
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (previousPopupLatLng) {
             previousPopup = L.popup({
-                offset: isTrack ? L.point(0, 0) : L.point(0, -76)  // Apply offset conditionally
+                offset: isTrack ? L.point(0, 0) : L.point(-3, -76)  // Apply offset conditionally
             })
                 .setLatLng(previousPopupLatLng)
                 .setContent(popupContent)

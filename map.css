@@ -177,6 +177,7 @@ h2 {
 
 .SpeciesInfo {
     display: block;
+    height: auto;
     max-height: 68vh;
     overflow-y: auto;
 }
