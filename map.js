@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#map').style.height = `${availableHeight - 10}px`;
     };
 
+
     // Call setMapHeight on load and resize events
     setMapHeight();
     window.addEventListener('resize', setMapHeight);
@@ -16,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+    var myIcon = L.icon({
+        iconUrl: 'marker.svg',
+        iconSize: [38, 95],
+        iconAnchor: [22, 94],
+        popupAnchor: [-3, -76],
+    });
 
     // Add locate control
     L.control.locate().addTo(map);
@@ -65,23 +73,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create markers and add them to the map
     locations.forEach(location => {
-        const marker = L.marker([location.lat, location.lng]).addTo(markerCluster);
+
+        const marker = L.marker([location.lat, location.lng], { icon: myIcon }).addTo(markerCluster);
         marker.bindPopup(
             `<div class="placediv">
-            <h2 class="placepopup">${location.name}</h2>
-            <button class="species-button" data-location="${location.name}">Ver especies</button>
-            </div>`
+        <h2 class="placepopup">${location.name}</h2>
+        <button class="species-button" data-location="${location.name}">Ver especies</button>
+        </div>`,
+            {
+                // Popup options can be adjusted here if necessary
+                offset: L.point(0, 0)  // Example offset adjustment
+            }
         );
 
         marker.on('popupopen', () => {
+            if (!previousPopupLatLng) {
+                previousPopupLatLng = { lat: location.lat, lng: location.lng };  // Store the location as an object
+                console.log('First popup LatLng:', previousPopupLatLng);  // Log the LatLng of the first popup
+            }
+
             document.querySelector('.species-button').addEventListener('click', () => {
-                previousPopupLatLng = [location.lat, location.lng];  // Store the location
-                showSpeciesList(location.name, [location.lat, location.lng]);
+                previousPopupLatLng = { lat: location.lat, lng: location.lng };  // Update the location on button click
+                showSpeciesList(location.name, previousPopupLatLng);
             });
         });
 
         locationMarkers[location.name] = marker;
     });
+
+
 
     // Load tracks and add them to the map
     const loadTrack = (trackFile, trackName) => {
@@ -120,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 gpxLayer.on('click', (e) => {
                     const latLng = e.latlng;
-                    previousPopupLatLng = latLng;  // Store the location
+                    previousPopupLatLng = { lat: latLng.lat, lng: latLng.lng };  // Store the location as an object  // Store the location
                     showSpeciesList(trackName, latLng);
                 });
             })
@@ -166,6 +186,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPopup = null;
 
     const showSpeciesList = (association, latLng) => {
+        console.log(`showSpeciesList called with association: ${association}`);
+        console.log(`LatLng passed to showSpeciesList:`, latLng);
+
         fetch('species.json')
             .then(response => {
                 if (!response.ok) {
@@ -174,48 +197,66 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
+                console.log('Species data fetched:', data);
+
+                // Filter the data based on the association
                 const filteredData = association === 'all' ? data : data.filter(bird => bird.association === association);
+
+                // Sort the filtered data alphabetically by bird name
                 filteredData.sort((a, b) => {
-                    const dateA = new Date(`2024-${a.most_probable_months[0]}`);
-                    const dateB = new Date(`2024-${b.most_probable_months[0]}`);
-                    return dateA - dateB;
+                    const nameA = a['nome-PT'].toUpperCase();
+                    const nameB = b['nome-PT'].toUpperCase();
+                    return nameA.localeCompare(nameB);
                 });
-    
+
+                console.log('Filtered and sorted species data:', filteredData);
+
+                // Create the species list HTML
                 const speciesList = filteredData.map(bird => `<li data-species="${bird['nome-PT']}" class="speciesli">${bird['nome-PT']}</li>`).join('');
-    
+
+                console.log('Generated species list HTML:', speciesList);
+
                 const popupContent =
                     `<div class="speciesdiv">
                         <h2>Especies em ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
-    
+
                 if (currentPopup) {
                     currentPopup.remove();
                 }
-    
+
                 // Ensure latLng is an object with lat and lng properties
                 let latLngObj = Array.isArray(latLng) ? { lat: latLng[0], lng: latLng[1] } : latLng;
-    
+                console.log('Final latLng object for popup:', latLngObj);
+
                 if (latLngObj && latLngObj.lat !== undefined && latLngObj.lng !== undefined) {
                     console.log(`Opening popup at latLng: ${latLngObj.lat}, ${latLngObj.lng}`);
-                    currentPopup = L.popup()
+                    currentPopup = L.popup({
+                        offset: L.point(0, -76)  // Adjust this offset as needed
+                    })
                         .setLatLng(latLngObj)
                         .setContent(popupContent)
                         .openOn(map);
                 } else {
                     console.error('Invalid latLng value:', latLng);
                 }
-    
+
                 document.querySelectorAll('.speciesli').forEach(item => {
                     item.addEventListener('click', (event) => {
                         const speciesName = event.target.getAttribute('data-species');
+                        previousAssociation = association;
+                        previousPopupLatLng = latLng;
+                        console.log(`Species clicked: ${speciesName}`);
                         showSpeciesInfo(filteredData.find(bird => bird['nome-PT'] === speciesName));
                     });
                 });
             })
             .catch(error => console.error('Error loading species data:', error));
     };
-    
+
+
+
 
     const showSpeciesInfo = (bird) => {
         if (!bird) {
@@ -223,23 +264,35 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Retrieve the current heard species list from localStorage
+        let heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
+
+        // Function to update button text based on current state
+        function updateButton() {
+            heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
+            const isHeard = heardSpecies.includes(bird['nome-PT']);
+            heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
+        }
+
         console.log('Bird object:', bird);  // Add this line for debugging
 
         const popupContent =
             `<div class="SpeciesInfo">
+                <div class="buttonmappopup">
                 <button id="backButton" class="back-button">Voltar à lista</button>
+                <button id="heardButton">${heardSpecies.includes(bird['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
+                </div>
                 <h2>${bird['nome-PT']} (${bird.scientific_name})</h2>
                 <a class="specieslink" href="species.html?name=${encodeURIComponent(bird['nome-PT'])}">${bird['nome-PT']} (${bird.scientific_name})}</a>
-                <button id="heardButton">${heardSpecies.includes(entry['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
                 <p>${bird['notas-PT']}</p>
                 <p>${bird['descricao-PT']}</p>
+                <p><strong>Localização:</strong> ${bird.association}</p>
                 <p><strong>Melhores meses para se ouvir:</strong> ${bird.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
                 ${bird.sound_url}
                 </div>
             </div>`;
-            
-            
+
 
         if (previousPopup) {
             previousPopup.remove();
@@ -247,7 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (previousPopupLatLng) {
             console.log(`Opening species info at previous latLng: ${previousPopupLatLng.lat}, ${previousPopupLatLng.lng}`);
-            previousPopup = L.popup()
+            previousPopup = L.popup({
+                offset: L.point(-3, -76)  // Adjust this offset as needed
+            })
                 .setLatLng(previousPopupLatLng)
                 .setContent(popupContent)
                 .openOn(map);
@@ -256,39 +311,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         document.querySelector('#backButton').addEventListener('click', () => {
+            console.log('Back button clicked');
+            console.log('Previous popup:', previousPopup);
+            console.log('Previous association:', previousAssociation);
+            console.log('Previous popup latLng:', previousPopupLatLng);
+
             if (previousPopup) {
                 previousPopup.remove();
+                // Call showSpeciesList with previousAssociation and previousPopupLatLng
+                console.log('Calling showSpeciesList with:', previousAssociation, previousPopupLatLng);
                 showSpeciesList(previousAssociation, previousPopupLatLng);
+            } else {
+                console.error('No previous popup to close');
             }
         });
+
+
+        const heardButton = document.getElementById('heardButton');
+        heardButton.addEventListener('click', () => {
+            heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
+            const isHeard = heardSpecies.includes(bird['nome-PT']);
+
+            if (isHeard) {
+                // If species is already in the list, remove it
+                heardSpecies = heardSpecies.filter(species => species !== bird['nome-PT']);
+                console.log(`${bird['nome-PT']} removed from heard list!`);
+            } else {
+                // If species is not in the list, add it
+                heardSpecies.push(bird['nome-PT']);
+                console.log(`${bird['nome-PT']} added to heard list!`);
+            }
+
+            // Update the heardSpecies in localStorage
+            localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
+
+            // Update the button text based on the new state
+            updateButton();
+        });
+
+        // Initial call to set the correct button text
+        updateButton();
+
     };
-    
-                    // Add event listener to the button to toggle add/remove from the heard list
-                    const heardButton = document.getElementById('heardButton');
-                    heardButton.addEventListener('click', () => {
-                        heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-                        const isHeard = heardSpecies.includes(entry['nome-PT']);
-    
-                        if (isHeard) {
-                            // If species is already in the list, remove it
-                            heardSpecies = heardSpecies.filter(species => species !== entry['nome-PT']);
-                            console.log(`${entry['nome-PT']} removed from heard list!`);
-                        } else {
-                            // If species is not in the list, add it
-                            heardSpecies.push(entry['nome-PT']);
-                            console.log(`${entry['nome-PT']} added to heard list!`);
-                        }
-    
-                        // Update the heardSpecies in localStorage
-                        localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
-    
-                        // Update the button text based on the new state
-                        updateButton();
-                    });
-    
-                    // Initial call to set the correct button text
-                    updateButton();
-                    }
 
     // Handle URL parameters for track selection
     const checkUrlParameters = () => {

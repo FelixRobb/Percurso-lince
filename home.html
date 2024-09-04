@@ -24,7 +24,7 @@
                 <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Hamburger icon -->
             </div>
         </header>
-        
+
         <!-- Side Menu -->
         <div id="side-menu">
             <a style="margin-top: 10px;" href="home.html">Início</a>
@@ -32,17 +32,22 @@
             <a href="recordings.html">Gravações</a>
             <a href="heard_species.html" class="nav-button">Lista</a>
         </div>
-        
+
         <div class="indexcont" id="content">
             <div class="card-container">
                 <div class="card">
                     <img src="places/Azenhas_do_guadiana.jpg" alt="First Location">
                     <div class="card-content">
-                        <div class="card-title">Azenhas do Guadiana</div>
-                        <div class="card-description">Praia fluvial nas azenhas de Mertola</div>
+                        <div class="card-top">
+                            <div class="card-title">Azenhas do Guadiana</div>
+                            <a class="info-button-text" onclick="openInfoPopup('info1')">Info</a>
+                        </div>
+                        <div class="card-linkdiv">
+                            <a href="map.html?lat=37.6468&lng=-7.6512" class="card-link">Ver no Mapa</a>
+                            <a href="recordings.html?location=Azenhas%20do%20Guadiana" class="card-link">Ver
+                                Gravações</a>
+                        </div>
                         <button class="info-button" onclick="openInfoPopup('info1')">i</button>
-                        <a href="map.html?lat=37.6468&lng=-7.6512" class="card-link">Ver no Mapa</a>
-                        <a class="info-button-text" onclick="openInfoPopup('info1')">Info</a>
                     </div>
                 </div>
                 <div id="info1" class="info-modal">
@@ -66,7 +71,8 @@
                             os melhores, e o anoitecer é a melhor hora para ouvir. A rela-meridional e o sapo-corredor
                             são anfíbios que podemos ouvir à noite no inverno ou no início da primavera. </p>
                         <a href="map.html?lat=37.6468&lng=-7.6512" class="info-modal-link">Ver no Mapa</a>
-                        <a href="recordings.html?location=Azenhas%20do%20Guadiana" class="info-modal-link">Ver Gravações</a>
+                        <a href="recordings.html?location=Azenhas%20do%20Guadiana" class="info-modal-link">Ver
+                            Gravações</a>
                     </div>
                 </div>
 
@@ -74,11 +80,16 @@
                 <div class="card">
                     <img src="places/Ribeira_de_oeiras.jpg" alt="Second Location">
                     <div class="card-content">
-                        <div class="card-title">Ribeira de Oeiras - Ponte</div>
-                        <div class="card-description">Ponte sobre o rio Oeiras</div>
+                        <div class="card-top">
+                            <div class="card-title">Ribeira de Oeiras - Ponte</div>
+                            <a class="info-button-text" onclick="openInfoPopup('info2')">Info</a>
+                        </div>
+                        <div class="card-linkdiv">
+                            <a href="map.html?lat=37.6254&lng=-7.8099" class="card-link">Ver no Mapa</a>
+                            <a href="recordings.html?location=Ribeira%20de%20Oeiras" class="card-link">Ver
+                                Gravações</a>
+                        </div>
                         <button class="info-button" onclick="openInfoPopup('info2')">i</button>
-                        <a href="map.html?lat=37.6254&lng=-7.8099" class="card-link">Ver no Mapa</a>
-                        <a class="info-button-text" onclick="openInfoPopup('info2')">Info</a>
                     </div>
                 </div>
                 <div id="info2" class="info-modal">
@@ -111,7 +122,8 @@
                             ser ouvidos durante grande parte do ano incluem o picanço-real, a cotovia-montesina, os
                             rouxinóis-bravos, e as duas espécies de pega.</p>
                         <a href="map.html?lat=37.6254&lng=-7.8099" class="info-modal-link">Ver no Mapa</a>
-                         <a href="recordings.html?location=Ribeira%20de%20Oeiras" class="info-modal-link">Ver Gravações</a>
+                        <a href="recordings.html?location=Ribeira%20de%20Oeiras" class="info-modal-link">Ver
+                            Gravações</a>
                     </div>
                 </div>
 
@@ -119,11 +131,16 @@
                 <div class="card">
                     <img src="places/Vila_de_mertola.jpg" alt="Third Location">
                     <div class="card-content">
-                        <div class="card-title">Vila de Mértola</div>
-                        <div class="card-description">Description for the third location goes here.</div>
+                        <div class="card-top">
+                            <div class="card-title">Vila de Mértola</div>
+                            <a class="info-button-text" onclick="openInfoPopup('info3')">Info</a>
+                        </div>
+                        <div class="card-linkdiv">
+                            <a href="map.html?lat=37.6438&lng=-7.6604" class="card-link">Ver no Mapa</a>
+                            <a href="recordings.html?location=Vila%20de%20M%C3%A9rtola" class="card-link">Ver
+                                Gravações</a>
+                        </div>
                         <button class="info-button" onclick="openInfoPopup('info3')">i</button>
-                        <a href="map.html?lat=37.6438&lng=-7.6604" class="card-link">Ver no Mapa</a>
-                        <a class="info-button-text" onclick="openInfoPopup('info3')">Info</a>
                     </div>
                 </div>
                 <div id="info3" class="info-modal">
@@ -154,7 +171,8 @@
                             Curiosamente, Mértola é um bom lugar para se ouvir flamingos! À noite estes sobrevoam
                             frequentemente a vila a vocalizar, seguindo o rio até Castro Marim.</p>
                         <a href="map.html?lat=37.6438&lng=-7.6604" class="info-modal-link">Ver no Mapa</a>
-                         <a href="recordings.html?location=Vila%20de%20M%C3%A9rtola" class="info-modal-link">Ver Gravações</a>
+                        <a href="recordings.html?location=Vila%20de%20M%C3%A9rtola" class="info-modal-link">Ver
+                            Gravações</a>
                     </div>
                 </div>
 
@@ -162,12 +180,18 @@
                 <div class="card">
                     <img src="places/pr3.jpg" alt="Second Location">
                     <div class="card-content">
-                        <div class="card-title">PR3 MTL - As margens do Guadiana</div>
-                        <div class="card-description">Description for the second location goes here.</div>
-                        <button class="info-button" onclick="openInfoPopup('info4')">i</button>
-                        <a href="map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana" class="card-link">Ver no
-                            Mapa</a>
+                        <div class="card-top">
+                            <div class="card-title">PR3 MTL - As margens do Guadiana</div>
                             <a class="info-button-text" onclick="openInfoPopup('info4')">Info</a>
+                        </div>
+                        <div class="card-linkdiv">
+                            <a href="map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana" class="card-link">Ver
+                                no
+                                Mapa</a>
+                            <a href="recordings.html?location=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana"
+                                class="card-link">Ver Gravações</a>
+                        </div>
+                        <button class="info-button" onclick="openInfoPopup('info4')">i</button>
                     </div>
                 </div>
                 <div id="info4" class="info-modal">
@@ -190,7 +214,8 @@
                         </p>
                         <a href="map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana"
                             class="info-modal-link">Ver no Mapa</a>
-                        <a href="recordings.html?location=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana" class="info-modal-link">Ver Gravações</a>
+                        <a href="recordings.html?location=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana"
+                            class="info-modal-link">Ver Gravações</a>
                     </div>
                 </div>
 
@@ -198,12 +223,17 @@
                 <div class="card">
                     <img src="places/pr5.jpg" alt="Second Location">
                     <div class="card-content">
-                        <div class="card-title">PR5 MTL - Ao Ritmo das Águas do Vascão</div>
-                        <div class="card-description">Description for the second location goes here.</div>
-                        <button class="info-button" onclick="openInfoPopup('info5')">i</button>
-                        <a href="map.html?track=PR5%20MTL%20-%20Ao%20Ritmo%20das%20%C3%81guas%20do%20Vasc%C3%A3o"
-                            class="card-link">Ver no Mapa</a>
+                        <div class="card-top">
+                            <div class="card-title">PR5 MTL - Ao Ritmo das Águas do Vascão</div>
                             <a class="info-button-text" onclick="openInfoPopup('info5')">Info</a>
+                        </div>
+                        <div class="card-linkdiv">
+                            <a href="map.html?track=PR5%20MTL%20-%20Ao%20Ritmo%20das%20%C3%81guas%20do%20Vasc%C3%A3o"
+                                class="card-link">Ver no Mapa</a>
+                            <a href="recordings.html?location=PR5%20MTL%20-%20Ao%20Ritmo%20das%20%C3%81guas%20do%20Vasc%C3%A3o"
+                                class="card-link">Ver Gravações</a>
+                        </div>
+                        <button class="info-button" onclick="openInfoPopup('info5')">i</button>
                     </div>
                 </div>
                 <div id="info5" class="info-modal">
@@ -240,7 +270,8 @@
                         </p>
                         <a href="map.html?track=PR5%20MTL%20-%20Ao%20Ritmo%20das%20%C3%81guas%20do%20Vasc%C3%A3o"
                             class="info-modal-link">Ver no Mapa</a>
-                                     <a href="recordings.html?location=PR5%20MTL%20-%20Ao%20Ritmo%20das%20%C3%81guas%20do%20Vasc%C3%A3o" class="info-modal-link">Ver Gravações</a>
+                        <a href="recordings.html?location=PR5%20MTL%20-%20Ao%20Ritmo%20das%20%C3%81guas%20do%20Vasc%C3%A3o"
+                            class="info-modal-link">Ver Gravações</a>
                     </div>
                 </div>
 
@@ -248,12 +279,17 @@
                 <div class="card">
                     <img src="places/pr8.jpg" alt="Second Location">
                     <div class="card-content">
-                        <div class="card-title">PR8 - MTL Moinho do Alferes um Percurso Ribeirinho</div>
-                        <div class="card-description">Description for the second location goes here.</div>
-                        <button class="info-button" onclick="openInfoPopup('info6')">i</button>
-                        <a href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho"
-                            class="card-link">Ver no Mapa</a>
+                        <div class="card-top">
+                            <div class="card-title">PR8 - MTL Moinho do Alferes um Percurso Ribeirinho</div>
                             <a class="info-button-text" onclick="openInfoPopup('info6')">Info</a>
+                        </div>
+                        <div class="card-linkdiv">
+                            <a href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho"
+                                class="card-link">Ver no Mapa</a>
+                            <a href="recordings.html?location=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho"
+                                class="card-link">Ver Gravações</a>
+                        </div>
+                        <button class="info-button" onclick="openInfoPopup('info6')">i</button>
                     </div>
                 </div>
                 <div id="info6" class="info-modal">
@@ -294,7 +330,8 @@
                             do rio. As relas-meridionais também podem ser ouvidas neste local.</p>
                         <a href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho"
                             class="info-modal-link">Ver no Mapa</a>
-                                         <a href="recordings.html?location=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho" class="info-modal-link">Ver Gravações</a>
+                        <a href="recordings.html?location=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho"
+                            class="info-modal-link">Ver Gravações</a>
                     </div>
                 </div>
                 <!-- Add more cards as needed -->

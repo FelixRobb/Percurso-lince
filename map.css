@@ -207,16 +207,38 @@ h2 {
     overflow: hidden;
 }
 
+.buttonmappopup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#heardButton {
+    cursor: pointer;
+    background-color: #7a7a7a;
+    color: #fff;
+    padding: 8px 13px;
+    border: none;
+    border-radius: 20px;
+}
+
+#heardButton:hover {
+    background-color: #5d5d5d;
+}
+
 #backButton {
     background-color: #7a7a7a;
     border-radius: 20px;
     border: none;
     padding: 8px 13px;
     color: #ffffff;
-    margin-bottom: 20px;
     cursor: pointer;
 }
 
+#backButton:hover {
+    background-color: #5d5d5d;
+}
 .species-button {
     margin: auto;
     background-color: #404040;
@@ -228,6 +250,7 @@ h2 {
 }
 
 .SpeciesInfo {
+    display: block;
     max-height: 70vh;
     overflow-y: auto;
 }
@@ -244,12 +267,17 @@ h2 {
 }
 
 .specieslink {
-    color: #ffffff !important;
+    color: #fff !important;
+    display: flex;
+    text-overflow: clip;
+    width: 90%;
+    height: 15px;
     text-decoration: none;
     background-color: #7a7a7a;
     padding: 10px;
     border: none;
     border-radius: 20px;
+    overflow-x: scroll;
     transition: background-color 0.3s;
 }
 
