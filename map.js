@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gpxLayer.on('click', (e) => {
                     const latLng = e.latlng;
                     previousPopupLatLng = { lat: latLng.lat, lng: latLng.lng };  // Store the location as an object  // Store the location
-                    showSpeciesList(trackName, latLng, true);
+                    showSpeciesList(trackName, latLng, isTrack=true);
                 });
             })
             .catch(error => console.error(`Error loading track ${trackName}:`, error));
@@ -200,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return dateA - dateB;
                 });
 
+                console.log(isTrack)
                 const speciesList = filteredData.map(bird => `<li data-species="${bird['nome-PT']}" class="speciesli">${bird['nome-PT']}</li>`).join('');
 
                 const popupContent =
@@ -353,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const middlePoint = trackBounds[trackName].getCenter();
                 previousPopupLatLng = middlePoint;  // Store the location
-                showSpeciesList(trackName, middlePoint);
+                showSpeciesList(trackName, middlePoint, isTrack=true);
 
                 // Automatically select the track in the dropdown
                 trackSelect.value = trackName;
