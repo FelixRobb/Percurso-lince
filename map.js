@@ -200,9 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     return dateA - dateB;
                 });
 
-                console.log(isTrack)
-                const speciesList = filteredData.map(bird => `<li data-species="${bird['nome-PT']}" class="speciesli">${bird['nome-PT']}</li>`).join('');
-
+                const speciesList = filteredData.map(bird => `<li data-species-id="${bird.id}" class="speciesli">${bird['nome-PT']}</li>`).join('');
+                
                 const popupContent =
                     `<div class="speciesdiv">
                         <h2>Especies em ${association}</h2>
@@ -229,17 +228,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 document.querySelectorAll('.speciesli').forEach(item => {
                     item.addEventListener('click', (event) => {
-                        const speciesName = event.target.getAttribute('data-species');
-                        showSpeciesInfo(filteredData.find(bird => bird['nome-PT'] === speciesName), isTrack);  // Pass isTrack
-                    });
-                });
+                        const speciesId = Number(event.target.getAttribute('data-species-id'));
+                        const bird = filteredData.find(bird => bird.id === speciesId);
+                        showSpeciesInfo(bird, association, isTrack); // Use bird.id instead
+    });
+});
             })
             .catch(error => console.error('Error loading species data:', error));
     };
 
 
 
-    const showSpeciesInfo = (bird, isTrack = false) => {
+    const showSpeciesInfo = (bird, association, isTrack = false) => {
         if (!bird) {
             console.error('Species information is missing');
             return;
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Function to update button text based on current state
         function updateButton() {
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(bird['nome-PT']);
+            const isHeard = heardSpecies.includes(bird.id);
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
         }
 
@@ -290,6 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#backButton').addEventListener('click', () => {
             if (previousPopup) {
                 previousPopup.remove();
+                previousAssociation = association
                 showSpeciesList(previousAssociation, previousPopupLatLng, isTrack);  // Pass isTrack parameter here
             }
         });
@@ -297,14 +298,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const heardButton = document.getElementById('heardButton');
         heardButton.addEventListener('click', () => {
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(bird['nome-PT']);
-
+            const isHeard = heardSpecies.includes(bird.id);
+            heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
+            
             if (isHeard) {
                 // If species is already in the list, remove it
-                heardSpecies = heardSpecies.filter(species => species !== bird['nome-PT']);
+                heardSpecies = heardSpecies.filter(species => species !== bird.id);
             } else {
                 // If species is not in the list, add it
-                heardSpecies.push(bird['nome-PT']);
+                heardSpecies.push(bird.id);
             }
 
             // Update the heardSpecies in localStorage
