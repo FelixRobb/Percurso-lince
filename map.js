@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         iconUrl: 'marker.svg',
         iconSize: [38, 95],
         iconAnchor: [22, 94],
-        popupAnchor: [-3, -76]
+        popupAnchor: [-3, -60]
     });
 
     // Add locate control
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const middlePoint = trackBounds[selectedTrack].getCenter();
             previousPopupLatLng = middlePoint;  // Store the location
-            showSpeciesList(selectedTrack, middlePoint);
+            showSpeciesList(selectedTrack, middlePoint,);
         } else if (locationMarkers[selectedTrack]) {
             const marker = locationMarkers[selectedTrack];
             map.setView(marker.getLatLng(), 15);
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (latLngObj && latLngObj.lat !== undefined && latLngObj.lng !== undefined) {
                     currentPopup = L.popup({
-                        offset: isTrack ? L.point(0, 0) : L.point(-3, -76)  // Apply offset conditionally
+                        offset: isTrack ? L.point(0, 0) : L.point(-3, -60)  // Apply offset conditionally
                     })
                         .setLatLng(latLngObj)
                         .setContent(popupContent)
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (previousPopupLatLng) {
             previousPopup = L.popup({
-                offset: isTrack ? L.point(0, 0) : L.point(-3, -76)  // Apply offset conditionally
+                offset: isTrack ? L.point(0, 0) : L.point(-3, -60)  // Apply offset conditionally
             })
                 .setLatLng(previousPopupLatLng)
                 .setContent(popupContent)
