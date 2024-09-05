@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Function to update button text based on current state
                 function updateButton() {
                     heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-                    const isHeard = heardSpecies.includes(entry['nome-PT']);
+                    const isHeard = heardSpecies.includes(entry.id);
                     heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
                 }
             
@@ -81,15 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const heardButton = document.getElementById('heardButton');
                 heardButton.addEventListener('click', () => {
                     heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-                    const isHeard = heardSpecies.includes(entry['nome-PT']);
+                    const isHeard = heardSpecies.includes(entry.id);
                     
                     if (isHeard) {
                         // If species is already in the list, remove it
-                        heardSpecies = heardSpecies.filter(species => species !== entry['nome-PT']);
+                        heardSpecies = heardSpecies.filter(species => species !== entry.id);
                         console.log(`${entry['nome-PT']} removed from heard list!`);
                     } else {
                         // If species is not in the list, add it
-                        heardSpecies.push(entry['nome-PT']);
+                        heardSpecies.push(entry.id);
                         console.log(`${entry['nome-PT']} added to heard list!`);
                     }
                     
