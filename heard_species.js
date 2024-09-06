@@ -9,6 +9,11 @@ function displayHeardSpecies(heardSpecies = null) {
         }
     }
 
+    // If no search term is present, sort alphabetically
+    if (heardSpecies.length > 0 && !searchInput.value) {
+        heardSpecies.sort((a, b) => a.localeCompare(b));
+    }
+
     const speciesList = document.getElementById('speciesList');
     speciesList.innerHTML = ''; // Clear the list
 
@@ -46,30 +51,35 @@ searchInput.addEventListener('input', () => {
     const searchTerm = searchInput.value.toLowerCase();
     let heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
 
-    // Apply the weighted search logic
-    const weightedResults = heardSpecies
-        .map(species => {
-            const name = species.toLowerCase();
-            let weight = 0;
+    if (searchTerm) {
+        // Apply the weighted search logic
+        const weightedResults = heardSpecies
+            .map(species => {
+                const name = species.toLowerCase();
+                let weight = 0;
 
-            // Highest weight: species name starts with the query
-            if (name.startsWith(searchTerm)) {
-                weight += 3;
-            }
+                // Highest weight: species name starts with the query
+                if (name.startsWith(searchTerm)) {
+                    weight += 3;
+                }
 
-            // Lower weight: query is found anywhere in the species name
-            else if (name.includes(searchTerm)) {
-                weight += 1;
-            }
+                // Lower weight: query is found anywhere in the species name
+                else if (name.includes(searchTerm)) {
+                    weight += 1;
+                }
 
-            return { species, weight };
-        })
-        .filter(item => item.weight > 0) // Only include species that have a weight (i.e., matched the query)
-        .sort((a, b) => b.weight - a.weight) // Sort by weight, highest weight first
-        .map(item => item.species); // Map back to the species names
+                return { species, weight };
+            })
+            .filter(item => item.weight > 0) // Only include species that have a weight (i.e., matched the query)
+            .sort((a, b) => b.weight - a.weight) // Sort by weight, highest weight first
+            .map(item => item.species); // Map back to the species names
 
-    // Update the display with weighted results
-    displayHeardSpecies(weightedResults);
+        // Update the display with weighted results
+        displayHeardSpecies(weightedResults);
+    } else {
+        // If no search term, display all species sorted alphabetically
+        displayHeardSpecies();
+    }
 });
 
 // Initial display of heard species
