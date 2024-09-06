@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Function to update button text based on current state
         function updateButton() {
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(bird.id);
+            const isHeard = heardSpecies.includes(bird["nome-PT"]);
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
         }
 
@@ -298,15 +298,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const heardButton = document.getElementById('heardButton');
         heardButton.addEventListener('click', () => {
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(bird.id);
+            const isHeard = heardSpecies.includes(bird['nome-PT']);
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
             
             if (isHeard) {
                 // If species is already in the list, remove it
-                heardSpecies = heardSpecies.filter(species => species !== bird.id);
+                heardSpecies = heardSpecies.filter(species => species !== bird['nome-PT']);
             } else {
                 // If species is not in the list, add it
-                heardSpecies.push(bird.id);
+                heardSpecies.push(bird['nome-PT']);
             }
 
             // Update the heardSpecies in localStorage
