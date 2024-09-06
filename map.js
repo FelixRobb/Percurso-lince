@@ -297,21 +297,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const heardButton = document.getElementById('heardButton');
         heardButton.addEventListener('click', () => {
-            console.log('clicked')
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            console.log('clicked 2')
             const isHeard = heardSpecies.includes(species['nome-PT']);
-            console.log('isHeard', isHeard)
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
-            console.log('clicked 3')
             
             if (isHeard) {
-                console.log('clicked 4')
                 // If species is already in the list, remove it
-                heardSpecies = heardSpecies.filter(species => species !== species['nome-PT']);
-                console.log('clicked 6')
+                heardSpecies = heardSpecies.filter(specie => specie !== species['nome-PT']);
             } else {
-                console.log('clicked 5')
                 // If species is not in the list, add it
                 heardSpecies.push(species['nome-PT']);
             }
