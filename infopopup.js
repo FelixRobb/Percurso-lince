@@ -1,6 +1,6 @@
 // Open popup
 function openInfoPopup(id) {
-    document.getElementById(id).style.display = 'block';
+    document.getElementById(id).style.display = 'flex';
 }
 
 // Close popup

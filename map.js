@@ -193,14 +193,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
-                const filteredData = association === 'all' ? data : data.filter(bird => bird.association === association);
+                const filteredData = association === 'all' ? data : data.filter(species => species.association === association);
                 filteredData.sort((a, b) => {
                     const dateA = new Date(`2024-${a.most_probable_months[0]}`);
                     const dateB = new Date(`2024-${b.most_probable_months[0]}`);
                     return dateA - dateB;
                 });
 
-                const speciesList = filteredData.map(bird => `<li data-species-id="${bird.id}" class="speciesli">${bird['nome-PT']}</li>`).join('');
+                const speciesList = filteredData.map(species => `<li data-species-id="${species.id}" class="speciesli">${species['nome-PT']}</li>`).join('');
                 
                 const popupContent =
                     `<div class="speciesdiv">
@@ -229,8 +229,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.speciesli').forEach(item => {
                     item.addEventListener('click', (event) => {
                         const speciesId = Number(event.target.getAttribute('data-species-id'));
-                        const bird = filteredData.find(bird => bird.id === speciesId);
-                        showSpeciesInfo(bird, association, isTrack); // Use bird.id instead
+                        const species = filteredData.find(species => species.id === speciesId);
+                        showSpeciesInfo(species, association, isTrack); // Use species.id instead
     });
 });
             })
@@ -239,8 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    const showSpeciesInfo = (bird, association, isTrack = false) => {
-        if (!bird) {
+    const showSpeciesInfo = (species, association, isTrack = false) => {
+        if (!species) {
             console.error('Species information is missing');
             return;
         }
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Function to update button text based on current state
         function updateButton() {
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(bird["nome-PT"]);
+            const isHeard = heardSpecies.includes(species["nome-PT"]);
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
         }
 
@@ -260,15 +260,15 @@ document.addEventListener('DOMContentLoaded', () => {
             `<div class="SpeciesInfo">
                 <div class="buttonmappopup">
                 <button id="backButton" class="back-button">Voltar à lista</button>
-                <button id="heardButton">${heardSpecies.includes(bird['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
+                <button id="heardButton">${heardSpecies.includes(species['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
                 </div>
-                <h2>${bird['nome-PT']} (${bird.scientific_name})</h2>
-                <a class="specieslink" href="species.html?name=${encodeURIComponent(bird['nome-PT'])}">${bird['nome-PT']} (${bird.scientific_name})}</a>
-                <p>${bird['notas-PT']}</p>
-                <p>${bird['descricao-PT']}</p>
-                <p><strong>Melhores meses para se ouvir:</strong> ${bird.most_probable_months.join(', ')}</p>
+                <h2>${species['nome-PT']} (${species.scientific_name})</h2>
+                <a class="specieslink" href="species.html?name=${encodeURIComponent(species['nome-PT'])}">${species['nome-PT']} (${species.scientific_name})}</a>
+                <p>${species['notas-PT']}</p>
+                <p>${species['descricao-PT']}</p>
+                <p><strong>Melhores meses para se ouvir:</strong> ${species.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
-                ${bird.sound_url}
+                ${species.sound_url}
                 </div>
             </div>`;
 
@@ -297,16 +297,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const heardButton = document.getElementById('heardButton');
         heardButton.addEventListener('click', () => {
+            console.log('clicked')
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(bird['nome-PT']);
+            console.log('clicked 2')
+            const isHeard = heardSpecies.includes(species['nome-PT']);
+            console.log('isHeard', isHeard)
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
+            console.log('clicked 3')
             
             if (isHeard) {
+                console.log('clicked 4')
                 // If species is already in the list, remove it
-                heardSpecies = heardSpecies.filter(species => species !== bird['nome-PT']);
+                heardSpecies = heardSpecies.filter(species => species !== species['nome-PT']);
+                console.log('clicked 6')
             } else {
+                console.log('clicked 5')
                 // If species is not in the list, add it
-                heardSpecies.push(bird['nome-PT']);
+                heardSpecies.push(species['nome-PT']);
             }
 
             // Update the heardSpecies in localStorage

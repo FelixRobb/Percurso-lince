@@ -26,15 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Species name from URL:', speciesName);
     document.title = speciesName;
 
-    // Fetch bird data and filter for the selected species
+    // Fetch species data and filter for the selected species
     fetch('species.json')
         .then(response => {
             console.log('Response received:', response);
             return response.json();
         })
-        .then(birds => {
-            console.log('Birds data received:', birds);
-            const speciesEntries = birds.filter(bird => bird['nome-PT'] === speciesName);
+        .then(species => {
+            console.log('Species data received:', species);
+            const speciesEntries = species.filter(species => species['nome-PT'] === speciesName);
 
             console.log('Filtered species entries:', speciesEntries);
 

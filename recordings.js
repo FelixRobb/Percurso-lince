@@ -35,9 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Gera e loga os links das localizações possíveis
-            logLocationLinks();
-
             filterNameButton.addEventListener('click', () => {
                 filteredSpecies = sortByName(filteredSpecies);
                 displaySpecies(filteredSpecies);
