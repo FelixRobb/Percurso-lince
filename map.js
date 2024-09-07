@@ -265,10 +265,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2>${species['nome-PT']} (${species.scientific_name})</h2>
                 <a class="specieslink" href="species.html?name=${encodeURIComponent(species['nome-PT'])}">${species['nome-PT']} (${species.scientific_name})}</a>
                 <p>${species['notas-PT']}</p>
-                <p>${species['descricao-PT']}</p>
                 <p><strong>Melhores meses para se ouvir:</strong> ${species.most_probable_months.join(', ')}</p>
                 <div class="sounddiv">
                 ${species.sound_url}
+                <p>${species['descricao-PT']}</p>
                 </div>
             </div>`;
 
