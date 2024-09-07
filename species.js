@@ -70,11 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 details.innerHTML = `
                     <h2>${entry['nome-PT']} (${entry.scientific_name})</h2>
                     <button id="heardButton">${heardSpecies.includes(entry['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
-                    <p class="description">${entry['descricao-PT']}</p>
                     <p class="comments"><strong>Descrição:</strong> ${entry['notas-PT']}</p>
                     <p class="months"><strong>Melhores meses para se ouvir:</strong> ${entry.most_probable_months.join(', ')}</p>
+                    <p class="description"><strong><i>Gravação: </strong>${entry['descricao-PT']}</i></p>
                     <div class="sound-url">${entry.sound_url}</div>
-                    <p class="location"><strong>Localização:</strong> <a href="${locationUrl}">${entry.association}</a></p>
+                    <p class="location"><strong>Localização associada:</strong> <a href="${locationUrl}">${entry.association}</a></p>
                 `;
             
                 // Add event listener to the button to toggle add/remove from the heard list
