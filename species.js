@@ -1,11 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.getElementById('sidebar');
-    const sidebarContent = document.getElementById('sidebar-content');
     const details = document.getElementById('details');
-    const toggleButton = document.getElementById('toggle-sidebar');
-    const closeButton = document.getElementById('close-sidebar');
-
-    console.log('DOM fully loaded and parsed');
+    
 
     // Define the location map
     const locationMap = {
@@ -17,26 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
         'PR8 MTL - Moinho do Alferes um Percurso Ribeirinho': 'map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho'
     };
 
-    console.log('Location map defined:', locationMap);
 
     // Extract the species name from the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const speciesName = urlParams.get('name');
 
-    console.log('Species name from URL:', speciesName);
     document.title = speciesName;
 
     // Fetch species data and filter for the selected species
     fetch('species.json')
         .then(response => {
-            console.log('Response received:', response);
             return response.json();
         })
         .then(species => {
-            console.log('Species data received:', species);
             const speciesEntries = species.filter(species => species['nome-PT'] === speciesName);
 
-            console.log('Filtered species entries:', speciesEntries);
 
             if (speciesEntries.length === 0) {
                 details.innerHTML = `<p>No details found for species: ${speciesName}</p>`;
@@ -44,103 +34,103 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Create the sidebar content
-            const sidebarContentHtml = speciesEntries.map((entry, index) => `
-                <div class="sidebar-item" data-index="${index}">${entry.association}</div>
-            `).join('');
-            sidebarContent.innerHTML = sidebarContentHtml;
+            // Create a Set to keep track of unique locations (associations)
+            const uniqueLocations = new Set();
 
-            console.log('Sidebar content HTML:', sidebarContentHtml);
+            // Filter unique entries by location (association)
+            const uniqueSpeciesEntries = speciesEntries.filter(entry => {
+                if (uniqueLocations.has(entry.association)) {
+                    return false; // Skip duplicates
+                }
+                uniqueLocations.add(entry.association);
+                return true;
+            });
 
-            function displayDetails(entry) {
+            // Function to display details, including the select element
+            function displayDetails(entry, speciesEntries) {
                 const locationUrl = locationMap[entry.association] || '#';
-                console.log('Location URL for', entry.association, ':', locationUrl);
-            
+
                 // Retrieve the current heard species list from localStorage
                 let heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            
+
+                // Filter speciesEntries by the selected association (location)
+                const locationEntries = speciesEntries.filter(e => e.association === entry.association);
+
+                // Initialize content for multiple recordings
+                let recordingsContent = '';
+
+                locationEntries.forEach((locationEntry, index) => {
+                    recordingsContent += `
+                        ${locationEntry.sound_url}
+                        <p class="description"><strong><i>Gravação ${index + 1}: </strong>${locationEntry['descricao-PT']}</i></p>
+                    `;
+                });
+
+
                 // Function to update button text based on current state
                 function updateButton() {
                     heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
                     const isHeard = heardSpecies.includes(entry['nome-PT']);
                     heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
                 }
-            
-                // Initial button label set
+
+                // Build the species details and insert the select dropdown after the species name
                 details.innerHTML = `
                     <h2>${entry['nome-PT']} (${entry.scientific_name})</h2>
                     <button id="heardButton">${heardSpecies.includes(entry['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
                     <p class="comments"><strong>Descrição:</strong> ${entry['notas-PT']}</p>
                     <p class="months"><strong>Melhores meses para se ouvir:</strong> ${entry.most_probable_months.join(', ')}</p>
-                    <p class="description"><strong><i>Gravação: </strong>${entry['descricao-PT']}</i></p>
-                    <div class="sound-url">${entry.sound_url}</div>
+                    <label id="location-select-label" for="location-select"><strong>Escolha a Localização:</strong></label>
+                    <select id="location-select"></select>
+                    ${recordingsContent}
                     <p class="location"><strong>Localização associada:</strong> <a href="${locationUrl}">${entry.association}</a></p>
                 `;
-            
+
+                // Populate the select element with unique locations
+                const locationSelect = document.getElementById('location-select');
+                const locationOptionsHtml = uniqueSpeciesEntries.map((entry, index) => `
+                    <option value="${index}">${entry.association}</option>
+                `).join('');
+                locationSelect.innerHTML = locationOptionsHtml;
+
+                // Pre-select the first option and trigger change event
+                locationSelect.selectedIndex = uniqueSpeciesEntries.indexOf(entry);
+
                 // Add event listener to the button to toggle add/remove from the heard list
                 const heardButton = document.getElementById('heardButton');
                 heardButton.addEventListener('click', () => {
                     heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
                     const isHeard = heardSpecies.includes(entry['nome-PT']);
-                    
+
                     if (isHeard) {
                         // If species is already in the list, remove it
                         heardSpecies = heardSpecies.filter(species => species !== entry['nome-PT']);
-                        console.log(`${entry['nome-PT']} removed from heard list!`);
                     } else {
                         // If species is not in the list, add it
                         heardSpecies.push(entry['nome-PT']);
-                        console.log(`${entry['nome-PT']} added to heard list!`);
                     }
-                    
+
                     // Update the heardSpecies in localStorage
                     localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
-                    
+
                     // Update the button text based on the new state
                     updateButton();
                 });
-            
+
                 // Initial call to set the correct button text
                 updateButton();
             }
-            
-            
-            document.querySelectorAll('.sidebar-item').forEach(item => {
-                item.addEventListener('click', (event) => {
-                    const index = event.target.getAttribute('data-index');
-                    console.log('Sidebar item clicked:', event.target.textContent, 'Index:', index);
 
-                    document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-                    event.target.classList.add('active');
-                    displayDetails(speciesEntries[index]);
-                });
-            });
-
-            if (speciesEntries.length > 0) {
-                const firstSidebarItem = document.querySelector('.sidebar-item');
-                if (firstSidebarItem) {
-                    firstSidebarItem.classList.add('active');
-                    displayDetails(speciesEntries[0]);
-                }
+            // Display details for the first location by default
+            if (uniqueSpeciesEntries.length > 0) {
+                displayDetails(uniqueSpeciesEntries[0], speciesEntries);  // Display details for the first location
             }
+
+            // Event listener for select element
+            details.addEventListener('change', (event) => {
+                const selectedIndex = event.target.value;
+                displayDetails(uniqueSpeciesEntries[selectedIndex], speciesEntries);
+            });
         })
         .catch(error => console.error('Error loading species data:', error));
-
-    // Add event listener to toggle button to open sidebar
-    toggleButton.addEventListener('click', () => {
-        console.log('button pressed')
-        sidebar.classList.add('visible');
-    });
-
-    // Add event listener to close button to close sidebar
-    closeButton.addEventListener('click', () => {
-        sidebar.classList.remove('visible');
-    });
-
-    // Add event listener to document to close sidebar when clicking outside
-    document.addEventListener('click', (event) => {
-        if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
-            sidebar.classList.remove('visible');
-        }
-    });   
 });

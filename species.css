@@ -9,9 +9,21 @@ body {
 /* Container for sidebar and details */
 #species-details {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 1rem;
+}
+
+#location-select-label {
+    margin-bottom: 10px !important;
+}
+
+#location-select {
+    margin-bottom: 15px;
+    width: 100%;
+    background-color: #bbbbbb;
+    border-radius: 5px;
 }
 
 /* Sidebar Styles */
@@ -82,7 +94,6 @@ body {
     color: #1e90ff;
 }
 
-#details .description,
 #details .comments,
 #details .months {
     margin: 1rem 0;
@@ -90,6 +101,12 @@ body {
 
 #details .sound-url {
     margin-top: 1rem;
+}
+
+#details .description {
+    margin-top: 2px;
+    margin-bottom: 20px;
+    font-size: 13px;
 }
 
 #details .location {
