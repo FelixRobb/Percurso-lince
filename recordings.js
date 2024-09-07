@@ -22,16 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
             populateTimeFilter(allSpecies);
             displaySpecies(filteredSpecies);
 
-            // Verifica a URL e seleciona a localização se for especificada
+            // Check URL for location and apply filter if needed
             const urlParams = new URLSearchParams(window.location.search);
-            const locationFromUrl = urlParams.get('location'); // Assume que o parâmetro da URL é "location"
+            const locationFromUrl = urlParams.get('location'); // Assume URL parameter is "location"
 
             if (locationFromUrl) {
                 const locationOption = Array.from(filterAssociationSelect.options).find(option => option.value === locationFromUrl);
                 if (locationOption) {
                     filterAssociationSelect.value = locationFromUrl;
-                    updateFilteredSpecies(); // Atualiza as espécies filtradas com base na localização
-                    displaySpecies(filteredSpecies); // Mostra as espécies filtradas
+                    updateFilteredSpecies(); // Update filteredSpecies based on location
+                    displaySpecies(filteredSpecies); // Show filteredSpecies
                 }
             }
 
@@ -78,15 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
             
                         return { species, weight };
                     })
-                    .filter(item => item.weight > 0) // Only include species that have a weight (i.e., matched the query)
-                    .sort((a, b) => b.weight - a.weight) // Sort by weight, highest weight first
-                    .map(item => item.species); // Map back to the species objects
+                    .filter(item => item.weight > 0) // Only include species with a weight
+                    .sort((a, b) => b.weight - a.weight) // Sort by weight, highest first
+                    .map(item => item.species); // Map back to species objects
             
                 displaySpecies(filteredSpecies);
             });
-            
-            
-            
+
             filterAssociationSelect.addEventListener('change', () => {
                 updateFilteredSpecies();
                 displaySpecies(filteredSpecies);
@@ -113,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     name: species['nome-PT'],
                     scientific_name: species.scientific_name,
                     most_probable_months: new Set(species.most_probable_months),
-                    association: species.association,
+                    associations: new Set([species.association]), // Change association to a set
                     group_PT: species['grupo-PT'],
                     quando_PT: species['quando-PT'],
                     comenta: species['notas-PT'],
@@ -122,12 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             } else {
                 species.most_probable_months.forEach(month => uniqueSpecies[species['nome-PT']].most_probable_months.add(month));
+                uniqueSpecies[species['nome-PT']].associations.add(species.association); // Add association
             }
         });
 
         return Object.values(uniqueSpecies).map(species => ({
             ...species,
-            most_probable_months: averageMonths([...species.most_probable_months])
+            most_probable_months: averageMonths([...species.most_probable_months]),
+            associations: [...species.associations] // Convert set to array
         }));
     }
 
@@ -141,10 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedTime = filterTimeSelect.value;
 
         filteredSpecies = allSpecies.filter(species =>
-            (selectedLocation === '' || species.association === selectedLocation) &&
+            (selectedLocation === '' || species.associations.includes(selectedLocation)) &&
             (selectedType === '' || species.group_PT === selectedType) &&
             (selectedTime === '' || species.quando_PT === selectedTime)
         );
+
     }
 
     function displaySpecies(species) {
@@ -160,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function populateAssociationFilter(species) {
-        const uniqueLocations = [...new Set(species.map(species => species.association))];
+        const uniqueLocations = [...new Set(species.flatMap(species => species.associations))];
         filterAssociationSelect.innerHTML = '<option value="">Todas as Localizações</option>'; // Reset filter options
         uniqueLocations.forEach(location => {
             const option = document.createElement('option');
@@ -169,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
             filterAssociationSelect.appendChild(option);
         });
     }
-
 
     function populateTypeFilter(species) {
         const uniqueTypes = [...new Set(species.map(species => species.group_PT))];
