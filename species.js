@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 details.innerHTML = `
                     <h2>${entry['nome-PT']} (${entry.scientific_name})</h2>
                     <button id="heardButton">${heardSpecies.includes(entry['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
-                    <p class="comments"><strong>Descrição:</strong> ${entry['notas-PT']}</p>
+                    <p class="comments">${entry['notas-PT']}</p>
                     <p class="months"><strong>Melhores meses para se ouvir:</strong> ${entry.most_probable_months.join(', ')}</p>
                     <label id="location-select-label" for="location-select"><strong>Escolha a Localização:</strong></label>
                     <select id="location-select"></select>
