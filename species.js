@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Define the location map
     const locationMap = {
-        'Azenhas do Guadiana': 'map.html?lat=37.6468&lng=-7.6512',
+        'Azenhas do Guadiana': 'map.html?lat=37.6462&lng=-7.6525',
         'Ribeira de Oeiras': 'map.html?lat=37.6254&lng=-7.8099',
         'Vila de Mértola': 'map.html?lat=37.6438&lng=-7.6604',
         'PR3 MTL - As Margens do Guadiana': 'map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana',
@@ -59,10 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Initialize content for multiple recordings
                 let recordingsContent = '';
 
-                locationEntries.forEach((locationEntry, index) => {
+                locationEntries.forEach((locationEntry) => {
                     recordingsContent += `
                         ${locationEntry.sound_url}
-                        <p class="description"><strong><i>Gravação ${index + 1}: </strong>${locationEntry['descricao-PT']}</i></p>
+                        <p class="description"><strong><i></strong>${locationEntry['descricao-PT']}</i></p>
                     `;
                 });
 
