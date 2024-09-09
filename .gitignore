@@ -7,3 +7,4 @@ birdsold.json
 species copy.json
 speciesoriginal.json
 .prettierrc
+.DS_Store
