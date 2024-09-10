@@ -43,6 +43,12 @@ header h1 {
     display: flex;
     align-items: center;
     flex-direction: row;
+    transition: color .2s ease-out;
+}
+
+#menu:hover {
+    text-decoration: none;
+    color: #ff6a00;
 }
 
 /* Side Menu */

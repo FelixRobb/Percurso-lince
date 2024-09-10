@@ -10,6 +10,8 @@ function toggleMenu() {
 
 function openMenu() {
     var sideMenu = document.getElementById("side-menu");
+    var menubutton = document.getElementById("menu")
+    menubutton.style.color = "#ff6a00"
     sideMenu.style.display = "block";
     sideMenu.style.width = "90vw";
 
@@ -19,6 +21,8 @@ function openMenu() {
 
 function closeMenu() {
     var sideMenu = document.getElementById("side-menu");
+    var menubutton = document.getElementById("menu")
+    menubutton.style.color = "#fff"
     sideMenu.style.display = "none";
     sideMenu.style.width = "0";
 
