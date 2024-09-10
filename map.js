@@ -71,37 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Create markers and add them to the map
-    locations.forEach(location => {
-
-        const marker = L.marker([location.lat, location.lng], { icon: myIcon }).addTo(markerCluster);
-        marker.bindPopup(
-            `<div class="placediv">
-        <h2 class="placepopup">${location.name}</h2>
-        <button class="species-button" data-location="${location.name}">Ver especies</button>
-        </div>`,
-            {
-                // Popup options can be adjusted here if necessary
-                offset: L.point(0, 0)  // Example offset adjustment
-            }
-        );
-
-        marker.on('popupopen', () => {
-            if (!previousPopupLatLng) {
-                previousPopupLatLng = { lat: location.lat, lng: location.lng };  // Store the location as an object
-            }
-
-            document.querySelector('.species-button').addEventListener('click', () => {
-                previousPopupLatLng = { lat: location.lat, lng: location.lng };  // Update the location on button click
-                showSpeciesList(location.name, previousPopupLatLng);
-            });
-        });
-
-        locationMarkers[location.name] = marker;
-    });
-
-
-
     // Load tracks and add them to the map
     const loadTrack = (trackFile, trackName) => {
         fetch(trackFile)
@@ -139,12 +108,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 gpxLayer.on('click', (e) => {
                     const latLng = e.latlng;
-                    previousPopupLatLng = { lat: latLng.lat, lng: latLng.lng };  // Store the location as an object  // Store the location
-                    showSpeciesList(trackName, latLng, isTrack=true);
+                    previousPopupLatLng = { lat: latLng.lat, lng: latLng.lng };  // Store the location
+                    showTrackPopup(trackName, latLng, isTrack=true);
                 });
             })
             .catch(error => console.error(`Error loading track ${trackName}:`, error));
     };
+
 
     const tracks = [
         { file: 'tracks/PR3 MTL - As margens do Guadiana.gpx', name: 'PR3 MTL - As Margens do Guadiana' },
@@ -184,6 +154,129 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentPopup = null;
 
+
+    const showDetailedPopup = (placeName, isTrack=true) => {
+        fetch('details.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const details = data[placeName];
+    
+                if (details) {
+                    const detailedPopupContent = `
+                    <div class="detailed-popup">
+                        <h2>About ${placeName}</h2>
+                        <p>${details.description}</p>
+                        <a href="${details.links[0].url}">${details.links[0].text}</a>
+                            <a data-location="${placeName}">Ver espécies</a>
+                    </div>
+                    `;
+    
+                    if (currentPopup) {
+                        currentPopup.remove();
+                    }
+    
+                    // Ensure latLng is defined before creating the popup
+                    if (previousPopupLatLng) {
+                        const latLngObj = L.latLng(previousPopupLatLng.lat, previousPopupLatLng.lng);
+                        currentPopup = L.popup({
+                            offset: isTrack ? L.point(0, 0) : L.point(-3, -60)  // Apply offset conditionally
+                        })
+                            .setLatLng(latLngObj)
+                            .setContent(detailedPopupContent)
+                            .openOn(map);
+    
+                        // Add event listener for species button
+                        document.querySelector('.species-button').addEventListener('click', () => {
+                            showSpeciesList(placeName, previousPopupLatLng);
+                        });
+    
+                    } else {
+                        console.error('previousPopupLatLng is undefined or null');
+                    }
+                } else {
+                    console.error(`No details found for ${placeName}`);
+                }
+            })
+            .catch(error => console.error('Error loading detailed information:', error));
+    };
+    
+    
+
+    // Create markers and add them to the map
+locations.forEach(location => {
+    const marker = L.marker([location.lat, location.lng], { icon: myIcon }).addTo(markerCluster);
+    marker.bindPopup(
+        `<div class="placediv">
+            <h2 class="placepopup">${location.name}</h2>
+            <div class="placedivbuttons">
+            <button class="species-button" data-location="${location.name}">Ver espécies</button>
+            <button class="details-button" data-location="${location.name}">Informações</button>
+            </div>
+        </div>`,
+        {
+            offset: L.point(0, 0)  // Example offset adjustment
+        }
+    );
+
+    marker.on('popupopen', () => {
+        // Update previousPopupLatLng when the popup opens
+        previousPopupLatLng = { lat: location.lat, lng: location.lng };
+
+        document.querySelector('.species-button').addEventListener('click', () => {
+            showSpeciesList(location.name, previousPopupLatLng);
+        });
+
+        document.querySelector('.details-button').addEventListener('click', () => {
+            showDetailedPopup(location.name, isTrack=false);
+        });
+    });
+
+    locationMarkers[location.name] = marker;
+});
+
+
+    // Update showTrackPopup to include a button for detailed information
+    const showTrackPopup = (trackName, latLng, isTrack) => {
+        const popupContent = `
+            <div class="placediv">
+                <h2 class="placepopup">${trackName}</h2>
+                <div class="placedivbuttons">
+                <button class="species-button" data-location="${location.name}">Ver espécies</button>
+                <button class="details-button" data-location="${location.name}">Informações</button>
+                </div>
+            </div>
+        `;
+
+        if (previousPopup) {
+            previousPopup.remove();
+        }
+
+        if (previousPopupLatLng) {
+            previousPopup = L.popup({
+                offset: isTrack ? L.point(0, 0) : L.point(-3, -60)  // Apply offset conditionally
+            })
+                .setLatLng(previousPopupLatLng)
+                .setContent(popupContent)
+                .openOn(map);
+        } else {
+            console.error('previousPopupLatLng is undefined');
+        }
+
+        document.querySelector('.species-button').addEventListener('click', () => {
+            showSpeciesList(trackName, latLng, true);
+        });
+
+        document.querySelector('.details-button').addEventListener('click', () => {
+            showDetailedPopup(trackName, isTrack=true);
+        });
+    };
+
+
     const showSpeciesList = (association, latLng, isTrack = false) => {
         fetch('species.json')
             .then(response => {
@@ -193,18 +286,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
-                const filteredData = association === 'all' ? data : data.filter(species => species.association === association);
-                filteredData.sort((a, b) => {
-                    const dateA = new Date(`2024-${a.most_probable_months[0]}`);
-                    const dateB = new Date(`2024-${b.most_probable_months[0]}`);
-                    return dateA - dateB;
-                });
+                const filteredData = association === 'all'
+                    ? data
+                    : data.filter(species => species.association === association);
 
-                const speciesList = filteredData.map(species => `<li data-species-id="${species.id}" class="speciesli">${species['nome-PT']}</li>`).join('');
-                
+                // Get unique species names
+                const uniqueSpecies = Array.from(
+                    new Set(filteredData.map(species => species['nome-PT']))
+                );
+
+                const speciesList = uniqueSpecies.map(speciesName =>
+                    `<li data-species-name="${speciesName}" class="speciesli">${speciesName}</li>`
+                ).join('');
+
                 const popupContent =
                     `<div class="speciesdiv">
-                        <h2>Especies em ${association}</h2>
+                        <h2>Espécies em ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
 
@@ -212,7 +309,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentPopup.remove();
                 }
 
-                // Ensure latLng is an object with lat and lng properties
                 let latLngObj = Array.isArray(latLng) ? { lat: latLng[0], lng: latLng[1] } : latLng;
 
                 if (latLngObj && latLngObj.lat !== undefined && latLngObj.lng !== undefined) {
@@ -228,19 +324,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 document.querySelectorAll('.speciesli').forEach(item => {
                     item.addEventListener('click', (event) => {
-                        const speciesId = Number(event.target.getAttribute('data-species-id'));
-                        const species = filteredData.find(species => species.id === speciesId);
-                        showSpeciesInfo(species, association, isTrack); // Use species.id instead
-    });
-});
+                        const speciesName = event.target.getAttribute('data-species-name');
+                        const species = filteredData.filter(species => species['nome-PT'] === speciesName);
+                        showSpeciesInfo(species, association, isTrack);
+                    });
+                });
             })
             .catch(error => console.error('Error loading species data:', error));
     };
 
 
-
     const showSpeciesInfo = (species, association, isTrack = false) => {
-        if (!species) {
+        if (!species || species.length === 0) {
             console.error('Species information is missing');
             return;
         }
@@ -251,25 +346,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Function to update button text based on current state
         function updateButton() {
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(species["nome-PT"]);
+            const isHeard = heardSpecies.includes(species[0]["nome-PT"]);
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
         }
 
+        // Bundle all sound urls and descriptions
+        const recordingsContent = species.map(entry =>
+            `<div class="sounddiv">
+                ${entry.sound_url}
+                <p>${entry['descricao-PT']}</p>
+            </div>`
+        ).join('');
 
         const popupContent =
             `<div class="SpeciesInfo">
                 <div class="buttonmappopup">
-                <button id="backButton" class="back-button">Voltar à lista</button>
-                <button id="heardButton">${heardSpecies.includes(species['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
+                    <button id="backButton" class="back-button">Voltar à lista</button>
+                    <button id="heardButton">${heardSpecies.includes(species[0]['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
                 </div>
-                <h2>${species['nome-PT']} (${species.scientific_name})</h2>
-                <a class="specieslink" href="species.html?name=${encodeURIComponent(species['nome-PT'])}">${species['nome-PT']} (${species.scientific_name})}</a>
-                <p>${species['notas-PT']}</p>
-                <p><strong>Melhores meses para se ouvir:</strong> ${species.most_probable_months.join(', ')}</p>
-                <div class="sounddiv">
-                ${species.sound_url}
-                <p>${species['descricao-PT']}</p>
-                </div>
+                <h2>${species[0]['nome-PT']} (${species[0].scientific_name})</h2>
+                <a class="specieslink" href="species.html?name=${encodeURIComponent(species[0]['nome-PT'])}">
+                    ${species[0]['nome-PT']} (${species[0].scientific_name})
+                </a>
+                <p>${species[0]['notas-PT']}</p>
+                <p><strong>Melhores meses para se ouvir:</strong> ${species[0].most_probable_months.join(', ')}</p>
+                ${recordingsContent}
             </div>`;
 
         if (previousPopup) {
@@ -290,29 +391,29 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#backButton').addEventListener('click', () => {
             if (previousPopup) {
                 previousPopup.remove();
-                previousAssociation = association
-                showSpeciesList(previousAssociation, previousPopupLatLng, isTrack);  // Pass isTrack parameter here
+                previousAssociation = association;
+                showSpeciesList(previousAssociation, previousPopupLatLng, isTrack);
             }
         });
 
         const heardButton = document.getElementById('heardButton');
         heardButton.addEventListener('click', () => {
             heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(species['nome-PT']);
+            const isHeard = heardSpecies.includes(species[0]['nome-PT']);
             heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
-            
+
             if (isHeard) {
-                // If species is already in the list, remove it
-                heardSpecies = heardSpecies.filter(specie => specie !== species['nome-PT']);
+                // Remove species from the heard list
+                heardSpecies = heardSpecies.filter(specie => specie !== species[0]['nome-PT']);
             } else {
-                // If species is not in the list, add it
-                heardSpecies.push(species['nome-PT']);
+                // Add species to the heard list
+                heardSpecies.push(species[0]['nome-PT']);
             }
 
-            // Update the heardSpecies in localStorage
+            // Update localStorage
             localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
 
-            // Update the button text based on the new state
+            // Update button text based on new state
             updateButton();
         });
 
@@ -356,7 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const middlePoint = trackBounds[trackName].getCenter();
                 previousPopupLatLng = middlePoint;  // Store the location
-                showSpeciesList(trackName, middlePoint, isTrack=true);
+                showSpeciesList(trackName, middlePoint, isTrack = true);
 
                 // Automatically select the track in the dropdown
                 trackSelect.value = trackName;
