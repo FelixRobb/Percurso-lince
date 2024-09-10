@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Percursos sonoros Lince-ibérico - Index</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Percursos Sonoros Lince-ibérico - Index</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 
 <body>
     <header>
-        <h1>Percursos sonoros Lince-ibérico</h1>
+        <h1>Percursos Sonoros Lince-ibérico</h1>
         <nav id="main-nav">
             <a href="home.html" class="nav-button">Início</a>
             <a href="map.html" class="nav-button">Mapa</a>
@@ -23,65 +23,91 @@
             <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Hamburger icon -->
         </div>
     </header>
-    
+
     <!-- Side Menu -->
     <div id="side-menu">
-        <a style="margin-top: 10px;" href="home.html">Início</a>
+        <a href="home.html">Início</a>
         <a href="map.html">Mapa</a>
         <a href="recordings.html">Gravações</a>
-        <a href="heard_species.html" class="nav-button">Lista</a>
+        <a href="heard_species.html">Lista</a>
     </div>
-    
+
     <main>
-    <div id="myModal" class="modal">
-        <div class="index-modal-content">
-            <h2>Percursos sonoros Lince-ibérico</h2>
+        <div class="sections">
+        <section class="hero-section">
+            <div class="hero-text">
+                <h2>Explore os Sons do vale do Guadiana</h2>
+                <p>Conheça a fauna do território do Lince-ibérico através de gravações de campo. Aventure-se em
+                    percursos sonoros exclusivos e aprenda mais sobre as espécies que coabitam com este animal
+                    emblemático.</p>
+                <div class="info-links">
+                    <div class="links-boxes">
+                        <h3>Localizações:</h3>
+                        <div class="links">
+                            <div class="link" id="link1">
+                                <a href="map.html?lat=37.6462&lng=-7.6525" class="linka">Azenhas do Guadiana</a>
+                            </div>
+                            <div class="link" id="link2">
+                                <a href="map.html?lat=37.6254&lng=-7.8099" class="linka">Ribeira de Oeiras</a>
+                            </div>
+                            <div class="link" id="link3">
+                                <a href="map.html?lat=37.6372&lng=-7.6633" class="linka">Vila de Mértola</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="links-boxes">
+                        <h3>Trilhos:</h3>
+                        <div class="links">
+                            <div class="link" id="link4">
+                                <a href="map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana" class="linka">PR3
+                                    MTL - As margens do Guadiana</a>
+                            </div>
+                            <div class="link" id="link5">
+                                <a
+                                    href="map.html?track=PR5%20MTL%20-%20Ao%20Ritmo%20das%20%C3%81guas%20do%20Vasc%C3%A3o" class="linka">PR5
+                                    MTL - Ao Ritmo das Águas do Vascão</a>
+                            </div>
+                            <div class="link" id="link6">
+                                <a
+                                    href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho" class="linka">PR8
+                                    - MTL Moinho do Alferes um Percurso Ribeirinho</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-buttons">
+                    <a href="map.html" class="cta-button">Ver Mapa</a>
+                    <a href="recordings.html" class="cta-button">Ouvir Gravações</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h3>Sobre o Projeto</h3>
             <p>O ICNF e o projeto LIFE Lynxconnect convidam todos os residentes e visitantes do concelho de Mértola a
-                conhecer e experienciar sons da natureza em territórios de lince-ibérico. Nesta aplicação encontra
-                pontos em
-                torno da vila de Mértola e percursos do Parque Natural do Vale do Guadiana com os registos sonoros de
-                inúmeras espécies que pode escutar. Pretende-se que possam usufruir de uma nova dimensão e aprender mais
-                sobre a comunidade faunística que coexiste com o lince, consoante o período do dia ou da noite, a
-                estação do
-                ano ou o local.</p>
-            <p>Além das gravações recolhidas no território por um especialista, apresentam-se fotos e breves textos que
-                destacam algumas curiosidades e biologia das espécies. Aventure-se nesta nova descoberta dos territórios
-                que
-                o lince frequenta. Recorde-se de todos os cuidados para não perturbar os animais, do respeito pela
-                propriedade privada e que deve permanecer em silêncio (parado num ponto pode ser uma boa opção).
-                Desejamos
-                uma ótima experiência.</p>
-            <p><strong>Ideia original:</strong> Magnus Robb e Margarida Lopes Fernandes</p>
-            <p><strong>Pesquisa, captação de sons e textos sobre as espécies:</strong> Magnus Robb</p>
-            <p><strong>Fotos:</strong> Cristina Girão Vieira, António Tavares, Agostinho Tomás, João Pargana, Magnus
-                Robb,
-                Francisco Amorim, Margarida Fernandes e Pedro Sarmento</p>
-            <p><strong>Conceção e design da aplicação:</strong> Teresa Pimenta e Pedro Rodrigues</p>
-            <p><strong>Colaboração:</strong> Cristina Girão Vieira e Carlos Carrapato</p>
-            <p><strong>Coordenação:</strong> João Alves</p>
-            <p><strong>Projeto LIFE Lynxconnect</strong></p>
-            <p>@MR e MLF ICNF 2024</p>
-            <button href="home.html" id="modal-ok-button">OK</button>
+                conhecer e experienciar sons da natureza em territórios de lince-ibérico. Com gravações recolhidas no
+                território por um especialista, apresentamos uma experiência única.</p>
+            <div class="credits">
+                <p><strong>Ideia original:</strong> Magnus Robb e Margarida Lopes Fernandes</p>
+                <p><strong>Pesquisa e captação de sons:</strong> Magnus Robb</p>
+                <p><strong>Fotos:</strong> Cristina Girão Vieira, António Tavares, Agostinho Tomás, e outros.</p>
+                <p><strong>Design:</strong> Teresa Pimenta e Pedro Rodrigues</p>
+                <p><strong>Website desenvolvido por:</strong> Félix Robb</p>
+                <p><strong>Coordenação:</strong> João Alves</p>
+                <p>@MR e MLF ICNF 2024</p>
+            </div>
+        </section>
+        <div id="ipatro">
+            <img id="patrocinadores" src="patrocinadores.png">
         </div>
     </div>
-</main>
+    </main>
+
     <footer>
         <div class="container">
-            <p>&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
+            <p>&copy; 2024 Percursos Sonoros Lince-ibérico. Todos os direitos reservados.</p>
         </div>
     </footer>
-    <script>
-        function toggleMenu() {
-    var sideMenu = document.getElementById("side-menu");
-    if (sideMenu.style.width === "250px") {
-        sideMenu.style.width = "0";
-    } else {
-        sideMenu.style.width = "250px";
-    }
-}
-
-    </script>
-    <script src="popup.js"></script>
     <script src="menu.js"></script>
 </body>
 
