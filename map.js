@@ -172,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h2>About ${placeName}</h2>
                         <p>${details.description}</p>
                         <a href="${details.links[0].url}">${details.links[0].text}</a>
-                        <a class="species-buttoninfo" data-location="${placeName}">Ver espécies</a>
                     </div>
                     `;
     
@@ -190,10 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             .setContent(detailedPopupContent)
                             .openOn(map);
     
-                        // Add event listener for species button
-                        document.querySelector('.species-buttoninfo').addEventListener('click', () => {
-                            showSpeciesList(placeName, previousPopupLatLng);
-                        });
     
                     } else {
                         console.error('previousPopupLatLng is undefined or null');
