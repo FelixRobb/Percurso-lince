@@ -82,6 +82,12 @@ header h1 {
     color: #f1f1f1;
 }
 
+#side-menu a:first-child {
+    margin-top: 10px;
+}
+
+
+
 /* Responsive styles */
 @media screen and (max-width: 600px) {
     
