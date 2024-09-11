@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
             
                         // Second highest weight: scientific name starts with the query and is more than 3 characters
-                        if (scientificName.startsWith(query) && query.length > 3) {
+                        if (scientificName.startsWith(query) && query.length > 2) {
                             weight += 2;
                         }
             
