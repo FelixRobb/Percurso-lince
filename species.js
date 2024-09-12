@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const details = document.getElementById('details');
-    
+
 
     // Define the location map
     const locationMap = {
@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(species => {
             const speciesEntries = species.filter(species => species['nome-PT'] === speciesName);
 
+            window.top.document.title = speciesName;
 
             if (speciesEntries.length === 0) {
                 details.innerHTML = `<p>No details found for species: ${speciesName}</p>`;

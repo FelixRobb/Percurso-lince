@@ -120,42 +120,42 @@ a:hover {
 }
 
 #link1 {
-    background-image: url(/places/Azenhas_do_guadiana.jpg);
+    background-image: url(/images/Azenhas_do_guadiana.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
 #link2 {
-    background-image: url(/places/Ribeira_de_oeiras.jpg);
+    background-image: url(/images/Ribeira_de_oeiras.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
 #link3 {
-    background-image: url(/places/Vila_de_mertola.jpg);
+    background-image: url(/images/Vila_de_mertola.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
 #link4 {
-    background-image: url(/places/pr3.jpg);
+    background-image: url(/images/pr3.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
 #link5 {
-    background-image: url(/places/pr5.jpg);
+    background-image: url(/images/pr5.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
 #link6 {
-    background-image: url(/places/pr8.jpg);
+    background-image: url(/images/pr8.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -164,6 +164,7 @@ a:hover {
 .cta-buttons {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 10px;
 }

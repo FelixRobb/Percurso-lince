@@ -69,7 +69,7 @@ header h1 {
     transition: .5s;
 }
 
-#side-menu a {
+.side-menu-links {
     padding: 8px 12px;
     text-decoration: none;
     font-size: 25px;
@@ -78,8 +78,12 @@ header h1 {
     transition: 0.3s;
 }
 
-#side-menu a:hover {
-    color: #f1f1f1;
+.side-menu-links.active {
+    color: #ff6a00;
+}
+
+.side-menu-links:hover {
+    color: #ff6a00;
 }
 
 #side-menu a:first-child {
@@ -142,7 +146,7 @@ nav a.nav-button {
 
 nav a.active,
 nav a:hover {
-    background-color: #1e90ff;
+    background-color: #ff6a00;
 }
 
 
