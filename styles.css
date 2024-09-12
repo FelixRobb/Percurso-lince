@@ -84,6 +84,7 @@ header h1 {
 
 .side-menu-links:hover {
     color: #ff6a00;
+    text-decoration: none;
 }
 
 #side-menu a:first-child {
