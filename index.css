@@ -170,6 +170,10 @@ a:hover {
 
 .cta-button {
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     padding: 0.8rem 1.5rem;
     background-color: #a9a9a9;
     color: #222;
