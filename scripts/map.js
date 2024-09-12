@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).addTo(map);
 
     var myIcon = L.icon({
-        iconUrl: 'marker.svg',
+        iconUrl: '/images/marker.svg',
         iconSize: [38, 95],
         iconAnchor: [22, 94],
         popupAnchor: [-3, -60]
