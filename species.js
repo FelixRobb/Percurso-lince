@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const speciesName = urlParams.get('name');
 
-    document.title = speciesName;
+    const titlename = "Details for " + speciesName;
+
+    window.top.document.title = titlename;
 
     // Fetch species data and filter for the selected species
     fetch('species.json')
@@ -26,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(species => {
             const speciesEntries = species.filter(species => species['nome-PT'] === speciesName);
-
-            window.top.document.title = speciesName;
+        
 
             if (speciesEntries.length === 0) {
                 details.innerHTML = `<p>No details found for species: ${speciesName}</p>`;
