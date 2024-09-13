@@ -44,6 +44,11 @@ h1 {
     background-color: #393939;
 }
 
+.linktohearing {
+    color: #fff;
+    text-decoration: none;
+}
+
 .hero-text h2 {
     color: rgb(235, 235, 235);
     font-size: 2.5rem;
