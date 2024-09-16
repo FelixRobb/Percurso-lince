@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const showDetailedPopup = (placeName, isTrack=true) => {
-        fetch('details.json')
+        fetch('/json/details.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -273,7 +273,7 @@ locations.forEach(location => {
 
 
     const showSpeciesList = (association, latLng, isTrack = false) => {
-        fetch('species.json')
+        fetch('/json/species.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Network response was not ok: ${response.statusText}`);
