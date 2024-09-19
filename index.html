@@ -12,105 +12,209 @@
 
 <body>
     <header>
-        <h1>Percursos Sonoros Lince-ibérico</h1>
+        <h1 id="titulomenu">${titulomenu}</h1>
         <nav id="main-nav">
-            <a href="index.html" class="nav-button active">Início</a>
-            <a href="home.html" class="nav-button">Explorar</a>
-            <a href="map.html" class="nav-button">Mapa</a>
-            <a href="recordings.html" class="nav-button">Gravações</a>
-            <a href="heard_species.html" class="nav-button">Lista</a>
+            <a href="index.html" class="nav-button active" id="menuinicio">${menuinicio}</a>
+            <a href="home.html" class="nav-button" id="menuexplorar">${menuexplorar}</a>
+            <a href="map.html" class="nav-button" id="menumapa">${menumapa}</a>
+            <a href="recordings.html" class="nav-button" id="menugravacoes">${menugravacoes}</a>
+            <a href="heard_species.html" class="nav-button" id="menulista">${menulista}</a>
         </nav>
         <div id="menu-icon">
-            <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Hamburger icon -->
+            <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Ícone de menu hamburguer -->
         </div>
     </header>
 
-    <!-- Side Menu -->
+    <!-- Menu lateral -->
     <div id="side-menu">
-        <a class="side-menu-links active" href="index.html">Início</a>
-        <a class="side-menu-links" href="home.html">Explorar</a>
-        <a class="side-menu-links" href="map.html">Mapa</a>
-        <a class="side-menu-links" href="recordings.html">Gravações</a>
-        <a class="side-menu-links" href="heard_species.html">Lista</a>
+        <a class="side-menu-links active" href="index.html" id="menuinicio">${menuinicio}</a>
+        <a class="side-menu-links" href="home.html" id="menuexplorar">${menuexplorar}</a>
+        <a class="side-menu-links" href="map.html" id="menumapa">${menumapa}</a>
+        <a class="side-menu-links" href="recordings.html" id="menugravacoes">${menugravacoes}</a>
+        <a class="side-menu-links" href="heard_species.html" id="menulista">${menulista}</a>
     </div>
 
     <main>
         <div class="sections">
-        <section class="hero-section">
-            <div class="hero-text">
-                <h2>Explore os Sons do Vale do Guadiana</h2>
-                <p>Conheça a fauna do território do Lince-ibérico através de gravações de campo. Aventure-se em
-                    percursos sonoros exclusivos e aprenda mais sobre as espécies que coabitam com este animal
-                    emblemático.</p>
-                    <a href="hearing.html" class="linktohearing">Guia Para Saber Escutar</a>
-                <div class="info-links">
-                    <div class="links-boxes">
-                        <h3>Localizações:</h3>
-                        <div class="links">
-                            <div class="link" id="link1">
-                                <a href="map.html?lat=37.6462&lng=-7.6525" class="linka">Azenhas do Guadiana</a>
+            <section class="hero-section">
+                <div class="hero-text">
+                    <h2 id="herotexth2">${herotexth2}</h2>
+                    <p id="herotextp">${herotextp}</p>
+                    <a href="hearing.html" class="linktohearing" id="guiaparaouvir">${guiaparaouvir}</a>
+                    <div class="info-links">
+                        <div class="links-boxes">
+                            <h3 id="herolocalizacoes">${herolocalizacoes}</h3>
+                            <div class="links">
+                                <div class="link" id="link1">
+                                    <a href="map.html?lat=37.6462&lng=-7.6525" class="linka" id="herolinkazenhas">${herolinkazenhas}</a>
+                                </div>
+                                <div class="link" id="link2">
+                                    <a href="map.html?lat=37.6254&lng=-7.8099" class="linka" id="herolinkriberira">${herolinkriberira}</a>
+                                </div>
+                                <div class="link" id="link3">
+                                    <a href="map.html?lat=37.6372&lng=-7.6633" class="linka" id="herolinkvila">${herolinkvila}</a>
+                                </div>
                             </div>
-                            <div class="link" id="link2">
-                                <a href="map.html?lat=37.6254&lng=-7.8099" class="linka">Ribeira de Oeiras</a>
-                            </div>
-                            <div class="link" id="link3">
-                                <a href="map.html?lat=37.6372&lng=-7.6633" class="linka">Vila de Mértola</a>
+                        </div>
+                        <div class="links-boxes">
+                            <h3>${herolinkpr3}</h3>
+                            <div class="links">
+                                <div class="link" id="link4">
+                                    <a href="map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana" class="linka" id="herolinkpr3">${herolinkpr3}</a>
+                                </div>
+                                <div class="link" id="link5">
+                                    <a href="map.html?track=PR5%20MTL%20-%20Ao%20Ritmo%20das%20Águas%20do%20Vascão" class="linka" id="herolinkpr5">${herolinkpr5}</a>
+                                </div>
+                                <div class="link" id="link6">
+                                    <a href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho" class="linka" id="herolinkpr8">${herolinkpr8}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="links-boxes">
-                        <h3>Trilhos:</h3>
-                        <div class="links">
-                            <div class="link" id="link4">
-                                <a href="map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana" class="linka">PR3
-                                    MTL - As margens do Guadiana</a>
-                            </div>
-                            <div class="link" id="link5">
-                                <a
-                                    href="map.html?track=PR5%20MTL%20-%20Ao%20Ritmo%20das%20%C3%81guas%20do%20Vasc%C3%A3o" class="linka">PR5
-                                    MTL - Ao Ritmo das Águas do Vascão</a>
-                            </div>
-                            <div class="link" id="link6">
-                                <a
-                                    href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho" class="linka">PR8
-                                    - MTL Moinho do Alferes um Percurso Ribeirinho</a>
-                            </div>
-                        </div>
+                    <div class="cta-buttons">
+                        <a href="map.html" class="cta-button" id="herolinkvermapa">${herolinkvermapa}</a>
+                        <a href="recordings.html" class="cta-button" id="herolinkouvirgravacoes">${herolinkouvirgravacoes}</a>
                     </div>
                 </div>
-                <div class="cta-buttons">
-                    <a href="map.html" class="cta-button">Ver Mapa</a>
-                    <a href="recordings.html" class="cta-button">Ouvir Gravações</a>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="info-section">
-            <h3>Sobre o Projeto</h3>
-            <p>O ICNF e o projeto LIFE Lynxconnect convidam todos os residentes e visitantes do concelho de Mértola a
-                conhecer e experienciar sons da natureza em territórios de lince-ibérico. Com gravações recolhidas no
-                território por um especialista, apresentamos uma experiência única.</p>
-            <div class="credits">
-                <p><strong>Ideia original:</strong> Magnus Robb e Margarida Lopes Fernandes</p>
-                <p><strong>Pesquisa e captação de sons:</strong> Magnus Robb</p>
-                <p><strong>Fotos:</strong> Cristina Girão Vieira, António Tavares, Agostinho Tomás, e outros.</p>
-                <p><strong>Website desenvolvido por:</strong> Félix Robb</p>
-                <p><strong>Coordenação:</strong> João Alves</p>
-                <p>@MR e MLF ICNF 2024</p>
+            <section class="info-section">
+                <h3 id="infosectionh3">${infosectionh3}</h3>
+                <p id="infosectionp">${infosectionp}</p>
+                <div class="credits">
+                    <p id="pideiaoriginal"><strong id="sideiaoriginal">${sideiaoriginal}</strong> Magnus Robb e Margarida Lopes Fernandes</p>
+                    <p id="ppesquisa"><strong id="spesquisa">${spesquisa}</strong> Magnus Robb</p>
+                    <p id="pfotos"><strong id="sfotos">${sfotos}</strong> Cristina Girão Vieira, António Tavares, Agostinho Tomás, e outros.</p>
+                    <p id="pwebsite"><strong id="swebsite">${swebsite}</strong> Félix Robb</p>
+                    <p id="pcoordenacao"><strong id="scoordenacao">${scoordenacao}</strong> João Alves</p>
+                    <p id="mremlf">${mremlf}</p>
+                </div>
+            </section>
+            <div id="ipatro">
+                <img id="patrocinadores" src="images/patrocinadores.png" alt="Patrocinadores">
             </div>
-        </section>
-        <div id="ipatro">
-            <img id="patrocinadores" src="images/patrocinadores.png">
         </div>
-    </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Percursos Sonoros Lince-ibérico. Todos os direitos reservados.</p>
+            <p id="foooter">&copy; 2024 Percursos Sonoros Lince-ibérico. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <select id="languageSelect" onchange="changeLanguage(this.value)">
+        <option value="pt">Português</option>
+        <option value="en">English</option>
+    </select>
+
     <script src="/scripts/menu.js"></script>
+    <script src="/scripts/infopopup.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const language = getLanguage() || "pt";
+    loadTranslations(language);
+});
+
+function getLanguage() {
+    let language = localStorage.getItem("language");
+    if (!language) {
+        createLanguagePopup();
+    }
+    return language;
+}
+
+function createLanguagePopup() {
+    const popup = document.createElement('div');
+    popup.id = "language-popup";
+    popup.innerHTML = `
+        <div id="popup-content">
+            <h2>Choose your language</h2>
+            <button id="pt-btn">Português</button>
+            <button id="en-btn">English</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+
+    // Estilizando o popup
+    const styles = `
+        #language-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+        }
+        #popup-content {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 30px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0px 0px 20px #000;
+        }
+        #popup-content h2 {
+            margin-bottom: 20px;
+        }
+        #popup-content button {
+            background-color: #666;
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #popup-content button:hover {
+            background-color: #ff6a00;
+        }
+
+    `;
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = styles;
+    document.head.appendChild(styleSheet);
+
+    // Atribuindo eventos aos botões
+    document.getElementById("pt-btn").addEventListener("click", () => setLanguage("pt"));
+    document.getElementById("en-btn").addEventListener("click", () => setLanguage("en"));
+}
+
+function setLanguage(lang) {
+    localStorage.setItem("language", lang);
+    document.getElementById("language-popup").remove();
+    loadTranslations(lang);
+}
+
+function loadTranslations(language) {
+    const path = `translations/${language}/index.json`;
+    fetch('translations/all.json')
+        .then(response => response.json())
+        .then(data => applyTranslations(data))
+        .catch(error => console.error("Erro ao carregar traduções:", error));
+
+    fetch(path)
+        .then(response => response.json())
+        .then(data => applyTranslations(data))
+        .catch(error => console.error("Erro ao carregar traduções:", error));
+
+}
+
+function applyTranslations(translations) {
+    Object.keys(translations).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = translations[id];
+        }
+    });
+}
+    </script>
+
 </body>
 
 </html>
