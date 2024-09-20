@@ -146,7 +146,8 @@
                     alert("Could not load all translations. Please try again later.");
                 });
 
-            fetch('translations/all.json')
+            const pathall = `translations/${language}/all.json`;
+            fetch(pathall)
                 .then(response => response.json())
                 .then(data => applyTranslations(data))
                 .catch(error => {

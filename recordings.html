@@ -171,7 +171,8 @@
                 .then(data => applyTranslations(data))
                 .catch(error => console.error("Error loading translations:", error));
 
-            fetch('translations/all.json')
+            const pathall = `translations/${language}/all.json`;
+            fetch(pathall)
                 .then(response => response.json())
                 .then(data => applyTranslations(data))
                 .catch(error => {
