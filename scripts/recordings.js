@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let allSpecies = [];
     let filteredSpecies = [];
 
-    fetch('species.json')
+    fetch('/json/species.json')
         .then(response => response.json())
         .then(species => {
             const aggregatedSpecies = aggregateSpecies(species);
