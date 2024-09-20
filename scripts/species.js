@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.top.document.title = titlename;
 
     // Fetch species data and filter for the selected species
-    fetch('species.json')
+    fetch('/json/species.json')
         .then(response => {
             return response.json();
         })

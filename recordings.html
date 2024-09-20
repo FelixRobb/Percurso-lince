@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Percursos sonoros Lince-ibérico - Gravações</title>
+    <title data-i18n="title">Percursos sonoros Lince-ibérico - Gravações</title>
     <link rel="stylesheet" href="/styles/styles.css">
     <link rel="stylesheet" href="/styles/recordings.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -12,13 +12,13 @@
 
 <body>
     <header>
-        <h1 id="titulomenu">${titulomenu}</h1>
+        <h1 id="titulomenu" data-i18n="titulomenu"></h1>
         <nav id="main-nav">
-            <a href="index.html" class="nav-button" id="menuinicio">${menuinicio}</a>
-            <a href="home.html" class="nav-button" id="menuexplorar">${menuexplorar}</a>
-            <a href="map.html" class="nav-button" id="menumapa">${menumapa}</a>
-            <a href="recordings.html" class="nav-button active" id="menugravacoes">${menugravacoes}</a>
-            <a href="heard_species.html" class="nav-button" id="menulista">${menulista}</a>
+            <a href="index.html" class="nav-button" id="menuinicio" data-i18n="menuinicio"></a>
+            <a href="home.html" class="nav-button" id="menuexplorar" data-i18n="menuexplorar"></a>
+            <a href="map.html" class="nav-button" id="menumapa" data-i18n="menumapa"></a>
+            <a href="recordings.html" class="nav-button active" id="menugravacoes" data-i18n="menugravacoes"></a>
+            <a href="heard_species.html" class="nav-button" id="menulista" data-i18n="menulista"></a>
         </nav>
         <div id="menu-icon">
             <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Ícone de menu hamburguer -->
@@ -27,54 +27,54 @@
 
     <!-- Menu lateral -->
     <div id="side-menu">
-        <a class="side-menu-links" href="index.html" id="menuinicio">${menuinicio}</a>
-        <a class="side-menu-links" href="home.html" id="menuexplorar">${menuexplorar}</a>
-        <a class="side-menu-links" href="map.html" id="menumapa">${menumapa}</a>
-        <a class="side-menu-links active" href="recordings.html" id="menugravacoes">${menugravacoes}</a>
-        <a class="side-menu-links" href="heard_species.html" id="menulista">${menulista}</a>
+        <a class="side-menu-links" href="index.html" id="menuiniciom" data-i18n="menuiniciom"></a>
+        <a class="side-menu-links" href="home.html" id="menuexplorarm" data-i18n="menuexplorarm"></a>
+        <a class="side-menu-links" href="map.html" id="menumapam" data-i18n="menumapam"></a>
+        <a class="side-menu-links active" href="recordings.html" id="menugravacoesm" data-i18n="menugravacoesm"></a>
+        <a class="side-menu-links" href="heard_species.html" id="menulistam" data-i18n="menulistam"></a>
     </div>
-
 
     <main>
         <div class="container">
             <div class="searchdiv">
-                <button id="open-filters-button">${open-filters-button}</button>
-                <input type="text" id="search-input" placeholder="Pesquisar pelo nome ou nome científico...">
-                <button id="search-button">${}</button>
+                <button id="open-filters-button" data-i18n="open-filters-button"></button>
+                <input type="text" id="search-input" placeholder="Search">
+                <button id="search-button" data-i18n="search-button"></button>
             </div>
 
             <!-- The Modal -->
             <div id="filtersModal" class="filter-modal">
                 <div class="filter-modal-content">
                     <div class="filter-modal-top">
-                        <h2>Filter Options</h2>
+                        <h2 data-i18n="filter-options-title"></h2>
                         <span class="close">&times;</span>
                     </div>
                     <div class="filter-options">
-                        <button id="filter-season">${filter-season}</button>
-                        <button id="filter-name">${filter-name}</button>
+                        <button id="filter-season" data-i18n="filter-season"></button>
+                        <button id="filter-name" data-i18n="filter-name"></button>
                     </div>
                     <div class="filterselectdiv">
                         <select id="filter-association" class="filter">
-                            <option id="allloc" value="">${allloc}</option>
+                            <option id="allloc" value="" data-i18n="allloc"></option>
                         </select>
                         <select id="filter-type" class="filter">
-                            <option id="alltype" value="">${alltype}</option>
+                            <option id="alltype" value="" data-i18n="alltype"></option>
                         </select>
                         <select id="filter-time" class="filter">
-                            <option id="alltime" value="">${alltime}</option>
+                            <option id="alltime" value="" data-i18n="alltime"></option>
                         </select>
                     </div>
-                    <button id="apply-filters-button" class="modal-button">${apply-filters-button}</button>
+                    <button id="apply-filters-button" class="modal-button" data-i18n="apply-filters-button"></button>
                 </div>
             </div>
 
             <div id="recordings-list"></div>
         </div>
     </main>
+
     <footer>
         <div class="container">
-            <p>&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
+            <p id="footer" data-i18n="footer">&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
         </div>
     </footer>
 
@@ -83,32 +83,31 @@
     <script src="/scripts/filters.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-    const language = getLanguage() || "pt";
-    loadTranslations(language);
-});
+            const language = getLanguage() || "pt";
+            loadTranslations(language);
+        });
 
-function getLanguage() {
-    let language = localStorage.getItem("language");
-    if (!language) {
-        createLanguagePopup();
-    }
-    return language;
-}
+        function getLanguage() {
+            let language = localStorage.getItem("language");
+            if (!language) {
+                createLanguagePopup();
+            }
+            return language;
+        }
 
-function createLanguagePopup() {
-    const popup = document.createElement('div');
-    popup.id = "language-popup";
-    popup.innerHTML = `
+        function createLanguagePopup() {
+            const popup = document.createElement('div');
+            popup.id = "language-popup";
+            popup.innerHTML = `
         <div id="popup-content">
             <h2>Choose your language</h2>
             <button id="pt-btn">Português</button>
             <button id="en-btn">English</button>
         </div>
     `;
-    document.body.appendChild(popup);
+            document.body.appendChild(popup);
 
-    // Estilizando o popup
-    const styles = `
+            const styles = `
         #language-popup {
             position: fixed;
             top: 0;
@@ -142,49 +141,58 @@ function createLanguagePopup() {
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         #popup-content button:hover {
             background-color: #ff6a00;
         }
-
     `;
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = styles;
-    document.head.appendChild(styleSheet);
+            const styleSheet = document.createElement("style");
+            styleSheet.innerText = styles;
+            document.head.appendChild(styleSheet);
 
-    // Atribuindo eventos aos botões
-    document.getElementById("pt-btn").addEventListener("click", () => setLanguage("pt"));
-    document.getElementById("en-btn").addEventListener("click", () => setLanguage("en"));
-}
-
-function setLanguage(lang) {
-    localStorage.setItem("language", lang);
-    document.getElementById("language-popup").remove();
-    loadTranslations(lang);
-}
-
-function loadTranslations(language) {
-    const path = `translations/${language}/recordings.json`;
-    fetch('translations/all.json')
-        .then(response => response.json())
-        .then(data => applyTranslations(data))
-        .catch(error => console.error("Erro ao carregar traduções:", error));
-
-    fetch(path)
-        .then(response => response.json())
-        .then(data => applyTranslations(data))
-        .catch(error => console.error("Erro ao carregar traduções:", error));
-
-}
-
-function applyTranslations(translations) {
-    Object.keys(translations).forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.innerHTML = translations[id];
+            document.getElementById("pt-btn").addEventListener("click", () => setLanguage("pt"));
+            document.getElementById("en-btn").addEventListener("click", () => setLanguage("en"));
         }
-    });
-}
+
+        function setLanguage(lang) {
+            localStorage.setItem("language", lang);
+            document.getElementById("language-popup").remove();
+            loadTranslations(lang);
+        }
+
+        function changelang(lang) {
+            localStorage.setItem("language", lang);
+            loadTranslations(lang);
+        }
+
+        function loadTranslations(language) {
+            const path = `translations/${language}/recording.json`;
+            fetch(path)
+                .then(response => response.json())
+                .then(data => applyTranslations(data))
+                .catch(error => console.error("Error loading translations:", error));
+
+            fetch('translations/all.json')
+                .then(response => response.json())
+                .then(data => applyTranslations(data))
+                .catch(error => {
+                    console.error("Error loading all translations:", error);
+                    alert("Could not load all translations. Please try again later.");
+                });
+        }
+
+        function applyTranslations(translations) {
+            const elements = document.querySelectorAll("[data-i18n]");
+            elements.forEach(element => {
+                const key = element.getAttribute("data-i18n");
+                if (translations[key]) {
+                    if (element.tagName === 'TITLE') {
+                        document.title = translations[key];
+                    } else {
+                        element.textContent = translations[key];
+                    }
+                }
+            });
+        }
     </script>
 </body>
 
