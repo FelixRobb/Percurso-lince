@@ -46,13 +46,16 @@
                             <h3 id="herolocalizacoes" data-i18n="herolocalizacoes"></h3>
                             <div class="links">
                                 <div class="link" id="link1">
-                                    <a href="map.html?lat=37.6462&lng=-7.6525" class="linka" id="herolinkazenhas" data-i18n="herolinkazenhas"></a>
+                                    <a href="map.html?lat=37.6462&lng=-7.6525" class="linka" id="herolinkazenhas"
+                                        data-i18n="herolinkazenhas"></a>
                                 </div>
                                 <div class="link" id="link2">
-                                    <a href="map.html?lat=37.6254&lng=-7.8099" class="linka" id="herolinkriberira" data-i18n="herolinkriberira"></a>
+                                    <a href="map.html?lat=37.6254&lng=-7.8099" class="linka" id="herolinkriberira"
+                                        data-i18n="herolinkriberira"></a>
                                 </div>
                                 <div class="link" id="link3">
-                                    <a href="map.html?lat=37.6372&lng=-7.6633" class="linka" id="herolinkvila" data-i18n="herolinkvila"></a>
+                                    <a href="map.html?lat=37.6372&lng=-7.6633" class="linka" id="herolinkvila"
+                                        data-i18n="herolinkvila"></a>
                                 </div>
                             </div>
                         </div>
@@ -60,20 +63,24 @@
                             <h3 id="herolinkpr" data-i18n="herolinkpr"></h3>
                             <div class="links">
                                 <div class="link" id="link4">
-                                    <a href="map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana" class="linka" id="herolinkpr3" data-i18n="herolinkpr3"></a>
+                                    <a href="map.html?track=PR3%20MTL%20-%20As%20Margens%20do%20Guadiana" class="linka"
+                                        id="herolinkpr3" data-i18n="herolinkpr3"></a>
                                 </div>
                                 <div class="link" id="link5">
-                                    <a href="map.html?track=PR5%20MTL%20-%20Ao%20Ritmo%20das%20Águas%20do%20Vascão" class="linka" id="herolinkpr5" data-i18n="herolinkpr5"></a>
+                                    <a href="map.html?track=PR5%20MTL%20-%20Ao%20Ritmo%20das%20Águas%20do%20Vascão"
+                                        class="linka" id="herolinkpr5" data-i18n="herolinkpr5"></a>
                                 </div>
                                 <div class="link" id="link6">
-                                    <a href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho" class="linka" id="herolinkpr8" data-i18n="herolinkpr8"></a>
+                                    <a href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho"
+                                        class="linka" id="herolinkpr8" data-i18n="herolinkpr8"></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="cta-buttons">
                         <a href="map.html" class="cta-button" id="herolinkvermapa" data-i18n="herolinkvermapa"></a>
-                        <a href="recordings.html" class="cta-button" id="herolinkouvirgravacoes" data-i18n="herolinkouvirgravacoes"></a>
+                        <a href="recordings.html" class="cta-button" id="herolinkouvirgravacoes"
+                            data-i18n="herolinkouvirgravacoes"></a>
                     </div>
                 </div>
             </section>
@@ -82,9 +89,11 @@
                 <h3 id="infosectionh3" data-i18n="infosectionh3"></h3>
                 <p id="infosectionp" data-i18n="infosectionp"></p>
                 <div class="credits">
-                    <p id="pideiaoriginal"><strong id="sideiaoriginal" data-i18n="sideiaoriginal"></strong> Magnus Robb e Margarida Lopes Fernandes</p>
+                    <p id="pideiaoriginal"><strong id="sideiaoriginal" data-i18n="sideiaoriginal"></strong> Magnus Robb
+                        e Margarida Lopes Fernandes</p>
                     <p id="ppesquisa"><strong id="spesquisa" data-i18n="spesquisa"></strong> Magnus Robb</p>
-                    <p id="pfotos"><strong id="sfotos" data-i18n="sfotos"></strong> Cristina Girão Vieira, António Tavares, Agostinho Tomás, e outros.</p>
+                    <p id="pfotos"><strong id="sfotos" data-i18n="sfotos"></strong> Cristina Girão Vieira, António
+                        Tavares, Agostinho Tomás, e outros.</p>
                     <p id="pwebsite"><strong id="swebsite" data-i18n="swebsite"></strong> Félix Robb</p>
                     <p id="pcoordenacao"><strong id="scoordenacao" data-i18n="scoordenacao"></strong> João Alves</p>
                     <p id="mremlf" data-i18n="mremlf"></p>
@@ -98,7 +107,8 @@
 
     <footer>
         <div class="container">
-            <p id="foooter" data-i18n="footer">&copy; 2024 Percursos Sonoros Lince-ibérico. Todos os direitos reservados.</p>
+            <p id="foooter" data-i18n="footer">&copy; 2024 Percursos Sonoros Lince-ibérico. Todos os direitos
+                reservados.</p>
         </div>
     </footer>
 
@@ -113,6 +123,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             const language = getLanguage() || "pt";
             loadTranslations(language);
+            document.getElementById("languageSelect").value = language;
         });
 
         function getLanguage() {
@@ -202,7 +213,7 @@
                     alert("Could not load all translations. Please try again later.");
                 });
 
-                const pathall = `translations/${language}/all.json`;
+            const pathall = `translations/${language}/all.json`;
             fetch(pathall)
                 .then(response => response.json())
                 .then(data => applyTranslations(data))
