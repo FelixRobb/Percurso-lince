@@ -231,15 +231,13 @@ a:hover {
     background-color: #fff;
     border-radius: 20% 40%;
 }
-/* Footer */
-footer {
-    background-color: #222;
-    color: #f5f5f5;
-    text-align: center;
-    padding: 1.5rem;
-}
 
-footer .container {
-    max-width: 800px;
-    margin: 0 auto;
+#changelang {
+    color: #ffffff;
+    text-decoration: underline;
+    font-size: 20px;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: color 0.3s;
+    transform: translatey(-1px);
 }
