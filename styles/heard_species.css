@@ -23,6 +23,9 @@ body {
     margin-top: 20px;
 }
 
+.specieslistdivtop h2 {
+    text-align: center;
+}
 
 #speciesList {
     display: flex;

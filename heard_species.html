@@ -66,6 +66,7 @@
 
     function getLanguage() {
       let language = localStorage.getItem("language");
+      language = language.toUpperCase()
       if (!language) {
         createLanguagePopup();
       }
