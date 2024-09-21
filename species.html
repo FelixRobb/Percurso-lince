@@ -12,27 +12,30 @@
 
 <body>
     <header>
-        <h1 data-i18n="titulomenu">Percursos Sonoros Lince-ibérico</h1>
-        <nav id="main-nav">
-            <a href="index.html" class="nav-button" data-i18n="menuinicio"></a>
-            <a href="home.html" class="nav-button" data-i18n="menuexplorar"></a>
-            <a href="map.html" class="nav-button" data-i18n="menumapa"></a>
-            <a href="recordings.html" class="nav-button" data-i18n="menugravacoes"></a>
-            <a href="heard_species.html" class="nav-button" data-i18n="menulista"></a>
-        </nav>
-        <div id="menu-icon">
-            <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Hamburger icon -->
+        <header>
+            <h1 id="titulomenu" data-i18n="titulomenu"></h1>
+            <nav id="main-nav">
+                <a href="index.html" class="nav-button" id="menuinicio" data-i18n="menuinicio"></a>
+                <a href="home.html" class="nav-button" id="menuexplorar" data-i18n="menuexplorar"></a>
+                <a href="map.html" class="nav-button" id="menumapa" data-i18n="menumapa"></a>
+                <a href="recordings.html" class="nav-button" id="menugravacoes" data-i18n="menugravacoes"></a>
+                <a href="heard_species.html" class="nav-button" id="menulista" data-i18n="menulista"></a>
+                <a id="changelang" onclick="createLanguagePopup()" data-i18n="language"></a>
+            </nav>
+            <div id="menu-icon">
+                <a id="menu" onclick="toggleMenu()">&#9776</a> <!-- Ícone de menu hamburguer -->
+            </div>
+        </header>
+        
+        <!-- Menu lateral -->
+        <div id="side-menu">
+            <a class="side-menu-links" href="index.html" id="menuiniciom" data-i18n="menuiniciom"></a>
+            <a class="side-menu-links" href="home.html" id="menuexplorarm" data-i18n="menuexplorarm"></a>
+            <a class="side-menu-links" href="map.html" id="menumapam" data-i18n="menumapam"></a>
+            <a class="side-menu-links" href="recordings.html" id="menugravacoesm" data-i18n="menugravacoesm"></a>
+            <a class="side-menu-links" href="heard_species.html" id="menulistam" data-i18n="menulistam"></a>
+            <a id="changelangside" onclick="createLanguagePopup()" data-i18n="language"></a>
         </div>
-    </header>
-
-    <!-- Side Menu -->
-    <div id="side-menu">
-        <a class="side-menu-links" href="index.html" data-i18n="menuiniciom"></a>
-        <a class="side-menu-links" href="home.html" data-i18n="menuexplorarm"></a>
-        <a class="side-menu-links" href="map.html" data-i18n="menumapam"></a>
-        <a class="side-menu-links" href="recordings.html" data-i18n="menugravacoesm"></a>
-        <a class="side-menu-links" href="heard_species.html" data-i18n="menulistam"></a>
-    </div>
 
     <main>
         <div class="maininfo">
@@ -43,15 +46,16 @@
             </div>
         </div>
     </main>
-    
+
     <footer>
         <div class="container">
             <p data-i18n="footer">&copy; 2024 Percursos sonoros Lince-ibérico. All rights reserved.</p>
         </div>
     </footer>
-    
-    <button id="changelang" onclick="createLanguagePopup()">Lang</button>
-    
+
+
+
+
     <script src="/scripts/species.js"></script>
     <script src="/scripts/menu.js"></script>
     <script>
@@ -81,18 +85,18 @@
             document.body.appendChild(popup);
 
             const styles = `
-                #language-popup {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: rgba(0, 0, 0, 0.6);
-                    z-index: 9999;
-                }
+            #language-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 99999;
+        }
                 #popup-content {
                     background-color: #333;
                     color: #fff;

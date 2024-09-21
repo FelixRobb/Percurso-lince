@@ -94,6 +94,13 @@ header h1 {
     margin-top: 10px;
 }
 
+#changelangside {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    color: #585858;
+}
 
 
 /* Responsive styles */
