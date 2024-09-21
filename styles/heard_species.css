@@ -12,7 +12,7 @@ body {
     align-items: center;
 }
 
-.specieslistdiv {
+.specieslistdivtop {
     display: flex;
     background-color: #2f2f2f;
     padding: 20px;

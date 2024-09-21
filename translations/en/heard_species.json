@@ -1,4 +1,5 @@
 {
     "heard_species_title": "List of species you already heard",
-    "search_button": "Search"
+    "search_button": "Search",
+    "search_placeholder": "Search Species..."
 }

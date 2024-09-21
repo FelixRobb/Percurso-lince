@@ -122,14 +122,14 @@
             styleSheet.innerText = styles;
             document.head.appendChild(styleSheet);
 
-            document.getElementById("pt-btn").addEventListener("click", () => setLanguage("pt"));
-            document.getElementById("en-btn").addEventListener("click", () => setLanguage("en"));
+            document.getElementById("pt-btn").addEventListener("click", () => setLanguage("PT"));
+            document.getElementById("en-btn").addEventListener("click", () => setLanguage("EN"));
         }
 
         function setLanguage(lang) {
             localStorage.setItem("language", lang);
             document.getElementById("language-popup").remove();
-            loadTranslations(lang);
+            window.location.reload();
         }
 
         function loadTranslations(language) {

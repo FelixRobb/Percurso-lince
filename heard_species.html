@@ -36,10 +36,10 @@
 
   <main>
     <div class="maindiv">
-      <div class="specieslistdiv">
+      <div class="specieslistdivtop">
         <h2 data-i18n="heard_species_title"></h2>
         <div class="searchbar">
-          <input type="text" id="searchInput" placeholder="Pesquisar espécies..." data-i18n="search_placeholder">
+          <input type="search" id="searchInput" placeholder="Pesquisar espécies..." data-i18n="search_placeholder">
           <button id="search-button" data-i18n="search_button"></button>
         </div>
         <ul id="speciesList"></ul>
@@ -133,13 +133,9 @@
     function setLanguage(lang) {
       localStorage.setItem("language", lang);
       document.getElementById("language-popup").remove();
-      loadTranslations(lang);
+      window.location.reload();
     }
 
-    function changelang(lang) {
-      localStorage.setItem("language", lang);
-      loadTranslations(lang);
-    }
 
     function loadTranslations(language) {
       const path = `translations/${language}/heard_species.json`;
@@ -162,17 +158,19 @@
     }
 
     function applyTranslations(translations) {
-      const elements = document.querySelectorAll("[data-i18n]");
-      elements.forEach(element => {
+    const elements = document.querySelectorAll("[data-i18n]");
+    elements.forEach(element => {
         const key = element.getAttribute("data-i18n");
         if (translations[key]) {
-          if (element.tagName === 'TITLE') {
-            document.title = translations[key];
-          } else {
-            element.textContent = translations[key];
-          }
+            if (element.tagName === 'TITLE') {
+                document.title = translations[key];
+            } else if (element.tagName === 'INPUT' && element.type === 'search') {
+                element.setAttribute('placeholder', translations[key]);
+            } else {
+                element.textContent = translations[key];
+            }
         }
-      });
+    });
     }
   </script>
 </body>

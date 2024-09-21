@@ -17,7 +17,7 @@ header {
     text-align: center;
     margin: auto;
     position: sticky;
-    top: 0px;
+    top: 8px;
     left: 0px;
     z-index: 50001;
     background: #000000;
@@ -120,6 +120,7 @@ header h1 {
         text-align: center;
         border-radius: 50px;
         margin: auto;
+        margin-bottom: 10px !important;
         background: transparent;
         position: sticky;
         top: 10px;
