@@ -11,6 +11,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let allSpecies = [];
     let filteredSpecies = [];
 
+    const getCurrentLanguage = () => {
+        return localStorage.getItem('language') || 'PT'; // Default to Portuguese if not set
+    };
+
+    const translateUI = () => {
+        const currentLang = getCurrentLanguage();
+        
+        // Translate button texts
+        filterMonthButton.textContent = currentLang === 'PT' ? 'Filtrar por Mês' : 'Filter by Month';
+        filterNameButton.textContent = currentLang === 'PT' ? 'Filtrar por Nome' : 'Filter by Name';
+        searchButton.textContent = currentLang === 'PT' ? 'Pesquisar' : 'Search';
+
+        // Translate select options
+        filterAssociationSelect.options[0].text = currentLang === 'PT' ? 'Todas as Localizações' : 'All Locations';
+        filterTypeSelect.options[0].text = currentLang === 'PT' ? 'Classe Animal' : 'Animal Class';
+        filterTimeSelect.options[0].text = currentLang === 'PT' ? 'Hora do dia' : 'Time of day';
+
+        // Translate placeholder
+        searchInput.placeholder = currentLang === 'PT' ? 'Pesquisar espécies...' : 'Search species...';
+    };
+
     fetch('/json/species.json')
         .then(response => response.json())
         .then(species => {
@@ -21,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             populateTypeFilter(allSpecies);
             populateTimeFilter(allSpecies);
             displaySpecies(filteredSpecies);
+            translateUI();
 
             // Check URL for location and apply filter if needed
             const urlParams = new URLSearchParams(window.location.search);
@@ -48,10 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
             searchInput.addEventListener('input', () => {
                 updateFilteredSpecies(); // Apply association, type, and time filters
                 const query = searchInput.value.toLowerCase();
+                const currentLang = getCurrentLanguage();
             
                 filteredSpecies = filteredSpecies
                     .map(species => {
-                        const name = species.name.toLowerCase();
+                        const name = species[`name-${currentLang}`].toLowerCase();
                         const scientificName = species.scientific_name.toLowerCase();
             
                         let weight = 0;
@@ -104,30 +127,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function aggregateSpecies(species) {
         const uniqueSpecies = {};
+        const currentLang = getCurrentLanguage();
 
         species.forEach(species => {
-            if (!uniqueSpecies[species['nome-PT']]) {
-                uniqueSpecies[species['nome-PT']] = {
-                    name: species['nome-PT'],
+            if (!uniqueSpecies[species[`nome-${currentLang}`]]) {
+                uniqueSpecies[species[`nome-${currentLang}`]] = {
+                    [`name-PT`]: species['nome-PT'],
+                    [`name-EN`]: species['nome-EN'],
                     scientific_name: species.scientific_name,
                     most_probable_months: new Set(species.most_probable_months),
-                    associations: new Set([species.association]), // Change association to a set
-                    group_PT: species['grupo-PT'],
-                    quando_PT: species['quando-PT'],
-                    comenta: species['notas-PT'],
-                    description: species['descricao-PT'],
+                    associations: new Set([species.association]),
+                    [`group-PT`]: species['grupo-PT'],
+                    [`group-EN`]: species['grupo-EN'],
+                    [`quando-PT`]: species['quando-PT'],
+                    [`quando-EN`]: species['quando-EN'],
+                    [`comenta-PT`]: species['notas-PT'],
+                    [`comenta-EN`]: species['notas-EN'],
+                    [`description-PT`]: species['descricao-PT'],
+                    [`description-EN`]: species['descricao-EN'],
                     sound_url: species.sound_url
                 };
             } else {
-                species.most_probable_months.forEach(month => uniqueSpecies[species['nome-PT']].most_probable_months.add(month));
-                uniqueSpecies[species['nome-PT']].associations.add(species.association); // Add association
+                species.most_probable_months.forEach(month => uniqueSpecies[species[`nome-${currentLang}`]].most_probable_months.add(month));
+                uniqueSpecies[species[`nome-${currentLang}`]].associations.add(species.association);
             }
         });
 
         return Object.values(uniqueSpecies).map(species => ({
             ...species,
             most_probable_months: averageMonths([...species.most_probable_months]),
-            associations: [...species.associations] // Convert set to array
+            associations: [...species.associations]
         }));
     }
 
@@ -139,22 +168,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedLocation = filterAssociationSelect.value;
         const selectedType = filterTypeSelect.value;
         const selectedTime = filterTimeSelect.value;
+        const currentLang = getCurrentLanguage();
 
         filteredSpecies = allSpecies.filter(species =>
             (selectedLocation === '' || species.associations.includes(selectedLocation)) &&
-            (selectedType === '' || species.group_PT === selectedType) &&
-            (selectedTime === '' || species.quando_PT === selectedTime)
+            (selectedType === '' || species[`group-${currentLang}`] === selectedType) &&
+            (selectedTime === '' || species[`quando-${currentLang}`] === selectedTime)
         );
-
     }
 
     function displaySpecies(species) {
         recordingsList.innerHTML = '';
+        const currentLang = getCurrentLanguage();
         species.forEach(species => {
             const speciesItem = document.createElement('div');
             speciesItem.classList.add('bird-item');
             speciesItem.innerHTML = `
-                <a href="species.html?name=${encodeURIComponent(species.name)}">${species.name} (${species.scientific_name})</a>
+                <a href="species.html?name=${encodeURIComponent(species[`name-PT`])}">${species[`name-${currentLang}`]} (${species.scientific_name})</a>
             `;
             recordingsList.appendChild(speciesItem);
         });
@@ -162,7 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function populateAssociationFilter(species) {
         const uniqueLocations = [...new Set(species.flatMap(species => species.associations))];
-        filterAssociationSelect.innerHTML = '<option value="">Todas as Localizações</option>'; // Reset filter options
+        const currentLang = getCurrentLanguage();
+        filterAssociationSelect.innerHTML = `<option value="">${currentLang === 'PT' ? 'Todas as Localizações' : 'All Locations'}</option>`;
         uniqueLocations.forEach(location => {
             const option = document.createElement('option');
             option.value = location;
@@ -172,8 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function populateTypeFilter(species) {
-        const uniqueTypes = [...new Set(species.map(species => species.group_PT))];
-        filterTypeSelect.innerHTML = '<option value="">Classe Animal</option>'; // Reset filter options
+        const currentLang = getCurrentLanguage();
+        const uniqueTypes = [...new Set(species.map(species => species[`group-${currentLang}`]))];
+        filterTypeSelect.innerHTML = `<option value="">${currentLang === 'PT' ? 'Classe Animal' : 'Animal Class'}</option>`;
         uniqueTypes.forEach(type => {
             const option = document.createElement('option');
             option.value = type;
@@ -183,8 +215,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function populateTimeFilter(species) {
-        const uniqueTimes = [...new Set(species.map(species => species.quando_PT))];
-        filterTimeSelect.innerHTML = '<option value="">Hora do dia</option>'; // Reset filter options
+        const currentLang = getCurrentLanguage();
+        const uniqueTimes = [...new Set(species.map(species => species[`quando-${currentLang}`]))];
+        filterTimeSelect.innerHTML = `<option value="">${currentLang === 'PT' ? 'Hora do dia' : 'Time of day'}</option>`;
         uniqueTimes.forEach(time => {
             const option = document.createElement('option');
             option.value = time;
@@ -194,20 +227,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function sortByMonth(species) {
-        const monthNames = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+        const monthNames = {
+            PT: ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"],
+            EN: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        };
+        const currentLang = getCurrentLanguage();
         const currentMonthIndex = new Date().getMonth();
-        const currentMonth = monthNames[currentMonthIndex];
+        const currentMonth = monthNames[currentLang][currentMonthIndex];
 
         const speciesThisMonth = species.filter(species => species.most_probable_months.includes(currentMonth));
         const speciesNotThisMonth = species.filter(species => !species.most_probable_months.includes(currentMonth));
 
-        speciesThisMonth.sort((a, b) => a.name.localeCompare(b.name));
-        speciesNotThisMonth.sort((a, b) => a.name.localeCompare(b.name));
+        speciesThisMonth.sort((a, b) => a[`name-${currentLang}`].localeCompare(b[`name-${currentLang}`]));
+        speciesNotThisMonth.sort((a, b) => a[`name-${currentLang}`].localeCompare(b[`name-${currentLang}`]));
 
         return speciesThisMonth.concat(speciesNotThisMonth);
     }
 
     function sortByName(species) {
-        return species.sort((a, b) => a.name.localeCompare(b.name));
+        const currentLang = getCurrentLanguage();
+        return species.sort((a, b) => a[`name-${currentLang}`].localeCompare(b[`name-${currentLang}`]));
     }
 });

@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#map').style.height = `${availableHeight - 12}px`;
     };
 
+    const getCurrentLanguage = () => {
+        console.log(localStorage.getItem('language'))
+        return localStorage.getItem('language') || 'pt'; // Default to Portuguese if not set
+
+    };
 
     // Call setMapHeight on load and resize events
     setMapHeight();
@@ -109,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gpxLayer.on('click', (e) => {
                     const latLng = e.latlng;
                     previousPopupLatLng = { lat: latLng.lat, lng: latLng.lng };  // Store the location
-                    showTrackPopup(trackName, latLng, isTrack=true);
+                    showTrackPopup(trackName, latLng, isTrack = true);
                 });
             })
             .catch(error => console.error(`Error loading track ${trackName}:`, error));
@@ -155,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPopup = null;
 
 
-    const showDetailedPopup = (placeName, isTrack=true) => {
+    const showDetailedPopup = (placeName, isTrack = true) => {
         fetch('/json/details.json')
             .then(response => {
                 if (!response.ok) {
@@ -165,20 +170,21 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 const details = data[placeName];
-    
+                const currentLang = getCurrentLanguage();
+
                 if (details) {
                     const detailedPopupContent = `
-                    <div class="detailed-popup">
-                        <h2>About ${placeName}</h2>
-                        <p>${details.description}</p>
-                        <a href="${details.links[0].url}">${details.links[0].text}</a>
-                    </div>
-                    `;
-    
+                <div class="detailed-popup">
+                    <h2>${currentLang === 'PT' ? 'Sobre' : 'About'} ${placeName}</h2>
+                    <p>${details[`description-${currentLang}`]}</p>
+                    <a href="${details.links[0].url}">${details.links[0][`text-${currentLang}`]}</a>
+                </div>
+                `;
+
                     if (currentPopup) {
                         currentPopup.remove();
                     }
-    
+
                     // Ensure latLng is defined before creating the popup
                     if (previousPopupLatLng) {
                         const latLngObj = L.latLng(previousPopupLatLng.lat, previousPopupLatLng.lng);
@@ -188,8 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             .setLatLng(latLngObj)
                             .setContent(detailedPopupContent)
                             .openOn(map);
-    
-    
+
+
                     } else {
                         console.error('previousPopupLatLng is undefined or null');
                     }
@@ -199,50 +205,52 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => console.error('Error loading detailed information:', error));
     };
-    
-    
+
+
 
     // Create markers and add them to the map
-locations.forEach(location => {
-    const marker = L.marker([location.lat, location.lng], { icon: myIcon }).addTo(markerCluster);
-    marker.bindPopup(
-        `<div class="placediv">
-            <h2 class="placepopup">${location.name}</h2>
-            <div class="placedivbuttons">
-            <button class="species-button" data-location="${location.name}">Ver espécies</button>
-            <button class="details-button" data-location="${location.name}">Informações</button>
-            </div>
-        </div>`,
-        {
-            offset: L.point(0, 0)  // Example offset adjustment
-        }
-    );
+    locations.forEach(location => {
+        const currentLang = getCurrentLanguage();
+        const marker = L.marker([location.lat, location.lng], { icon: myIcon }).addTo(markerCluster);
+        marker.bindPopup(
+            `<div class="placediv">
+            <h2>${currentLang === 'PT' ? 'Sobre' : 'About'} ${location.name}</h2>
+                <div class="placedivbuttons">
+                <button class="species-button" data-location="${location.name}">${currentLang === 'PT' ? 'Ver espécies' : 'View species'}</button>
+                <button class="details-button" data-location="${location.name}">${currentLang === 'PT' ? 'Informações' : 'Information'}</button>
+                </div>
+            </div>`,
+            {
+                offset: L.point(0, 0)
+            }
+        );
 
-    marker.on('popupopen', () => {
-        // Update previousPopupLatLng when the popup opens
-        previousPopupLatLng = { lat: location.lat, lng: location.lng };
+        marker.on('popupopen', () => {
+            // Update previousPopupLatLng when the popup opens
+            previousPopupLatLng = { lat: location.lat, lng: location.lng };
 
-        document.querySelector('.species-button').addEventListener('click', () => {
-            showSpeciesList(location.name, previousPopupLatLng);
+            document.querySelector('.species-button').addEventListener('click', () => {
+                showSpeciesList(location.name, previousPopupLatLng);
+            });
+
+            document.querySelector('.details-button').addEventListener('click', () => {
+                showDetailedPopup(location.name, isTrack = false);
+            });
         });
 
-        document.querySelector('.details-button').addEventListener('click', () => {
-            showDetailedPopup(location.name, isTrack=false);
-        });
+        locationMarkers[location.name] = marker;
     });
-
-    locationMarkers[location.name] = marker;
-});
 
 
     // Update showTrackPopup to include a button for detailed information
     const showTrackPopup = (trackName, latLng, isTrack) => {
+        const currentLang = getCurrentLanguage();
         const popupContent = `
             <div class="placediv">
                 <h2 class="placepopup">${trackName}</h2>
                 <div class="placedivbuttons">
-                <button class="species-button" data-location="${location.name}">Ver espécies</button>
-                <button class="details-button" data-location="${location.name}">Informações</button>
+                <button class="species-button" data-location="${trackName}">${currentLang === 'PT' ? 'Ver espécies' : 'View species'}</button>
+                <button class="details-button" data-location="${trackName}">${currentLang === 'PT' ? 'Informações' : 'Information'}</button>
                 </div>
             </div>
         `;
@@ -267,12 +275,14 @@ locations.forEach(location => {
         });
 
         document.querySelector('.details-button').addEventListener('click', () => {
-            showDetailedPopup(trackName, isTrack=true);
+            showDetailedPopup(trackName, isTrack = true);
         });
     };
 
 
     const showSpeciesList = (association, latLng, isTrack = false) => {
+        const currentLang = getCurrentLanguage();
+
         fetch('/json/species.json')
             .then(response => {
                 if (!response.ok) {
@@ -285,9 +295,9 @@ locations.forEach(location => {
                     ? data
                     : data.filter(species => species.association === association);
 
-                // Get unique species names
+                // Get unique species names based on the current language
                 const uniqueSpecies = Array.from(
-                    new Set(filteredData.map(species => species['nome-PT']))
+                    new Set(filteredData.map(species => species[`nome-${currentLang}`]))
                 );
 
                 const speciesList = uniqueSpecies.map(speciesName =>
@@ -296,7 +306,7 @@ locations.forEach(location => {
 
                 const popupContent =
                     `<div class="speciesdiv">
-                        <h2>Espécies em ${association}</h2>
+                        <h2>${currentLang === 'pt' ? 'Espécies em' : 'Species in'} ${association}</h2>
                         <ul class="species-list">${speciesList}</ul>
                     </div>`;
 
@@ -320,7 +330,7 @@ locations.forEach(location => {
                 document.querySelectorAll('.speciesli').forEach(item => {
                     item.addEventListener('click', (event) => {
                         const speciesName = event.target.getAttribute('data-species-name');
-                        const species = filteredData.filter(species => species['nome-PT'] === speciesName);
+                        const species = filteredData.filter(species => species[`nome-${currentLang}`] === speciesName);
                         showSpeciesInfo(species, association, isTrack);
                     });
                 });
@@ -329,11 +339,14 @@ locations.forEach(location => {
     };
 
 
+    // Modify the showSpeciesInfo function
     const showSpeciesInfo = (species, association, isTrack = false) => {
         if (!species || species.length === 0) {
             console.error('Species information is missing');
             return;
         }
+
+        const currentLang = getCurrentLanguage();
 
         // Retrieve the current heard species list from localStorage
         let heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
@@ -349,24 +362,24 @@ locations.forEach(location => {
         const recordingsContent = species.map(entry =>
             `<div class="sounddiv">
                 ${entry.sound_url}
-                <p>${entry['descricao-PT']}</p>
+                <p>${entry[`descricao-${currentLang}`]}</p>
             </div>`
         ).join('');
 
         const popupContent =
             `<div class="SpeciesInfo">
-                <div class="buttonmappopup">
-                    <button id="backButton" class="back-button">Voltar à lista</button>
-                    <button id="heardButton">${heardSpecies.includes(species[0]['nome-PT']) ? 'Remove from Heard' : 'Add to Heard'}</button>
-                </div>
-                <h2>${species[0]['nome-PT']} (${species[0].scientific_name})</h2>
-                <a class="specieslink" href="species.html?name=${encodeURIComponent(species[0]['nome-PT'])}">
-                    ${species[0]['nome-PT']} (${species[0].scientific_name})
-                </a>
-                <p>${species[0]['notas-PT']}</p>
-                <p><strong>Melhores meses para se ouvir:</strong> ${species[0].most_probable_months.join(', ')}</p>
-                ${recordingsContent}
-            </div>`;
+            <div class="buttonmappopup">
+                <button id="backButton" class="back-button">${currentLang === 'PT' ? 'Voltar à lista' : 'Back to list'}</button>
+                <button id="heardButton">${heardSpecies.includes(species[0][`nome-${currentLang}`]) ? (currentLang === 'PT' ? 'Remover de Ouvidos' : 'Remove from Heard') : (currentLang === 'PT' ? 'Adicionar a Ouvidos' : 'Add to Heard')}</button>
+            </div>
+            <h2>${species[0][`nome-${currentLang}`]} (${species[0].scientific_name})</h2>
+            <a class="specieslink" href="species.html?name=${encodeURIComponent(species[0][`nome-${currentLang}`])}">
+                ${species[0][`nome-${currentLang}`]} (${species[0].scientific_name})
+            </a>
+            <p>${species[0][`notas-${currentLang}`]}</p>
+            <p><strong>${currentLang === 'PT' ? 'Melhores meses para se ouvir' : 'Best months to hear'}:</strong> ${species[0].most_probable_months.join(', ')}</p>
+            ${recordingsContent}
+        </div>`;
 
         if (previousPopup) {
             previousPopup.remove();
@@ -392,25 +405,20 @@ locations.forEach(location => {
         });
 
         const heardButton = document.getElementById('heardButton');
-        heardButton.addEventListener('click', () => {
-            heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-            const isHeard = heardSpecies.includes(species[0]['nome-PT']);
-            heardButton.textContent = isHeard ? 'Remove from Heard' : 'Add to Heard';
+    heardButton.addEventListener('click', () => {
+        heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
+        const isHeard = heardSpecies.includes(species[0][`nome-PT`]);
+        heardButton.textContent = isHeard ? (currentLang === 'PT' ? 'Remover de Ouvidos' : 'Remove from Heard') : (currentLang === 'PT' ? 'Adicionar a Ouvidos' : 'Add to Heard');
 
-            if (isHeard) {
-                // Remove species from the heard list
-                heardSpecies = heardSpecies.filter(specie => specie !== species[0]['nome-PT']);
-            } else {
-                // Add species to the heard list
-                heardSpecies.push(species[0]['nome-PT']);
-            }
+        if (isHeard) {
+            heardSpecies = heardSpecies.filter(specie => specie !== species[0][`nome-PT`]);
+        } else {
+            heardSpecies.push(species[0][`nome-PT`]);
+        }
 
-            // Update localStorage
-            localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
-
-            // Update button text based on new state
-            updateButton();
-        });
+        localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
+        updateButton();
+    });
 
         // Initial call to set the correct button text
         updateButton();
