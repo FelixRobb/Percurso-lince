@@ -168,6 +168,7 @@
 /* Popup modal */
 .info-modal {
     display: none;
+    align-items: center;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -186,7 +187,8 @@
     border: 1px solid #888;
     border-radius: 20px;
     width: 80%;
-    max-height: 80vh;
+    max-height: 70dvh;
+    margin: auto;
     overflow: scroll;
     max-width: 600px;
     position: relative;
