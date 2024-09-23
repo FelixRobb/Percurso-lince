@@ -155,18 +155,23 @@ nav {
 
 nav a {
     color: #ffffff;
-    text-decoration: underline;
+    text-decoration: none;
     font-size: 20px;
     padding: 8px 8px;
     border-radius: 5px;
     transition: color 0.3s;
     transform: translatey(-1px);
+    text-wrap: nowrap;
 }
 
 
 nav a.active,
 nav a:hover {
     color: #ff6a00;
+}
+
+nav a:hover {
+    text-decoration: underline;
 }
 
 #changelang {

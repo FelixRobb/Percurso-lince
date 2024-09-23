@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelector('#map').style.height = `${availableHeight - 12}px`;
     };
-    
-    
+
+
     // notification system
-    
+
     const handleError = (error, context) => {
         console.error(`Error in ${context}:`, error);
         let message;
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         showNotification(message, 'error');
     };
-    
+
     const showNotification = (message, type = 'error') => {
         const notification = document.createElement('div');
         notification.textContent = message;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000);
     };
 
-    
+
 
     const getCurrentLanguage = () => {
         return localStorage.getItem('language') || 'pt'; // Default to Portuguese if not set
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         handleError(error, 'map_init');
         return; // Stop execution if map fails to initialize
     }
-    
+
     try {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -81,15 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
         handleError(error, 'tile_layer');
     }
-    
 
-    try {
-        L.control.locate().addTo(map).on('locationerror', (error) => {
-            handleError(error, 'geolocation');
-        });
-    } catch (error) {
-        handleError(error, 'geolocation');
-    }
+    // Add locate control
+    L.control.locate().addTo(map);
+
 
 
     let markerCluster;
@@ -98,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
         handleError(error, 'marker_load');
     }
-    
+
     var myIcon = L.icon({
         iconUrl: '/images/marker.svg',
         iconSize: [38, 95],
@@ -187,14 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     previousPopupLatLng = { lat: latLng.lat, lng: latLng.lng };  // Store the location
                     showTrackPopup(trackName, latLng, isTrack = true);
                 });
-                
+
                 gpxLayer.on('error', (e) => {
-                handleError(e.error, 'track_load');
+                    handleError(e.error, 'track_load');
                 });
             })
             .catch(error => {
                 handleError(error, 'track_load');
             });
+    };
 
 
     const tracks = [
@@ -481,20 +477,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const heardButton = document.getElementById('heardButton');
-    heardButton.addEventListener('click', () => {
-        heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
-        const isHeard = heardSpecies.includes(species[0][`nome-PT`]);
-        heardButton.textContent = isHeard ? (currentLang === 'PT' ? 'Remover de Ouvidos' : 'Remove from Heard') : (currentLang === 'PT' ? 'Adicionar a Ouvidos' : 'Add to Heard');
+        heardButton.addEventListener('click', () => {
+            heardSpecies = JSON.parse(localStorage.getItem('heardSpecies')) || [];
+            const isHeard = heardSpecies.includes(species[0][`nome-PT`]);
+            heardButton.textContent = isHeard ? (currentLang === 'PT' ? 'Remover de Ouvidos' : 'Remove from Heard') : (currentLang === 'PT' ? 'Adicionar a Ouvidos' : 'Add to Heard');
 
-        if (isHeard) {
-            heardSpecies = heardSpecies.filter(specie => specie !== species[0][`nome-PT`]);
-        } else {
-            heardSpecies.push(species[0][`nome-PT`]);
-        }
+            if (isHeard) {
+                heardSpecies = heardSpecies.filter(specie => specie !== species[0][`nome-PT`]);
+            } else {
+                heardSpecies.push(species[0][`nome-PT`]);
+            }
 
-        localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
-        updateButton();
-    });
+            localStorage.setItem('heardSpecies', JSON.stringify(heardSpecies));
+            updateButton();
+        });
 
         // Initial call to set the correct button text
         updateButton();
