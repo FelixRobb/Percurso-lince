@@ -39,7 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const showNotification = (message, type = 'error') => {
+        console.log("notif")
         const notification = document.createElement('div');
+        console.log("notifi")
         notification.textContent = message;
         notification.className = `notification ${type}`;
         document.body.insertBefore(notification, document.body.firstChild);
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 notification.remove();
             }, 600);
-        }, 5000);
+        }, 50000);
     };
 
 
@@ -407,7 +409,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 });
             })
-            .catch(error => console.error('Error loading species data:', error));
+            .catch(error => {
+                handleError(error, 'species_data');
+            });
     };
 
 
