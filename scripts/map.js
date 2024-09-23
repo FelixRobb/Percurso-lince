@@ -6,6 +6,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelector('#map').style.height = `${availableHeight - 12}px`;
     };
+    
+    
+    // notification system
+    
+    const handleError = (error, context) => {
+        console.error(`Error in ${context}:`, error);
+        let message;
+        switch (context) {
+            case 'map_init':
+                message = 'Failed to initialize the map. Please refresh the page or check your internet connection.';
+                break;
+            case 'tile_layer':
+                message = 'Unable to load map tiles. Some map features may be unavailable.';
+                break;
+            case 'geolocation':
+                message = 'Unable to access your location. Please check your browser settings.';
+                break;
+            case 'track_load':
+                message = 'Failed to load one or more tracks. Some routes may be missing.';
+                break;
+            case 'marker_load':
+                message = 'Failed to load location markers. Some points of interest may be missing.';
+                break;
+            case 'species_data':
+                message = 'Unable to load species data. Species information may be incomplete.';
+                break;
+            default:
+                message = 'An unexpected error occurred. Please try again later.';
+        }
+        showNotification(message, 'error');
+    };
+    
+    const showNotification = (message, type = 'error') => {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        document.body.insertBefore(notification, document.body.firstChild);
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notification.remove();
+            }, 600);
+        }, 5000);
+    };
+
+    
 
     const getCurrentLanguage = () => {
         return localStorage.getItem('language') || 'pt'; // Default to Portuguese if not set
@@ -17,11 +64,41 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', setMapHeight);
 
     // Initialize the map and tile layer
-    const map = L.map('map').setView([37.6364, -7.6690], 10.4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    let map;
+    try {
+        map = L.map('map').setView([37.6364, -7.6690], 10.4);
+    } catch (error) {
+        handleError(error, 'map_init');
+        return; // Stop execution if map fails to initialize
+    }
+    
+    try {
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map).on('tileerror', (error) => {
+            handleError(error, 'tile_layer');
+        });
+    } catch (error) {
+        handleError(error, 'tile_layer');
+    }
+    
 
+    try {
+        L.control.locate().addTo(map).on('locationerror', (error) => {
+            handleError(error, 'geolocation');
+        });
+    } catch (error) {
+        handleError(error, 'geolocation');
+    }
+
+
+    let markerCluster;
+    try {
+        markerCluster = L.markerClusterGroup().addTo(map);
+    } catch (error) {
+        handleError(error, 'marker_load');
+    }
+    
     var myIcon = L.icon({
         iconUrl: '/images/marker.svg',
         iconSize: [38, 95],
@@ -29,11 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
         popupAnchor: [-3, -60]
     });
 
-    // Add locate control
-    L.control.locate().addTo(map);
-
-    // Create marker cluster group
-    const markerCluster = L.markerClusterGroup().addTo(map);
 
     const locations = [
         { name: "Azenhas do Guadiana", lat: 37.6462, lng: -7.6525 },
@@ -115,9 +187,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     previousPopupLatLng = { lat: latLng.lat, lng: latLng.lng };  // Store the location
                     showTrackPopup(trackName, latLng, isTrack = true);
                 });
+                
+                gpxLayer.on('error', (e) => {
+                handleError(e.error, 'track_load');
+                });
             })
-            .catch(error => console.error(`Error loading track ${trackName}:`, error));
-    };
+            .catch(error => {
+                handleError(error, 'track_load');
+            });
 
 
     const tracks = [
@@ -147,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const middlePoint = trackBounds[selectedTrack].getCenter();
             previousPopupLatLng = middlePoint;  // Store the location
-            showSpeciesList(selectedTrack, middlePoint,);
+            showSpeciesList(selectedTrack, middlePoint, true);
         } else if (locationMarkers[selectedTrack]) {
             const marker = locationMarkers[selectedTrack];
             map.setView(marker.getLatLng(), 15);
