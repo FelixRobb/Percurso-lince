@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const getCurrentLanguage = () => {
-        console.log(localStorage.getItem('language'))
         return localStorage.getItem('language') || 'pt'; // Default to Portuguese if not set
 
     };
