@@ -170,7 +170,7 @@
     display: none;
     align-items: center;
     position: fixed;
-    z-index: 1;
+    z-index: 999999;
     left: 0;
     top: 0;
     justify-content: center;
@@ -180,18 +180,15 @@
 }
 
 .info-modal-content {
-    color: #111;
-    background-color: #fefefe;
-    margin: 80px 4vw 20px 4vw;
+    color: #fff;
+    background-color: #333;
     padding: 20px;
     border: 1px solid #888;
     border-radius: 20px;
     width: 80%;
-    max-height: 70dvh;
-    margin: auto;
-    overflow: scroll;
     max-width: 600px;
     position: relative;
+    box-shadow: 0px 0px 10px #222 inset;
 }
 
 .info-modal .close {
@@ -204,11 +201,18 @@
     cursor: pointer;
 }
 
+
+
 .info-modal .close:hover,
 .info-modal .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.info-modal p {
+    max-height: 70dvh;
+    overflow: auto;
 }
 
 .info-modal-link {

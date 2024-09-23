@@ -235,7 +235,7 @@
             <a href="map.html?track=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho"
                 class="info-modal-link" data-i18n="view_map">Ver no Mapa</a>
             <a href="recordings.html?location=PR8%20MTL%20-%20Moinho%20do%20Alferes%20um%20Percurso%20Ribeirinho"
-                class="card-link" data-i18n="view_recordings">Ver Gravações</a>
+                class="info-modal-link" data-i18n="view_recordings">Ver Gravações</a>
         </div>
     </div>
     
@@ -361,9 +361,12 @@
                 }
             });
         }
+        
+        </script>
+        <<script>
 
         function openInfoPopup(id) {
-            document.getElementById(id).style.display = "block";
+            document.getElementById(id).style.display = "flex";
         }
 
         function closeInfoPopup(id) {
