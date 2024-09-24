@@ -206,32 +206,40 @@ document.addEventListener('DOMContentLoaded', setMapHeight);
     tracks.forEach(track => loadTrack(track.file, track.name));
 
     // Handle track selection from the dropdown
-    const trackSelect = document.getElementById('trackSelect');
     trackSelect.addEventListener('change', (event) => {
-        const selectedTrack = event.target.value;
+    const selectedTrack = event.target.value;
 
-        for (const trackName in trackLayers) {
-            if (trackLayers[trackName]) {
-                trackLayers[trackName].setStyle({ color: 'grey' });
-            }
+    // Reset the styles for all tracks
+    for (const trackName in trackLayers) {
+        if (trackLayers[trackName]) {
+            trackLayers[trackName].setStyle({ color: 'grey' });
         }
+    }
 
-        if (selectedTrack === 'all') {
-            map.setView([37.6364, -7.6673], 12.5);
-        } else if (trackLayers[selectedTrack]) {
-            trackLayers[selectedTrack].setStyle({ color: 'red' });
-            map.fitBounds(trackBounds[selectedTrack]);
+    // Handle 'all' option for resetting the view
+    if (selectedTrack === 'all') {
+        map.setView([37.6364, -7.6673], 12.5);
+    } 
+    // Handle when a specific track is selected
+    else if (trackLayers[selectedTrack]) {
+        trackLayers[selectedTrack].setStyle({ color: 'red' });
+        map.fitBounds(trackBounds[selectedTrack]);
 
-            const middlePoint = trackBounds[selectedTrack].getCenter();
-            previousPopupLatLng = middlePoint;  // Store the location
-            showSpeciesList(selectedTrack, middlePoint, true);
-        } else if (locationMarkers[selectedTrack]) {
-            const marker = locationMarkers[selectedTrack];
-            map.setView(marker.getLatLng(), 15);
-        } else {
-            console.error(`Selected track or marker not found: ${selectedTrack}`);
-        }
-    });
+        const middlePoint = trackBounds[selectedTrack].getCenter();
+        previousPopupLatLng = middlePoint;  // Store the location
+        showSpeciesList(selectedTrack, middlePoint, true); // Pass true for isTrack
+    } 
+    // Handle when a specific location is selected
+    else if (locationMarkers[selectedTrack]) {
+        const marker = locationMarkers[selectedTrack];
+        map.setView(marker.getLatLng(), 15);
+        previousPopupLatLng = marker.getLatLng();
+        showSpeciesList(selectedTrack, marker.getLatLng(), false); // Pass false for isTrack
+    } 
+    else {
+        console.error(`Selected track or marker not found: ${selectedTrack}`);
+    }
+});
 
     let currentPopup = null;
 
