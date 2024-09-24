@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', setMapHeight);
                 message = 'Failed to load location markers. Some points of interest may be missing.';
                 break;
             case 'species_data':
-                message = 'Unable to load species data. Species information may be incomplete.';
+                message = 'Unable to load species data. Species information may be incomplete. Maybe try checking you internet conection...';
                 break;
             default:
                 message = 'An unexpected error occurred. Please try again later.';
