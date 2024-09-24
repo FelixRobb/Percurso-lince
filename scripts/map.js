@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const setMapHeight = () => {
-        const headerHeight = document.querySelector('header').offsetHeight;
-        const controlsHeight = document.querySelector('#controls').offsetHeight;
-        const availableHeight = window.innerHeight - headerHeight - controlsHeight;
+    const headerHeight = document.querySelector('header').offsetHeight;
+    const controlsHeight = document.querySelector('#controls').offsetHeight;
+    const availableHeight = window.innerHeight - headerHeight - controlsHeight;
+    document.querySelector('#map').style.height = `${availableHeight - 20}px`; // Remove the -12 if unnecessary
+};
 
-        document.querySelector('#map').style.height = `${availableHeight - 12}px`;
-    };
+window.addEventListener('resize', setMapHeight);
+document.addEventListener('DOMContentLoaded', setMapHeight);
 
 
     // notification system
