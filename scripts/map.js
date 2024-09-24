@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', setMapHeight);
             setTimeout(() => {
                 notification.remove();
             }, 600);
-        }, 50000);
+        }, 5000);
     };
 
 
