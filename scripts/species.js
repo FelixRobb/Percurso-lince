@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h2>${entry[`nome-${currentLang.toUpperCase()}`]} (${entry.scientific_name})</h2>
                     <button id="heardButton">${heardSpecies.includes(entry[`nome-${currentLang.toUpperCase()}`]) ? (currentLang === 'PT' ? 'Remover de Ouvidos' : 'Remove from Heard') : (currentLang === 'PT' ? 'Adicionar a Ouvidos' : 'Add to Heard')}</button>
                     <p class="comments">${entry[`notas-${currentLang.toUpperCase()}`]}</p>
-                    <p class="months"><strong>${currentLang === 'PT' ? 'Melhores meses para se ouvir' : 'Best months to hear'}:</strong> ${entry.most_probable_months.join(', ')}</p>
+                    <p class="months"><strong>${currentLang === 'PT' ? 'Melhores meses para se ouvir' : 'Best months to hear'}:</strong> ${entry[`most_probable_months_${currentLang}`].join(', ')}</p>
                     <label id="location-select-label" for="location-select"><strong>${currentLang === 'PT' ? 'Escolha a Localização' : 'Choose Location'}:</strong></label>
                     <select id="location-select"></select>
                     ${recordingsContent}

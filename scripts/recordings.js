@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     [`name-PT`]: species['nome-PT'],
                     [`name-EN`]: species['nome-EN'],
                     scientific_name: species.scientific_name,
-                    most_probable_months: new Set(species.most_probable_months),
+                    most_probable_months_PT: new Set(species.most_probable_months_PT),
                     associations: new Set([species.association]),
                     [`group-PT`]: species['grupo-PT'],
                     [`group-EN`]: species['grupo-EN'],
@@ -148,14 +148,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     sound_url: species.sound_url
                 };
             } else {
-                species.most_probable_months.forEach(month => uniqueSpecies[species[`nome-${currentLang}`]].most_probable_months.add(month));
+                species.most_probable_months_PT.forEach(month => uniqueSpecies[species[`nome-${currentLang}`]].most_probable_months_PT.add(month));
                 uniqueSpecies[species[`nome-${currentLang}`]].associations.add(species.association);
             }
         });
 
         return Object.values(uniqueSpecies).map(species => ({
-            ...species,
-            most_probable_months: averageMonths([...species.most_probable_months]),
+            ...species, 
+            most_probable_months_PT: averageMonths([...species.most_probable_months_PT]),
             associations: [...species.associations]
         }));
     }
@@ -227,22 +227,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function sortByMonth(species) {
-        const monthNames = {
-            PT: ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"],
-            EN: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-        };
-        const currentLang = getCurrentLanguage();
-        const currentMonthIndex = new Date().getMonth();
-        const currentMonth = monthNames[currentLang][currentMonthIndex];
+    // Define the month names in Portuguese (as they are used for calculations)
+    const monthNamesPT = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 
-        const speciesThisMonth = species.filter(species => species.most_probable_months.includes(currentMonth));
-        const speciesNotThisMonth = species.filter(species => !species.most_probable_months.includes(currentMonth));
+    // Get the current month index (0 for January, 1 for February, etc.)
+    const currentMonthIndex = new Date().getMonth();
 
-        speciesThisMonth.sort((a, b) => a[`name-${currentLang}`].localeCompare(b[`name-${currentLang}`]));
-        speciesNotThisMonth.sort((a, b) => a[`name-${currentLang}`].localeCompare(b[`name-${currentLang}`]));
+    // Get the current month name in Portuguese
+    const currentMonthPT = monthNamesPT[currentMonthIndex];
 
-        return speciesThisMonth.concat(speciesNotThisMonth);
-    }
+    // Filter species that are most probable in the current month
+    const speciesThisMonth = species.filter(species => species.most_probable_months_PT.includes(currentMonthPT));
+
+    // Filter species that are not most probable in the current month
+    const speciesNotThisMonth = species.filter(species => !species.most_probable_months_PT.includes(currentMonthPT));
+
+    // Sort both groups alphabetically by the Portuguese name
+    speciesThisMonth.sort((a, b) => a['name-PT'].localeCompare(b['name-PT']));
+    speciesNotThisMonth.sort((a, b) => a['name-PT'].localeCompare(b['name-PT']));
+
+    // Return the sorted list, with species for the current month appearing first
+    return speciesThisMonth.concat(speciesNotThisMonth);
+}
+
 
     function sortByName(species) {
         const currentLang = getCurrentLanguage();
