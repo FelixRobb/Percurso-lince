@@ -463,7 +463,7 @@ document.addEventListener('DOMContentLoaded', setMapHeight);
                 ${species[0][`nome-${currentLang}`]} (${species[0].scientific_name})
             </a>
             <p>${species[0][`notas-${currentLang}`]}</p>
-            <p><strong>${currentLang === 'PT' ? 'Melhores meses para se ouvir' : 'Best months to hear'}:</strong> ${species[0].most_probable_months.join(', ')}</p>
+            <p><strong>${currentLang === 'PT' ? 'Melhores meses para se ouvir' : 'Best months to hear'}:</strong> ${species[0][`most_probable_months_${currentLang}`].join(', ')}</p>
             ${recordingsContent}
         </div>`;
 

@@ -186,6 +186,7 @@
     border: 1px solid #888;
     border-radius: 20px;
     width: 80%;
+    height: fit-content;
     max-width: 600px;
     position: relative;
     box-shadow: 0px 0px 10px #222 inset;
@@ -211,7 +212,7 @@
 }
 
 .info-modal p {
-    max-height: 70dvh;
+    max-height: 60vh;
     overflow: auto;
 }
 
