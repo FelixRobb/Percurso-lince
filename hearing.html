@@ -65,7 +65,7 @@
         });
 
         function getLanguage() {
-            let language = localStorage.getItem("language");
+            let language = localStorage.getItem("lang-psg");
             if (!language) {
                 createLanguagePopup();
             }
@@ -133,7 +133,7 @@
         }
 
         function setLanguage(lang) {
-            localStorage.setItem("language", lang);
+            localStorage.setItem("lang-psg", lang);
             document.getElementById("language-popup").remove();
             window.location.reload();
         }

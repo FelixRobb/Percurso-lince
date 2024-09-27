@@ -10,12 +10,8 @@ body {
     gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     list-style: none;
+    grid-auto-rows: 1fr;
     padding: 10px;
-}
-
-#recordings-list p {
-    text-align: center;
-    margin-top: 3sw0px;
 }
 
 .bird-item {
@@ -23,7 +19,11 @@ body {
     border: 1px solid #333;
     border-radius: 5px;
     padding: 15px;
-    transition: background-color 0.3s, border-color 0.3s;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
 }
 
 .bird-item:hover {
@@ -34,10 +34,6 @@ body {
 .bird-item a {
     color: #cccccc;
     margin-left: 10px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .bird-item a:hover {
@@ -54,8 +50,7 @@ body {
 }
 
 .filter-options button {
-    margin: 10px 5px;
-    flex: 1;
+    margin: 10px;
     padding: 0.5rem 1rem;
     border: none;
     background-color: #ce7230;
@@ -167,9 +162,9 @@ body {
     align-items: center;
 }
 .modal-button {
-    margin: 10px auto;
+    margin: auto;
+    margin-top: 10px;
     padding: 0.5rem 1rem;
-    width: 100%;
     border: none;
     background-color: #cf7230;
     color: white;

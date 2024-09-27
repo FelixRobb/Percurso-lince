@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let filteredSpecies = [];
 
     const getCurrentLanguage = () => {
-        return localStorage.getItem('language') || 'PT'; // Default to Portuguese if not set
+        return localStorage.getItem('lang-psg') || 'PT'; // Default to Portuguese if not set
     };
 
     const translateUI = () => {

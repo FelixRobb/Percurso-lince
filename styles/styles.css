@@ -20,10 +20,11 @@ header {
     top: 8px;
     left: 0px;
     z-index: 50001;
-    background: #000000;
+    background: #0000008f;
     backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 20px #232323 inset;
+    border: 1px solid #6d6d6d84;
     -webkit-backdrop-filter: blur(10px);
-   
 }
 
 
@@ -60,6 +61,7 @@ header h1 {
     border-radius: 0px 0px 20px 20px;
     margin: 10px auto;
     display: none;
+    flex-direction: column;
     position: fixed;
     top: 60px;
     left: 50%;
@@ -74,29 +76,40 @@ header h1 {
 
 .side-menu-links {
     padding: 8px 12px;
+    margin: 5px 10px;
+    border-radius: 15px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
     display: block;
-    transition: 0.3s;
+    transition: all 0.3s;
+    border: 1px solid #ffffff28;
+    box-shadow: 0px 0px 20px #3737378f inset;
 }
 
 .side-menu-links.active {
     color: #ff6a00;
+    box-shadow: 0px 0px 10px #ff7a27 inset;
 }
 
 .side-menu-links:hover {
     color: #ff6a00;
     text-decoration: none;
+    box-shadow: 0px 0px 10px #ff7a27 inset;
+    background-color: #ff760e24;
 }
 
 #side-menu a:first-child {
-    margin-top: 10px;
+    margin-top: 20px;
+}
+
+#side-menu a:nth-child(5) {
+    margin-bottom: 10px;
 }
 
 #changelangside {
     position: fixed;
-    top: 20px;
+    top: 26px;
     right: 20px;
     cursor: pointer;
     color: #585858;
@@ -105,7 +118,7 @@ header h1 {
 
 
 /* Responsive styles */
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1000px) {
     
     nav#main-nav {
         display: none;
@@ -148,7 +161,7 @@ header h1 {
     }
 }
 
-@media screen and (min-width: 851px) {
+@media screen and (min-width: 1001px) {
     #side-menu {
         display: none !important;
         width: 0 !important;
@@ -159,44 +172,35 @@ nav {
     display: flex;
     align-content: center;
     justify-content: center;
-    gap: 0.2vw !important;
+    gap: 10px;
 }
 
 nav a {
+    width: min-content;
     color: #999;
     text-decoration: none;
-    font-size: 20px;
-    padding: 8px 8px;
-    border-radius: 5px;
-    transition: color 0.3s;
+    font-size: 1.5vw;
+    padding: 10px 15px;
+    border-radius: 16px;
+    transition: all 0.3s;
     transform: translatey(-1px);
     text-wrap: nowrap;
+    border: 1px solid #ffffff33;
+    box-shadow: 0px 0px 10px #4d4d4d9d inset;
 }
 
 
 nav a.active,
 nav a:hover {
     color: #ff6a00;
+    box-shadow: 0px 0px 10px #ff7a27 inset;
 }
 
 nav a:hover {
     text-decoration: underline;
 }
 
-#changelang {
-    color: #999;
-    text-decoration: underline;
-    font-size: 20px;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: color 0.3s;
-    transform: translatey(-1px);
-    cursor: pointer;
-}
 
-#changelang:hover {
-    color: #ff6a00;
-}
 
 .notification {
     position: fixed;

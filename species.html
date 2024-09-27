@@ -17,7 +17,7 @@
                 <a href="index.html" class="nav-button" id="menuinicio" data-i18n="menuinicio"></a>
                 <a href="home.html" class="nav-button" id="menuexplorar" data-i18n="menuexplorar"></a>
                 <a href="map.html" class="nav-button" id="menumapa" data-i18n="menumapa"></a>
-                <a href="recordings.html" class="nav-button" id="menugravacoes" data-i18n="menugravacoes"></a>
+                <a href="recordings.html" class="nav-button active" id="menugravacoes" data-i18n="menugravacoes"></a>
                 <a href="heard_species.html" class="nav-button" id="menulista" data-i18n="menulista"></a>
                 <a id="changelang" onclick="createLanguagePopup()" data-i18n="language"></a>
             </nav>
@@ -31,7 +31,7 @@
             <a class="side-menu-links" href="index.html" id="menuiniciom" data-i18n="menuiniciom"></a>
             <a class="side-menu-links" href="home.html" id="menuexplorarm" data-i18n="menuexplorarm"></a>
             <a class="side-menu-links" href="map.html" id="menumapam" data-i18n="menumapam"></a>
-            <a class="side-menu-links" href="recordings.html" id="menugravacoesm" data-i18n="menugravacoesm"></a>
+            <a class="side-menu-links active" href="recordings.html" id="menugravacoesm" data-i18n="menugravacoesm"></a>
             <a class="side-menu-links" href="heard_species.html" id="menulistam" data-i18n="menulistam"></a>
             <a id="changelangside" onclick="createLanguagePopup()" data-i18n="language"></a>
         </div>
@@ -64,7 +64,7 @@
         });
 
         function getLanguage() {
-            let language = localStorage.getItem("language");
+            let language = localStorage.getItem("lang-psg");
             if (!language) {
                 createLanguagePopup();
             }
@@ -132,7 +132,7 @@
         }
 
         function setLanguage(lang) {
-            localStorage.setItem("language", lang);
+            localStorage.setItem("lang-psg", lang);
             document.getElementById("language-popup").remove();
             window.location.reload();
         }

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const heardSpeciesContainer = document.getElementById('speciesList');
 
     const getCurrentLanguage = () => {
-        return localStorage.getItem('language') || 'pt'; // Default to Portuguese
+        return localStorage.getItem('lang-psg') || 'pt'; // Default to Portuguese
     };
 
     const currentLang = getCurrentLanguage();

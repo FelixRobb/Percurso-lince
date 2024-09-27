@@ -1,7 +1,7 @@
 function toggleMenu() {
     var sideMenu = document.getElementById("side-menu");
 
-    if (sideMenu.style.display === "block") {
+    if (sideMenu.style.display === "flex") {
         closeMenu();
     } else {
         openMenu();
@@ -12,7 +12,7 @@ function openMenu() {
     var sideMenu = document.getElementById("side-menu");
     var menubutton = document.getElementById("menu")
     menubutton.style.color = "#ff6a00"
-    sideMenu.style.display = "block";
+    sideMenu.style.display = "flex";
     sideMenu.style.width = "90vw";
 
     // Add an event listener to close the menu when clicking outside

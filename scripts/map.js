@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', setMapHeight);
     };
 
 
-
+    // Get language
     const getCurrentLanguage = () => {
-        return localStorage.getItem('language') || 'pt'; // Default to Portuguese if not set
+        return localStorage.getItem('lang-psg') || 'pt'; // Default to Portuguese if not set
 
     };
 
