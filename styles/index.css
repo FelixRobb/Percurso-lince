@@ -46,7 +46,7 @@ h1 {
 
 .linktohearing {
     color: #fff;
-    text-decoration: none;
+    text-decoration: underline;
     margin-bottom: 80px !important;
 }
 
