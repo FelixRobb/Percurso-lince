@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const speciesItem = document.createElement('div');
             speciesItem.classList.add('bird-item');
             speciesItem.innerHTML = `
-                <a href="species.html?name=${encodeURIComponent(species[`name-PT`])}">${species[`name-${currentLang}`]} (${species.scientific_name})</a>
+                <a href="species.html?name=${encodeURIComponent(species[`name-PT`])}"><b>${species[`name-${currentLang}`]} </b>  <i> ${species.scientific_name}</i></a>
             `;
             recordingsList.appendChild(speciesItem);
         });
