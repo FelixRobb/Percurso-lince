@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', setMapHeight);
 
     const locations = [
         { name: "Azenhas do Guadiana", lat: 37.6462, lng: -7.6525 },
-        { name: "Ribeira de Oeiras", lat: 37.6254, lng: -7.8099 },
+        { name: "Ribeira de Oeiras", lat: 37.6253, lng: -7.8103099 },
         { name: "Vila de Mértola", lat: 37.6372, lng: -7.6633 }
     ];
 
