@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', setMapHeight);
                 <button id="heardButton">${heardSpecies.includes(species[0][`nome-${currentLang}`]) ? (currentLang === 'PT' ? 'Remover de Ouvidos' : 'Remove from Heard') : (currentLang === 'PT' ? 'Adicionar a Ouvidos' : 'Add to Heard')}</button>
             </div>
             <h2>${species[0][`nome-${currentLang}`]} (${species[0].scientific_name})</h2>
-            <a class="specieslink" href="species.html?name=${encodeURIComponent(species[0][`nome-${currentLang}`])}">
+            <a class="specieslink" href="species.html?name=${encodeURIComponent(species[0][`nome-PT`])}">
                 ${species[0][`nome-${currentLang}`]} (${species[0].scientific_name})
             </a>
             <p>${species[0][`notas-${currentLang}`]}</p>
