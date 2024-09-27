@@ -183,6 +183,10 @@ nav a {
     padding: 10px 15px;
     border-radius: 16px;
     transition: all 0.3s;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
     text-wrap: nowrap;
     border: 1px solid #ffffff33;
     box-shadow: 0px 0px 10px #4d4d4d9d inset;
