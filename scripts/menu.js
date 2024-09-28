@@ -13,8 +13,8 @@ function openMenu() {
     var menubutton = document.getElementById("menu")
     menubutton.style.color = "#ff6a00"
     sideMenu.style.display = "flex";
-    sideMenu.style.width = "90vw";
-
+    
+    
     // Add an event listener to close the menu when clicking outside
     document.addEventListener('click', closeMenuOnOutsideClick);
 }
@@ -24,7 +24,7 @@ function closeMenu() {
     var menubutton = document.getElementById("menu")
     menubutton.style.color = "#fff"
     sideMenu.style.display = "none";
-    sideMenu.style.width = "0";
+    
 
     // Remove the event listener after closing the menu
     document.removeEventListener('click', closeMenuOnOutsideClick);

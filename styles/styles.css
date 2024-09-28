@@ -57,7 +57,6 @@ header h1 {
 
 /* Side Menu */
 #side-menu {
-    width: 0;
     border-radius: 0px 0px 20px 20px;
     margin: 10px auto;
     display: none;
@@ -65,13 +64,14 @@ header h1 {
     position: fixed;
     top: 60px;
     left: 50%;
+    width: 90vw;
+    height: fit-content;
     transform: translateX(-50%);
     z-index: 50000;
     background: transparent;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
     box-shadow: 0px 0px 5px #343434;
-    transition: .5s;
 }
 
 .side-menu-links {
