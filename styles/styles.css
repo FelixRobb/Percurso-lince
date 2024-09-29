@@ -78,6 +78,7 @@ header h1 {
 
 .burger-menu.open span {
     background-color: #ff6a00;
+    height: 4px;
 }
 
 .burger-menu span:nth-child(1) {
