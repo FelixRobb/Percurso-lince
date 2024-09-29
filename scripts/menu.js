@@ -1,41 +1,40 @@
-function toggleMenu() {
-    var sideMenu = document.getElementById("side-menu");
-
-    if (sideMenu.style.display === "flex") {
-        closeMenu();
-    } else {
-        openMenu();
-    }
-}
-
-function openMenu() {
-    var sideMenu = document.getElementById("side-menu");
-    var menubutton = document.getElementById("menu")
-    menubutton.style.color = "#ff6a00"
-    sideMenu.style.display = "flex";
-    
-    
-    // Add an event listener to close the menu when clicking outside
-    document.addEventListener('click', closeMenuOnOutsideClick);
-}
-
-function closeMenu() {
-    var sideMenu = document.getElementById("side-menu");
-    var menubutton = document.getElementById("menu")
-    menubutton.style.color = "#fff"
-    sideMenu.style.display = "none";
-    
-
-    // Remove the event listener after closing the menu
-    document.removeEventListener('click', closeMenuOnOutsideClick);
-}
-
-function closeMenuOnOutsideClick(event) {
-    var sideMenu = document.getElementById("side-menu");
-    var menuIcon = document.getElementById("menu-icon");
-
-    // Check if the clicked element is not the menu or the menu icon
-    if (!sideMenu.contains(event.target) && !menuIcon.contains(event.target)) {
-        closeMenu();
-    }
-}
+document.addEventListener('DOMContentLoaded', function() {
+            const burgerMenu = document.querySelector('.burger-menu');
+            const sideMenu = document.getElementById('side-menu');
+        
+            burgerMenu.addEventListener('click', toggleMenu);
+        
+            function toggleMenu(event) {
+                event.stopPropagation();
+                burgerMenu.classList.toggle('open');
+        
+                if (sideMenu.style.display === 'flex') {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            }
+        
+            function openMenu() {
+                sideMenu.style.display = 'flex';
+                setTimeout(() => {
+                    sideMenu.style.height = sideMenu.scrollHeight + 'px';
+                }, 10); // Small delay to ensure display: flex has taken effect
+                document.addEventListener('click', closeMenuOnOutsideClick);
+            }
+        
+            function closeMenu() {
+                sideMenu.style.height = '0';
+                setTimeout(() => {
+                    sideMenu.style.display = 'none';
+                }, 300); // Wait for transition to finish
+                document.removeEventListener('click', closeMenuOnOutsideClick);
+            }
+        
+            function closeMenuOnOutsideClick(event) {
+                if (!sideMenu.contains(event.target) && !burgerMenu.contains(event.target)) {
+                    burgerMenu.classList.remove('open');
+                    closeMenu();
+                }
+            }
+        });
