@@ -46,11 +46,13 @@ header h1 {
 }
 
 .burger-menu {
-    display: none;
+    display: flex;
+    align-items: center;
     cursor: pointer;
     width: 30px;
     height: 25px;
     position: relative;
+    transform: scale(90%);
 }
 
 .burger-menu span {
