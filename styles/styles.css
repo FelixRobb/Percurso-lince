@@ -30,7 +30,7 @@ header {
 
 header h1 {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: clamp(10px, 5vw, 20px);
     text-align: center;
     display: flex;
     align-items: center;
@@ -48,11 +48,12 @@ header h1 {
 .burger-menu {
     display: flex;
     align-items: center;
+    justify-content: space-around;
     cursor: pointer;
     width: 30px;
-    height: 25px;
+    height: 26px;
     position: relative;
-    transform: scale(90%);
+    transform: scale(90%) translateY(1.5px);
 }
 
 .burger-menu span {
