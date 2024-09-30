@@ -106,7 +106,7 @@ header h1 {
     transform: rotate(-135deg);
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1001px) {
 
     .burger-menu {
         display: none;

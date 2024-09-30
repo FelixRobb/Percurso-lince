@@ -13,6 +13,13 @@
 <body>
     <header>
         <h1 id="titulomenu" data-i18n="titulomenu"></h1>
+        <div id="menu-icon">
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
         <nav id="main-nav">
             <a href="index.html" class="nav-button active" id="menuinicio" data-i18n="menuinicio"></a>
             <a href="home.html" class="nav-button" id="menuexplorar" data-i18n="menuexplorar"></a>
@@ -21,14 +28,6 @@
             <a href="heard_species.html" class="nav-button" id="menulista" data-i18n="menulista"></a>
             <a id="changelang" onclick="createLanguagePopup()" data-i18n="language"></a>
         </nav>
-          <div id="menu-icon">
-            <div class="burger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-        
     </header>
 
     <!-- Menu lateral -->
@@ -212,7 +211,7 @@
                 .then(data => applyTranslations(data))
                 .catch(error => {
                     console.error("Error loading all translations:", error);
-                    alert("Could not load all translations. Please try again later.");
+                    
                 });
 
             const pathall = `translations/${language}/all.json`;
@@ -221,7 +220,7 @@
                 .then(data => applyTranslations(data))
                 .catch(error => {
                     console.error("Error loading all translations:", error);
-                    alert("Could not load all translations. Please try again later.");
+                    
                 });
         }
 
