@@ -40,8 +40,7 @@ header h1 {
 
 
 /* Burger Menu Styles */
-.menu-icon {
-    tap-highlight-color: transparent;
+#menu-icon {
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -54,6 +53,12 @@ header h1 {
     height: 26px;
     position: relative;
     transform: scale(90%) translateY(1.5px);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.burger-menu:hover {
+    background-color: unset;
+    text-decoration: none
 }
 
 .burger-menu span {
@@ -67,13 +72,6 @@ header h1 {
     left: 0;
     transform: rotate(0deg);
     transition: .25s ease-in-out;
-}
-
-.burger-menu:hover {
-    background-color: unset;
-    text-decoration: none;
-    tap-highlight-color: transparent;
-    -webkit-tap-highlight-color: transparent;
 }
 
 .burger-menu.open span {
@@ -108,12 +106,10 @@ header h1 {
     transform: rotate(-135deg);
 }
 
-/* Responsive styles */
-@media screen and (max-width: 1000px) {
-    /* ... (existing styles) ... */
+@media screen and (min-width: 1000px) {
 
     .burger-menu {
-        display: block;
+        display: none;
     }
 }
 
