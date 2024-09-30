@@ -6,12 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
             function toggleMenu(event) {
                 event.stopPropagation();
-                burgerMenu.classList.toggle('open');
+                
         
                 if (sideMenu.style.display === 'flex') {
                     closeMenu();
+                    burgerMenu.classList.remove('open');
                 } else {
                     openMenu();
+                    burgerMenu.classList.add('open');
                 }
             }
         
