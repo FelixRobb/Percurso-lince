@@ -60,8 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 details.innerHTML = `
-                    <h2>${entry[`nome-${currentLang.toUpperCase()}`]} (${entry.scientific_name})</h2>
-                    <button id="heardButton">${heardSpecies.includes(entry[`nome-${currentLang.toUpperCase()}`]) ? (currentLang === 'PT' ? 'Remover de Ouvidos' : 'Remove from Heard') : (currentLang === 'PT' ? 'Adicionar a Ouvidos' : 'Add to Heard')}</button>
+                    <div id="titleandbutt">
+                        <h2>${entry[`nome-${currentLang.toUpperCase()}`]} (${entry.scientific_name})</h2>
+                        <button id="heardButton">${heardSpecies.includes(entry[`nome-${currentLang.toUpperCase()}`]) ? (currentLang === 'PT' ? 'Remover de Ouvidos' : 'Remove from Heard') : (currentLang === 'PT' ? 'Adicionar a Ouvidos' : 'Add to Heard')}</button>
+                    </div>
                     <p class="comments">${entry[`notas-${currentLang.toUpperCase()}`]}</p>
                     <p class="months"><strong>${currentLang === 'PT' ? 'Melhores meses para se ouvir' : 'Best months to hear'}:</strong> ${entry[`most_probable_months_${currentLang}`].join(', ')}</p>
                     ${recordingsContent}

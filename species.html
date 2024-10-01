@@ -11,34 +11,34 @@
 </head>
 
 <body>
-        <header>
-            <h1 id="titulomenu" data-i18n="titulomenu"></h1>
-            <nav id="main-nav">
-                <a href="index.html" class="nav-button" id="menuinicio" data-i18n="menuinicio"></a>
-                <a href="home.html" class="nav-button" id="menuexplorar" data-i18n="menuexplorar"></a>
-                <a href="map.html" class="nav-button" id="menumapa" data-i18n="menumapa"></a>
-                <a href="recordings.html" class="nav-button active" id="menugravacoes" data-i18n="menugravacoes"></a>
-                <a href="heard_species.html" class="nav-button" id="menulista" data-i18n="menulista"></a>
-                <a id="changelang" onclick="createLanguagePopup()" data-i18n="language"></a>
-            </nav>
-                      <div id="menu-icon">
-                          <div class="burger-menu">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                          </div>
-                      </div>
-        </header>
-        
-        <!-- Menu lateral -->
-        <div id="side-menu">
-            <a class="side-menu-links" href="index.html" id="menuiniciom" data-i18n="menuiniciom"></a>
-            <a class="side-menu-links" href="home.html" id="menuexplorarm" data-i18n="menuexplorarm"></a>
-            <a class="side-menu-links" href="map.html" id="menumapam" data-i18n="menumapam"></a>
-            <a class="side-menu-links active" href="recordings.html" id="menugravacoesm" data-i18n="menugravacoesm"></a>
-            <a class="side-menu-links" href="heard_species.html" id="menulistam" data-i18n="menulistam"></a>
-            <a id="changelangside" onclick="createLanguagePopup()" data-i18n="language"></a>
+    <header>
+        <h1 id="titulomenu" data-i18n="titulomenu"></h1>
+        <nav id="main-nav">
+            <a href="index.html" class="nav-button" id="menuinicio" data-i18n="menuinicio"></a>
+            <a href="home.html" class="nav-button" id="menuexplorar" data-i18n="menuexplorar"></a>
+            <a href="map.html" class="nav-button" id="menumapa" data-i18n="menumapa"></a>
+            <a href="recordings.html" class="nav-button active" id="menugravacoes" data-i18n="menugravacoes"></a>
+            <a href="heard_species.html" class="nav-button" id="menulista" data-i18n="menulista"></a>
+            <a id="changelang" onclick="createLanguagePopup()" data-i18n="language"></a>
+        </nav>
+        <div id="menu-icon">
+            <div class="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
+    </header>
+
+    <!-- Menu lateral -->
+    <div id="side-menu">
+        <a class="side-menu-links" href="index.html" id="menuiniciom" data-i18n="menuiniciom"></a>
+        <a class="side-menu-links" href="home.html" id="menuexplorarm" data-i18n="menuexplorarm"></a>
+        <a class="side-menu-links" href="map.html" id="menumapam" data-i18n="menumapam"></a>
+        <a class="side-menu-links active" href="recordings.html" id="menugravacoesm" data-i18n="menugravacoesm"></a>
+        <a class="side-menu-links" href="heard_species.html" id="menulistam" data-i18n="menulistam"></a>
+        <a id="changelangside" onclick="createLanguagePopup()" data-i18n="language"></a>
+    </div>
 
     <main>
         <div class="maininfo">
@@ -63,13 +63,20 @@
     <script src="/scripts/menu.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const language = getLanguage() || "pt";
-            loadTranslations(language);
+            try {
+                const language = getLanguage() || "PT";
+                if (!language) throw new Error("Undefined language");
+                loadTranslations(language);
+            } catch (error) {
+                console.error("Error with language detection:", error);
+                createLanguagePopup();  // Reapresenta o popup caso haja erro
+            }
         });
 
         function getLanguage() {
             let language = localStorage.getItem("lang-psg");
             if (!language) {
+                console.warn("No language found, asking user to select.");
                 createLanguagePopup();
             }
             return language;
@@ -89,17 +96,17 @@
 
             const styles = `
             #language-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 99999;
-        }
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(0, 0, 0, 0.6);
+                z-index: 99999;
+            }
                 #popup-content {
                     background-color: #333;
                     color: #fff;
@@ -112,17 +119,17 @@
                     margin-bottom: 20px;
                 }
                 #popup-content button {
-          background-color: #666;
-          margin: 10px;
-          width: 200px;
-          text-align: center;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 20px;
-          font-size: 16px;
-          cursor: pointer;
-          transition: background-color 0.3s;
-        }
+                    background-color: #666;
+                    margin: 10px;
+                    width: 200px;
+                    text-align: center;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 20px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
                 #popup-content button:hover {
                     background-color: #ff6a00;
                 }
@@ -147,8 +154,9 @@
                 .then(response => response.json())
                 .then(data => applyTranslations(data))
                 .catch(error => {
-                    console.error("Error loading all translations:", error);
-                    
+                    console.error("Error loading translations:", error);
+                    alert("Failed to load translations. Please select your language again.");
+                    createLanguagePopup();  // Se houver erro, pede para o usuário selecionar o idioma novamente
                 });
         }
 
@@ -157,11 +165,18 @@
             elements.forEach(element => {
                 const key = element.getAttribute("data-i18n");
                 if (translations[key]) {
-                    element.textContent = translations[key];
+                    if (element.tagName === 'TITLE') {
+                        document.title = translations[key];
+                    } else if (element.tagName === 'INPUT' && element.type === 'search') {
+                        element.setAttribute('placeholder', translations[key]);
+                    } else {
+                        element.textContent = translations[key];
+                    }
                 }
             });
         }
     </script>
+
 </body>
 
 </html>
