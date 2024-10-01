@@ -137,7 +137,6 @@ body {
 .filter-modal {
     display: none; /* Hidden by default */
     justify-content: center;
-    align-items: center;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
