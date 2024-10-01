@@ -124,15 +124,15 @@ header h1 {
     top: 60px;
     left: 50%;
     width: 90vw;
-    height: 0; /* Start with height 0 */
-    max-height: calc(100vh - 80px); /* Maximum height */
+    height: 0; 
+    max-height: calc(100vh - 80px);
     transform: translateX(-50%);
     z-index: 50000;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
     box-shadow: 0px 0px 5px #343434;
-    overflow: hidden; /* Hide overflowing content */
-    transition: height 0.3s ease-out; /* Add transition for height */
+    overflow: scroll;
+    transition: height 0.3s ease-out;
 }
 
 
@@ -159,7 +159,6 @@ header h1 {
     color: #ff6a00;
     text-decoration: none;
     box-shadow: 0px 0px 10px #ff7a27 inset;
-    
 }
 
 #side-menu a:first-child {
@@ -181,7 +180,7 @@ header h1 {
 
 
 /* Responsive styles */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 850px) {
     
     nav#main-nav {
         display: none;
@@ -224,10 +223,13 @@ header h1 {
     }
 }
 
-@media screen and (min-width: 1001px) {
+@media screen and (min-width: 851px) {
     #side-menu {
         display: none !important;
-        width: 0 !important;
+    }
+    
+    #menu-icon {
+        display: none;
     }
 }
 
