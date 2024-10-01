@@ -20,10 +20,10 @@ header {
     top: 8px;
     left: 0px;
     z-index: 50001;
-    background: #0000008f;
+    background: #00000061;
+    box-shadow: 0px 0px 20px #6B6B6B8C inset;
+    border: 1px solid #666666A3;
     backdrop-filter: blur(10px);
-    box-shadow: 0px 0px 20px #232323 inset;
-    border: 1px solid #6d6d6d84;
     -webkit-backdrop-filter: blur(10px);
 }
 
@@ -193,10 +193,6 @@ header h1 {
     }
     
     header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
         height: 50px;
         width: 88vw;
         padding: 10px 20px;
@@ -204,14 +200,6 @@ header h1 {
         border-radius: 50px;
         margin: auto;
         margin-bottom: 10px !important;
-        background: transparent;
-        position: sticky;
-        top: 10px;
-        z-index: 50001;
-        background: transparent;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(10px);
-        box-shadow: 0px 0px 20px #343434;
     }
     
     
