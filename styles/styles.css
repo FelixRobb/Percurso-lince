@@ -20,9 +20,9 @@ header {
     top: 8px;
     left: 0px;
     z-index: 50001;
-    background: #00000061;
-    box-shadow: 0px 0px 20px #9B7D73CC inset;
-    border: 2px solid #9B7D73CC;
+    background: #000000b1;
+    box-shadow: 0px 0px 20px #85858564 inset;
+    border: 2px solid #58575782;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -128,7 +128,7 @@ header h1 {
     max-height: calc(100vh - 80px);
     transform: translateX(-50%);
     z-index: 50000;
-    background: rgba(0, 0, 0, 0.7);
+    background: #000000b1;
     backdrop-filter: blur(10px);
     box-shadow: 0px 0px 5px #343434;
     overflow: scroll;
@@ -171,11 +171,19 @@ header h1 {
 
 #changelangside {
     position: fixed;
-    top: 26px;
+    top: 16px;
     right: 20px;
     cursor: pointer;
     color: #585858;
-    padding: 8px 5px;
+    padding: 10px 13px;
+    font-size: 28px;
+    transform: scale(100%);
+    transition: all .2s;
+}
+
+#changelangside:hover {
+    transform: scale(112%);
+    text-decoration: none;
 }
 
 
