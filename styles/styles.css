@@ -21,8 +21,8 @@ header {
     left: 0px;
     z-index: 50001;
     background: #00000061;
-    box-shadow: 0px 0px 20px #6B6B6B8C inset;
-    border: 1px solid #666666A3;
+    box-shadow: 0px 0px 20px #9B7D73CC inset;
+    border: 2px solid #9B7D73CC;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
