@@ -8,3 +8,4 @@ species copy.json
 speciesoriginal.json
 .prettierrc
 .DS_Store
+.env
