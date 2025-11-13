@@ -1,0 +1,9 @@
+{
+  "heard_species_title": "Species you've heard",
+  "heard_species_description": "Keep track of the species you've already identified in the field and continue building your sound collection.",
+  "search_placeholder": "Search species...",
+  "empty_state": "You haven't added any species to your heard list yet.",
+  "no_results": "No species match your search.",
+  "view_species": "View details",
+  "remove_button": "Remove"
+}
