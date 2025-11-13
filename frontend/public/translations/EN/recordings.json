@@ -1,0 +1,16 @@
+{
+  "title": "Recordings and Species",
+  "description": "Filter recordings by location, animal class, time of day, or month and listen to highlighted calls. Use the search to quickly find a species by its common or scientific name.",
+  "search-placeholder": "Search by common or scientific name...",
+  "allloc": "All locations",
+  "alltype": "Animal class",
+  "alltime": "Time of day",
+  "allmonths": "All months",
+  "clear_filters": "Clear filters",
+  "results_heading": "Results",
+  "no_results": "No recordings found.",
+  "best_months": "Best months",
+  "time_of_day": "Time of day",
+  "view_species": "View details",
+  "view_recordings": "View recordings"
+}

@@ -1,0 +1,9 @@
+{
+  "heard_species_title": "Espécies que já ouviu",
+  "heard_species_description": "Registe as espécies que já identificou no campo e acompanhe a sua coleção sonora ao longo dos percursos.",
+  "search_placeholder": "Pesquisar espécies...",
+  "empty_state": "Ainda não adicionou espécies à sua lista de ouvidos.",
+  "no_results": "Nenhuma espécie corresponde à pesquisa.",
+  "view_species": "Ver detalhes",
+  "remove_button": "Remover"
+}

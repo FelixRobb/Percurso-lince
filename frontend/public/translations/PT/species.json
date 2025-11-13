@@ -1,0 +1,15 @@
+{
+  "view_recordings": "Ver gravações",
+  "add_to_heard": "Adicionar a ouvidos",
+  "remove_from_heard": "Remover de ouvidos",
+  "location_select": "Localização associada",
+  "description_heading": "Descrição",
+  "notes_heading": "Notas",
+  "best_months": "Melhores meses",
+  "time_of_day": "Hora do dia",
+  "where_heading": "Onde ouvir",
+  "habitat_heading": "Habitat",
+  "unknown": "Desconhecido",
+  "listen_source": "Ouvir no SoundCloud",
+  "loading": "A carregar informações da espécie..."
+}

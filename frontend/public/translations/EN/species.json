@@ -1,0 +1,15 @@
+{
+  "view_recordings": "View recordings",
+  "add_to_heard": "Add to heard list",
+  "remove_from_heard": "Remove from heard list",
+  "location_select": "Associated location",
+  "description_heading": "Description",
+  "notes_heading": "Notes",
+  "best_months": "Best months",
+  "time_of_day": "Time of day",
+  "where_heading": "Where to listen",
+  "habitat_heading": "Habitat",
+  "unknown": "Unknown",
+  "listen_source": "Listen on SoundCloud",
+  "loading": "Loading species information..."
+}

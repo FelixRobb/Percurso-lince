@@ -1,0 +1,16 @@
+{
+  "title": "Gravações e Espécies",
+  "description": "Filtre as gravações por localização, classe, período do dia ou mês e ouça exemplos de cada espécie. Use a pesquisa para encontrar rapidamente pelo nome comum ou científico.",
+  "search-placeholder": "Pesquisar pelo nome ou nome científico...",
+  "allloc": "Todas as localizações",
+  "alltype": "Classe animal",
+  "alltime": "Hora do dia",
+  "allmonths": "Todos os meses",
+  "clear_filters": "Limpar filtros",
+  "results_heading": "Resultados",
+  "no_results": "Nenhum registo encontrado.",
+  "best_months": "Melhores meses",
+  "time_of_day": "Hora do dia",
+  "view_species": "Ver detalhes",
+  "view_recordings": "Ver gravações"
+}
